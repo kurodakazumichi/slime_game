@@ -8,7 +8,10 @@ public class BattleLocation : MonoBehaviour
   // Variables
   //============================================================================
 
-  private Dictionary<int, List<EnemyWaveParam>> waveData = new Dictionary<int, List<EnemyWaveParam>>();
+  /// <summary>
+  /// WaveSettings
+  /// </summary>
+  private Dictionary<int, List<EnemyWaveSettings>> settings = new Dictionary<int, List<EnemyWaveSettings>>();
 
   //============================================================================
   // Properities
@@ -19,7 +22,7 @@ public class BattleLocation : MonoBehaviour
   /// </summary>
   public bool HasWaves {
     get {
-      return 0 < waveData.Count;
+      return 0 < settings.Count;
     }
   }
 
@@ -31,9 +34,12 @@ public class BattleLocation : MonoBehaviour
     get { 
       var list = new List<EnemyId>();
 
-      ForeachWaveData((wave) => {
-        if (!list.Contains(wave.Id)) {
-          list.Add(wave.Id);
+      ForeachWaveData((setting) => 
+      {
+        var id = MyEnum.Parse<EnemyId>(setting.EnemyId);
+
+        if (!list.Contains(id)) {
+          list.Add(id);
         }
       });
 
@@ -80,44 +86,25 @@ public class BattleLocation : MonoBehaviour
         return;
       }
 
-      // WaveXというオブジェクトの配下にあるEnemyWaveSettingsコンポーネントを全取得
+      // WaveXというオブジェクトの配下にあるEnemyWaveSettingsコンポーネントを取得、保持
       var settings = wave.GetComponentsInChildren<EnemyWaveSettings>();
-
-      // 設定からEnemyWaveParamインスタンスを生成して保持
-      foreach (var setting in settings) 
-      {
-        var param = EnemyWaveParam.Make(setting);
-        AddWaveParam(i, param);
-      }
-    }
-  }
-
-  /// <summary>
-  /// WaveDataにEnemyWaveParamを追加する
-  /// </summary>
-  private void AddWaveParam(int no, EnemyWaveParam param)
-  {
-    if (waveData.TryGetValue(no, out var waves)) 
-    {
-      waves.Add(param);
-    } else {
-      waveData.Add(no, new List<EnemyWaveParam> { param });
+      this.settings.Add(i, new List<EnemyWaveSettings>(settings));
     }
   }
 
   /// <summary>
   /// WaveDataに含まれるEnemyWaveParamの数だけループをする
   /// </summary>
-  private void ForeachWaveData(Action<EnemyWaveParam> action)
+  private void ForeachWaveData(Action<EnemyWaveSettings> action)
   {
-    foreach (var waves in waveData.Values) 
+    foreach (var settings in settings.Values) 
     {
-      if (waves == null) continue;
+      if (settings == null) continue;
 
-      foreach (var wave in waves) 
+      foreach (var setting in settings) 
       {
-        if (wave != null) {
-          action(wave);
+        if (setting != null) {
+          action(setting);
         }
       }
     }
