@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
 {
   private const float _serachRadius = 10f;
 
   /// <summary>
-  /// ƒvƒŒƒCƒ„[‚ÌUŒ‚‚ª“G‚ÉÕ“Ë‚·‚é
+  /// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ”»æ’ƒãŒæ•µã«è¡çªã™ã‚‹
   /// </summary>
   public void CollidePlayerAttackWithEnemy()
   {
