@@ -5,8 +5,23 @@ using UnityEngine;
 public class BattleLocation : MonoBehaviour
 {
   //============================================================================
+  // Enum
+  //============================================================================
+  private enum State 
+  {
+    Idle,
+    Usual,
+    Contact,
+  }
+
+  //============================================================================
   // Variables
   //============================================================================
+  
+  /// <summary>
+  /// ステートマシン
+  /// </summary>
+  private StateMachine<State> state = new StateMachine<State>();
 
   /// <summary>
   /// WaveSettings
@@ -17,9 +32,9 @@ public class BattleLocation : MonoBehaviour
   /// Playerにヒットしているかどうかのフラグ
   /// CollisionManagerの衝突判定処理から設定される
   /// </summary>
-  public bool IsPlayerHit { get; set; } = false;
+  private bool isPlayerHit { get; set; } = false;
 
-  private SphereCollider collider;
+  new private SphereCollider collider;
 
   //============================================================================
   // Properities
@@ -67,17 +82,73 @@ public class BattleLocation : MonoBehaviour
   {
     collider = GetComponent<SphereCollider>();
     CollectWaveData();
+
+    state.Add(State.Idle);
+    state.Add(State.Usual, EnterUsual, UpdateUsual);
+    state.Add(State.Contact, EnterContact, UpdateContact, ExitContact);
+    state.SetState(State.Idle);
+  }
+
+  private void Update()
+  {
+    state.Update();
   }
 
   private void LateUpdate()
   {
+    if (state.StateKey == State.Idle) {
+      return;
+    }
+
     var a = PlayerManager.Instance.PlayerOriginPosition;
     var b = collider.transform.position;
     var r = PlayerManager.Instance.PlayerCollider.radius + collider.radius;
+    isPlayerHit = CollisionUtil.IsCollideAxB(a, b, r);
+  }
 
-    if (Input.GetKeyDown(KeyCode.V) && CollisionUtil.IsCollideAxB(a, b, r)) {
-      Logger.Log("Hit Player");
+  private void OnGUI()
+  {
+    if (GUILayout.Button("ToUsual")) {
+      state.SetState(State.Usual);
     }
+  }
+
+  //----------------------------------------------------------------------------
+  // for Update
+  //----------------------------------------------------------------------------
+
+  private void EnterUsual()
+  {
+    isPlayerHit = false;
+  }
+
+  private void UpdateUsual()
+  {
+    if (isPlayerHit) {
+      state.SetState(State.Contact);
+      return;
+    }
+  }
+
+  private void EnterContact()
+  {
+    // WaveManagerにWaveデータを登録を依頼する
+    Logger.Log("[BattleLocation] OnHitPlayerEnter");
+  }
+
+  private void UpdateContact()
+  {
+    Logger.Log("[BattleLocation] OnHitPlayerStay");
+    if (isPlayerHit == false) {
+      state.SetState(State.Usual);
+      return;
+    }
+  }
+
+  private void ExitContact()
+  {
+    Logger.Log("[BattleLocation] OnHitPlayerExit");
+    // WaveManagerにWaveデータの破棄を依頼する
   }
 
   //----------------------------------------------------------------------------
