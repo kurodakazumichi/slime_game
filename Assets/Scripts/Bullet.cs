@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
 
   public void Fire(ISkill skill)
   {
-    var p = PlayerManager.Instance.PlayerPosition;
+    var p = PlayerManager.Instance.PlayerVisualPosition;
     transform.position = p;
 
     var e = EnemyManager.Instance.FindNearestEnemy(p);

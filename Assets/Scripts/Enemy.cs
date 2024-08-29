@@ -66,10 +66,10 @@ public class Enemy : MonoBehaviour, IEnemy
       return;
     }
 
-    var v = PlayerManager.Instance.PlayerPosition - transform.position;
+    var v = PlayerManager.Instance.PlayerVisualPosition - transform.position;
     transform.position += v.normalized * TimeSystem.DeltaTime;
 
-    var d1 = (PlayerManager.Instance.PlayerPosition - transform.position).sqrMagnitude;
+    var d1 = (PlayerManager.Instance.PlayerVisualPosition - transform.position).sqrMagnitude;
     var d2 = Collider.radius * Collider.radius;
 
     if (d1 < d2) {

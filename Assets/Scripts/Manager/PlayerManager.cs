@@ -46,7 +46,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     player.takeDamage(value);
   }
 
-  public Vector3 PlayerPosition {
+  public Vector3 PlayerVisualPosition {
     get { return player.VisualPosition; }
   }
 
