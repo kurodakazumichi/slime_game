@@ -27,7 +27,7 @@ public class EnemyWaveSettings : MonoBehaviour
 
   public bool InverseZ = false;
 
-  private void OnDrawGizmos()
+  private void OnDrawGizmosSelected()
   {
     Gizmos.color = new Color(1, 0, 0, 0.5f);
     Gizmos.DrawCube(transform.position, transform.localScale);

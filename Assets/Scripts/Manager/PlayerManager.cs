@@ -24,7 +24,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     player.Respawn();
   }
 
-  public void SetPlayerStateUsual()
+  public void Playable()
   {
     player.SetStateUsual();
   }

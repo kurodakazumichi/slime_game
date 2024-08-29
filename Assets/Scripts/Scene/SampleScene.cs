@@ -54,7 +54,7 @@ public class SampleScene : MonoBehaviour
 
   private void EnterUsual()
   {
-    PlayerManager.Instance.SetPlayerStateUsual();
+    PlayerManager.Instance.Playable();
   }
 
   private void UpdateUsual()
