@@ -16,7 +16,7 @@ public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
       return;
     }
 
-    var attacks = Physics.OverlapSphere(pm.PlayerPosition, _serachRadius, LayerMask.GetMask("PlayerAttack"));
+    var attacks = Physics.OverlapSphere(pm.PlayerOriginPosition, _serachRadius, LayerMask.GetMask("PlayerAttack"));
 
     foreach (var attack in attacks) 
     {
