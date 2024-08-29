@@ -87,35 +87,6 @@ public class Player : MonoBehaviour
   private void Update()
   {
     state.Update();
-
-    var colliders = Physics.OverlapSphere(transform.position, collider.radius, LayerMask.GetMask("BattleLocation"));
-
-    if (0 < colliders.Length) {
-      battleLocation = colliders[0];
-    } else {
-      battleLocation = null;
-    }
-
-    if (battleLocation != null) 
-    {
-      var data = battleLocation.transform.Find("WaveData");
-
-      for(int i = 0; true; ++i) 
-      {
-        var waves = data.transform.Find($"Waves{i}");
-
-        if (waves == null) {
-          break;
-        }
-
-        var settings = waves.GetComponentsInChildren<EnemyWaveSettings>();
-
-        if (settings != null)
-        {
-          Debug.Log($"[Player] {settings[0].EnemyId}");
-        }
-      }
-    }
   }
 
   private void EnterStateUsual()
