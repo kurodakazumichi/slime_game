@@ -60,10 +60,7 @@ public class EnemyWaveParam
   /// <summary>
   /// Wave毎に適用される角度のオフセット
   /// </summary>
-  public float WaveOffsetAngle {
-    get { return waveOffset.z; }
-    set { waveOffset.z = value; }
-  }
+  public float WaveOffsetAngle { get; set; }
 
   /// <summary>
   /// Wave毎に適用されるX方向オフセット
@@ -82,6 +79,14 @@ public class EnemyWaveParam
   }
 
   /// <summary>
+  /// Wave毎に適用されるZ方向オフセット
+  /// </summary>
+  public float WaveOffsetZ {
+    get { return waveOffset.z; }
+    set { waveOffset.z = value; }
+  }
+
+  /// <summary>
   /// Wave毎に適用されるオフセット、zは角度に使う
   /// </summary>
   private Vector3 waveOffset;
@@ -97,4 +102,10 @@ public class EnemyWaveParam
   /// このパラメーターはSphae.Lineのときのみ有効
   /// </summary>
   public bool InverseY { get; set; }
+
+  /// <summary>
+  /// 出現位置のZ方向を反転する
+  /// このパラメーターはSphae.Lineのときのみ有効
+  /// </summary>
+  public bool InverseZ { get; set; }
 }

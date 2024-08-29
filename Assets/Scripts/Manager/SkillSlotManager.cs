@@ -19,7 +19,7 @@ public class SkillSlotManager : MonoBehaviour
     s.CacheRectTransform.position = new Vector3(-320f, 35f, 0);
     s.CacheRectTransform.SetParent(transform, false);
     s.SetSkill(SkillManager.Instance.GetSkill(0));
-    s.Charge();
+    //s.Charge();
 
     _slots.Add(s);
   }

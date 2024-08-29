@@ -130,9 +130,9 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
       OriginAngle = 0f,
       WaveOffsetAngle = 18f,
       WaveOffsetX = 1.1f,
-      WaveOffsetY = 1.1f,
+      WaveOffsetZ = 1.1f,
       InverseX = false,
-      InverseY = true,
+      InverseZ = true,
     });
     Add(0, enemyWave);
 

@@ -14,9 +14,9 @@ TagManager:
   - UI
   - Enemy
   - PlayerAttack
-  - EnemyWave
-  - Player
   - 
+  - Player
+  - BattleLocation
   - 
   - 
   - 

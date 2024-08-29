@@ -277,7 +277,7 @@ public class EnemyWave
   {
     int   max     = waveParam.EnemyAmountPerWave;
     float offsetX = waveParam.WaveOffsetX;
-    float offsetY = waveParam.WaveOffsetY;
+    float offsetY = waveParam.WaveOffsetZ;
 
     for(int i = 0; i < max; ++i) 
     {
@@ -330,7 +330,7 @@ public class EnemyWave
   {
     int     max         = waveParam.EnemyAmountPerWave;
     float   offsetX = waveParam.WaveOffsetX;
-    float   offsetY = waveParam.WaveOffsetY;
+    float   offsetY = waveParam.WaveOffsetZ;
     Vector3 area        = waveParam.Area / 2f;
 
     for (int i = 0; i < max; ++i) 
@@ -342,7 +342,7 @@ public class EnemyWave
 
       if (waveParam.InverseX == true) { x *= -1; }
 
-      if (waveParam.InverseY == true) { z *= -1; }
+      if (waveParam.InverseZ == true) { z *= -1; }
 
       var enemy = GetEnemy();
       enemy.transform.position = waveParam.BasePosition + new Vector3(x, 0, z);
