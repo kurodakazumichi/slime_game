@@ -13,6 +13,14 @@ public class BattleLocation : MonoBehaviour
   /// </summary>
   private Dictionary<int, List<EnemyWaveSettings>> settings = new Dictionary<int, List<EnemyWaveSettings>>();
 
+  /// <summary>
+  /// Playerにヒットしているかどうかのフラグ
+  /// CollisionManagerの衝突判定処理から設定される
+  /// </summary>
+  public bool IsPlayerHit { get; set; } = false;
+
+  private SphereCollider collider;
+
   //============================================================================
   // Properities
   //============================================================================
@@ -57,7 +65,19 @@ public class BattleLocation : MonoBehaviour
 
   void Awake()
   {
+    collider = GetComponent<SphereCollider>();
     CollectWaveData();
+  }
+
+  private void LateUpdate()
+  {
+    var a = PlayerManager.Instance.PlayerOriginPosition;
+    var b = collider.transform.position;
+    var r = PlayerManager.Instance.PlayerCollider.radius + collider.radius;
+
+    if (Input.GetKeyDown(KeyCode.V) && CollisionUtil.IsCollideAxB(a, b, r)) {
+      Logger.Log("Hit Player");
+    }
   }
 
   //----------------------------------------------------------------------------

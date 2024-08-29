@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
 
   private Collider battleLocation = null;
 
+  public Vector3 OriginPosition {
+    get { return transform.position; }
+  }
+
   public Vector3 VisualPosition {
     get { return transform.position + collider.center; }
   }
