@@ -46,13 +46,6 @@ public class EnemyWaveParam
   public float WaitTime { get; set; } = 0;
 
   /// <summary>
-  /// Waveが生成する敵の合計数
-  /// </summary>
-  public int TotalEnemyCount {
-    get { return WaveCount * EnemyAmountPerWave; }
-  }
-
-  /// <summary>
   /// 起点となる角度、このパラメータはShape.Circleのときのみ有効
   /// </summary>
   public float OriginAngle { get; set; }
@@ -61,6 +54,36 @@ public class EnemyWaveParam
   /// Wave毎に適用される角度のオフセット
   /// </summary>
   public float WaveOffsetAngle { get; set; }
+
+  /// <summary>
+  /// Wave毎に適用されるオフセット、zは角度に使う
+  /// </summary>
+  private Vector3 waveOffset;
+
+  /// <summary>
+  /// 出現位置のX方向を反転する
+  /// このパラメーターはSphae.Lineのときのみ有効
+  /// </summary>
+  public bool InverseX { get; set; }
+
+  /// <summary>
+  /// 出現位置のY方向を反転する
+  /// このパラメーターはSphae.Lineのときのみ有効
+  /// </summary>
+  public bool InverseY { get; set; }
+
+  /// <summary>
+  /// 出現位置のZ方向を反転する
+  /// このパラメーターはSphae.Lineのときのみ有効
+  /// </summary>
+  public bool InverseZ { get; set; }
+
+  /// <summary>
+  /// Waveが生成する敵の合計数
+  /// </summary>
+  public int TotalEnemyCount {
+    get { return WaveCount * EnemyAmountPerWave; }
+  }
 
   /// <summary>
   /// Wave毎に適用されるX方向オフセット
@@ -87,25 +110,59 @@ public class EnemyWaveParam
   }
 
   /// <summary>
-  /// Wave毎に適用されるオフセット、zは角度に使う
+  /// インスタンスを複製する
   /// </summary>
-  private Vector3 waveOffset;
+  public EnemyWaveParam Clone()
+  {
+    var param = new EnemyWaveParam();
 
-  /// <summary>
-  /// 出現位置のX方向を反転する
-  /// このパラメーターはSphae.Lineのときのみ有効
-  /// </summary>
-  public bool InverseX { get; set; }
+    param.Id = this.Id;
+    param.Shape = this.Shape;
+    param.BasePosition = this.BasePosition;
+    param.Area = this.Area;
+    param.WaveCount = this.WaveCount;
+    param.WaveInterval = this.WaveInterval;
+    param.EnemyAmountPerWave = this.EnemyAmountPerWave;
+    param.WaitTime = this.WaitTime;
+    param.OriginAngle = this.OriginAngle;
+    param.WaveOffsetAngle = this.WaveOffsetAngle;
+    param.waveOffset = this.waveOffset;
+    param.InverseX = this.InverseX;
+    param.InverseY = this.InverseY;
+    param.InverseZ = this.InverseZ;
 
-  /// <summary>
-  /// 出現位置のY方向を反転する
-  /// このパラメーターはSphae.Lineのときのみ有効
-  /// </summary>
-  public bool InverseY { get; set; }
+    return param;
+  }
 
-  /// <summary>
-  /// 出現位置のZ方向を反転する
-  /// このパラメーターはSphae.Lineのときのみ有効
-  /// </summary>
-  public bool InverseZ { get; set; }
+  static public EnemyWaveParam Make(EnemyWaveSettings setting)
+  {
+    var param = new EnemyWaveParam();
+
+    if (MyEnum.TryParse<EnemyId>(setting.EnemyId, out var enemyId)) {
+      param.Id = enemyId;
+    } else {
+      Logger.Error($"[EnemyWaveParam] EnemyId = {setting.EnemyId} is not defined.");
+    }
+
+    if (MyEnum.TryParse<WaveShape>(setting.WaveShape, out var shape)) {
+      param.Shape = shape;
+    } else {
+      Logger.Error($"[EnemyWaveParam] Shape = {setting.WaveShape} is not defined.");
+    }
+
+    param.BasePosition       = setting.transform.position;
+    param.Area               = setting.transform.localScale;
+    param.WaveCount          = setting.WaveCount;
+    param.WaveInterval       = setting.WaveInterval;
+    param.EnemyAmountPerWave = setting.EnemyAmountPerWave;
+    param.WaitTime           = setting.WaitTime;
+    param.OriginAngle        = setting.OriginAngle;
+    param.WaveOffsetAngle    = setting.WaveOffsetAngle;
+    param.waveOffset         = setting.WaveOffset;
+    param.InverseX           = setting.InverseX;
+    param.InverseY           = setting.InverseY;
+    param.InverseZ           = setting.InverseZ;
+
+    return param;
+  }
 }
