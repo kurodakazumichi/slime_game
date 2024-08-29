@@ -27,9 +27,14 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
   private StateMachine<State> state;
 
   /// <summary>
+  /// 予約データ
+  /// </summary>
+  private BattleLocation reserve = null;
+
+  /// <summary>
   /// Waveデータ
   /// </summary>
-  private Dictionary<int, List<EnemyWave>> waveData;
+  private Dictionary<int, List<EnemyWave>> waveData = null;
 
   /// <summary>
   /// 現在のWaveを表すIndex
@@ -112,49 +117,6 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
     state.Add(State.Idle);
     state.Add(State.Running, EnterRunning, UpdateRunning);
     state.SetState(State.Idle);
-
-    waveData = new Dictionary<int, List<EnemyWave>>();
-
-
-    var enemyWave = new EnemyWave();
-    enemyWave.Init(new EnemyWaveParam() {
-      Id = EnemyId.Bat01,
-
-      WaveCount = 1,
-      WaveInterval = 0f,
-      EnemyAmountPerWave = 10,
-      Shape = WaveShape.Circle,
-      BasePosition = new Vector3(0, 0, 0),
-      Area = new Vector3(10, 10, 0),
-      WaitTime = 1f,
-      OriginAngle = 0f,
-      WaveOffsetAngle = 18f,
-      WaveOffsetX = 1.1f,
-      WaveOffsetZ = 1.1f,
-      InverseX = false,
-      InverseZ = true,
-    });
-    Add(0, enemyWave);
-
-    enemyWave = new EnemyWave();
-    enemyWave.Init(new EnemyWaveParam() {
-      WaveCount = 3,
-      BasePosition = new Vector3(-5, 0, 0),
-      Id = EnemyId.Enemy,
-      EnemyAmountPerWave = 1,
-      WaveInterval = 1f,
-      Shape = WaveShape.Point,
-    });
-    Add(0, enemyWave);
-
-    enemyWave = new EnemyWave();
-    enemyWave.Init(new EnemyWaveParam() {
-      BasePosition = new Vector3(5, 5, 0),
-      Id = EnemyId.Enemy,
-      EnemyAmountPerWave = 50,
-      WaveInterval = 0.1f,
-    });
-    Add(1, enemyWave);
   }
 
   // Update is called once per frame
@@ -167,10 +129,31 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
     state.Update();
   }
 
+  
+  private void OnGUI()
+  {
+    // TODO: 暫定処理、BattleLocationの情報が設定されていたらBattleStartボタンを出す
+    if (reserve != null) 
+    {
+      if (GUILayout.Button("Battle Start")) {
+        Logger.Log("Buttle Start!!");
+      }
+    }
+  }
+
 
   //----------------------------------------------------------------------------
   // Public
   //----------------------------------------------------------------------------
+  public void ReserveBattleLocation(BattleLocation battleLocation)
+  {
+    reserve = battleLocation;
+  }
+
+  public void CancelBattleLocation()
+  {
+    reserve = null;
+  }
 
   /// <summary>
   /// WaveManagerをリセットする。

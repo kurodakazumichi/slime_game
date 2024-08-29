@@ -86,7 +86,7 @@ public class BattleLocation : MonoBehaviour
     state.Add(State.Idle);
     state.Add(State.Usual, EnterUsual, UpdateUsual);
     state.Add(State.Contact, EnterContact, UpdateContact, ExitContact);
-    state.SetState(State.Idle);
+    state.SetState(State.Usual);
   }
 
   private void Update()
@@ -104,13 +104,6 @@ public class BattleLocation : MonoBehaviour
     var b = collider.transform.position;
     var r = PlayerManager.Instance.PlayerCollider.radius + collider.radius;
     isPlayerHit = CollisionUtil.IsCollideAxB(a, b, r);
-  }
-
-  private void OnGUI()
-  {
-    if (GUILayout.Button("ToUsual")) {
-      state.SetState(State.Usual);
-    }
   }
 
   //----------------------------------------------------------------------------
@@ -134,6 +127,8 @@ public class BattleLocation : MonoBehaviour
   {
     // WaveManagerにWaveデータを登録を依頼する
     Logger.Log("[BattleLocation] OnHitPlayerEnter");
+
+    WaveManager.Instance.ReserveBattleLocation(this);
   }
 
   private void UpdateContact()
@@ -149,6 +144,7 @@ public class BattleLocation : MonoBehaviour
   {
     Logger.Log("[BattleLocation] OnHitPlayerExit");
     // WaveManagerにWaveデータの破棄を依頼する
+    WaveManager.Instance.CancelBattleLocation();
   }
 
   //----------------------------------------------------------------------------
@@ -199,5 +195,20 @@ public class BattleLocation : MonoBehaviour
         }
       }
     }
+  }
+
+  public Dictionary<int, List<EnemyWaveParam>> MakeEnemyWaveParam()
+  {
+    var data = new Dictionary<int, List<EnemyWaveParam>>();
+
+    foreach (var setting in settings) {
+      data.Add(setting.Key, new List<EnemyWaveParam>());
+
+      foreach (var item in setting.Value) {
+        data[setting.Key].Add(EnemyWaveParam.Make(item));
+      }
+    }
+
+    return data;
   }
 }
