@@ -49,4 +49,19 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   {
     battleLocationCandidate = null;
   }
+
+#if _DEBUG
+  //----------------------------------------------------------------------------
+  // For Debug
+  //----------------------------------------------------------------------------
+
+  /// <summary>
+  /// デバッグ用の基底メソッド
+  /// </summary>
+  public override void OnDebug()
+  {
+    GUILayout.Label($"BattleLocationCount = {battleLocations.Count}");
+  }
+
+#endif
 }

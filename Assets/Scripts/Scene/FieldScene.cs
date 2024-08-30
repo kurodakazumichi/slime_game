@@ -52,6 +52,7 @@ public class FieldScene : MonoBehaviour
   //----------------------------------------------------------------------------
   private void EnterSystemSetup()
   {
+    DebugManager.Instance.Regist(FieldManager.Instance);
 
   }
 
