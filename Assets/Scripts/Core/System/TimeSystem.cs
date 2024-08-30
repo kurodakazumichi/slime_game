@@ -61,5 +61,37 @@ static public class TimeSystem
     get { return _skill; }
   }
 
+#if _DEBUG
+  //----------------------------------------------------------------------------
+  // For Debug
+  //----------------------------------------------------------------------------
+
+  /// <summary>
+  /// デバッグ用の基底メソッド
+  /// </summary>
+  static public void OnDebug()
+  {
+    using (new GUILayout.HorizontalScope()) {
+      GUILayout.Label("GlobalTimeScale");
+      GUILayout.TextField(_globalTimeScale.ToString(), GUILayout.Width(30));
+      if(GUILayout.Button("Reset")) {
+        _globalTimeScale = 1f;
+      }
+    }
+    _globalTimeScale = GUILayout.HorizontalSlider(_globalTimeScale, 0f, 10f);
+
+    using (new GUILayout.HorizontalScope()) {
+      GUILayout.Label("DefaultTimeScale");
+      GUILayout.TextField(_deltaTime.Scale.ToString(), GUILayout.Width(30));
+      if (GUILayout.Button("Reset")) {
+        _deltaTime.Scale = 1f;
+      }
+    }
+    _deltaTime.Scale = GUILayout.HorizontalSlider(_deltaTime.Scale, 0f, 10f);
+
+  }
+
+#endif
+
 
 }

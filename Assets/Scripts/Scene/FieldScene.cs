@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FieldScene : MonoBehaviour
+public class FieldScene : MyMonoBehaviour
 {
   private enum State { 
     Idle,
@@ -23,8 +23,10 @@ public class FieldScene : MonoBehaviour
   // Methods
   //============================================================================
 
-  private void Awake()
+  protected override void MyAwake()
   {
+    base.MyAwake();
+
     state = new StateMachine<State>();
 
     state.Add(State.Idle);
@@ -52,8 +54,8 @@ public class FieldScene : MonoBehaviour
   //----------------------------------------------------------------------------
   private void EnterSystemSetup()
   {
+    DebugManager.Instance.Regist(this);
     DebugManager.Instance.Regist(FieldManager.Instance);
-
   }
 
   private void UpdateSystemSetup()
@@ -84,5 +86,20 @@ public class FieldScene : MonoBehaviour
   {
 
   }
+
+#if _DEBUG
+  //----------------------------------------------------------------------------
+  // For Debug
+  //----------------------------------------------------------------------------
+
+  /// <summary>
+  /// デバッグ用の基底メソッド
+  /// </summary>
+  public override void OnDebug()
+  {
+    TimeSystem.OnDebug();
+  }
+
+#endif
 
 }
