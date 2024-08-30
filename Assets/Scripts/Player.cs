@@ -20,8 +20,6 @@ public class Player : MonoBehaviour
 
   new public SphereCollider collider { get; private set; }
 
-  private Collider battleLocation = null;
-
   public Vector3 OriginPosition {
     get { return transform.position; }
   }
