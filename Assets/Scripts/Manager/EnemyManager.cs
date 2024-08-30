@@ -14,6 +14,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
   protected override void MyAwake()
   {
+    base.MyAwake();
+
     MyEnum.ForEach<EnemyId>((id) => 
     {
       Debug.Log($"Create EnemyPool id = {id}");

@@ -10,13 +10,9 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
 
   protected override void MyAwake()
   {
+    base.MyAwake();
+
     player = Instantiate(playerPrefab).GetComponent<Player>();
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-
   }
 
   public void RespawnPlayer()

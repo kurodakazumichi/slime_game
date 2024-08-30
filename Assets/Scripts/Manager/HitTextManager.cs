@@ -18,6 +18,8 @@ public class HitTextManager : SingletonMonoBehaviour<HitTextManager>
 
   protected override void MyAwake()
   {
+    base.MyAwake();
+
     HitText createFunc()
     {
       var t = Instantiate(hitTextPrefab).GetComponent<HitText>();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingletonMonoBehaviour<T> : MonoBehaviour where T : Component
+public class SingletonMonoBehaviour<T> : MyMonoBehaviour where T : MyMonoBehaviour
 {
   /// <summary>
   /// Singleton Instance
@@ -32,18 +32,16 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : Component
   /// <summary>
   /// 2つ以上のインスタンスが生成された場合は、破棄して終了する。
   /// </summary>
-  void Awake()
+  protected override void MyAwake() 
   {
-    Debug.Log($"Done Awake Singleton of {gameObject.name}");
+    Logger.Log($"[SingletonMonoBehaviour] MyAwake() {gameObject.name}");
 
     if (this != Instance) {
-      Debug.LogWarning($"{typeof(T).Name} が1回以上生成されるフローが存在します。");
+      Logger.Warn($"{typeof(T).Name} が1回以上生成されるフローが存在します。");
       Destroy(this);
       return;
     }
 
-    MyAwake();
+    base.MyAwake();
   }
-
-  protected virtual void MyAwake() { }
 }

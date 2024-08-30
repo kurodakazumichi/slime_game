@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillManager : SingletonMonoBehaviour<SkillManager>
@@ -9,18 +9,20 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
 
   protected override void MyAwake()
   {
+    base.MyAwake();
+
     _exp = new Dictionary<int, int>();
 
-    // ƒXƒLƒ‹‚Ìí—Ş‚Ì”‚¾‚¯—v‘f‚ğ’Ç‰Á
+    // ã‚¹ã‚­ãƒ«ã®ç¨®é¡ã®æ•°ã ã‘è¦ç´ ã‚’è¿½åŠ 
     MyEnum.ForEach<SkillId>(id => _exp.Add((int)id, -1));
     SetExp(SkillId.NormalBullet, 0);
 
-    // ƒAƒNƒeƒBƒuƒXƒLƒ‹‚ğ‰Šú‰»
+    // ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚¹ã‚­ãƒ«ã‚’åˆæœŸåŒ–
     for(int i = 0; i < ACTIVE_SKILL_COUNT; ++i) {
       _activeSkills[i] = null;
     }
 
-    // b’è‚Å’Êí’eƒXƒLƒ‹‚ğƒZƒbƒg
+    // æš«å®šã§é€šå¸¸å¼¾ã‚¹ã‚­ãƒ«ã‚’ã‚»ãƒƒãƒˆ
     var s = new Skill();
 
     var entity = SkillData.FindById(SkillId.NormalBullet);
@@ -37,7 +39,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   }
 
   /// <summary>
-  /// ƒXƒLƒ‹ŒoŒ±’l‚ğƒZƒbƒg‚·‚é
+  /// ã‚¹ã‚­ãƒ«çµŒé¨“å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
   /// </summary>
   public void SetExp(SkillId id, int value)
   {
@@ -45,13 +47,13 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   }
 
   /// <summary>
-  /// ƒXƒLƒ‹ŒoŒ±’l‚ğ’Ç‰Á‚·‚é
+  /// ã‚¹ã‚­ãƒ«çµŒé¨“å€¤ã‚’è¿½åŠ ã™ã‚‹
   /// </summary>
   public void AddExp(SkillId id, int value)
   {
     _exp[(int)id] += value;
 
-    // Active Skill‚ÉŒoŒ±’l‚ğƒZƒbƒg
+    // Active Skillã«çµŒé¨“å€¤ã‚’ã‚»ãƒƒãƒˆ
     foreach (var skill in _activeSkills)
     {
       if (skill != null && skill.Id == id) {
@@ -61,7 +63,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   }
 
   /// <summary>
-  /// ƒXƒLƒ‹ŒoŒ±’l‚ğQÆ
+  /// ã‚¹ã‚­ãƒ«çµŒé¨“å€¤ã‚’å‚ç…§
   /// </summary>
   public int GetExp(SkillId id)
   {

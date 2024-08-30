@@ -108,6 +108,8 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
   //----------------------------------------------------------------------------
   protected override void MyAwake()
   {
+    base.MyAwake();
+
     state = new StateMachine<State>();
     state.Add(State.Idle);
     state.Add(State.Running, EnterRunning, UpdateRunning);
