@@ -87,6 +87,10 @@ public class BattleLocation : MonoBehaviour
     state.Add(State.Usual, EnterUsual, UpdateUsual);
     state.Add(State.Contact, EnterContact, UpdateContact, ExitContact);
     state.SetState(State.Usual);
+
+    if (FieldManager.Instance) {
+      FieldManager.Instance.RegistBattleLocation(this);
+    }
   }
 
   private void Update()
