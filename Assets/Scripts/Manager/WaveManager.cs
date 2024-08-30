@@ -27,11 +27,6 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
   private StateMachine<State> state;
 
   /// <summary>
-  /// 予約データ
-  /// </summary>
-  private BattleLocation reserve = null;
-
-  /// <summary>
   /// Waveデータ
   /// </summary>
   private Dictionary<int, List<EnemyWave>> waveData = null;
@@ -130,30 +125,9 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
   }
 
   
-  private void OnGUI()
-  {
-    // TODO: 暫定処理、BattleLocationの情報が設定されていたらBattleStartボタンを出す
-    if (reserve != null) 
-    {
-      if (GUILayout.Button("Battle Start")) {
-        Logger.Log("Buttle Start!!");
-      }
-    }
-  }
-
-
   //----------------------------------------------------------------------------
   // Public
   //----------------------------------------------------------------------------
-  public void ReserveBattleLocation(BattleLocation battleLocation)
-  {
-    reserve = battleLocation;
-  }
-
-  public void CancelBattleLocation()
-  {
-    reserve = null;
-  }
 
   /// <summary>
   /// WaveManagerをリセットする。

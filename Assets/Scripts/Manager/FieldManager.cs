@@ -13,6 +13,11 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   /// </summary>
   private List<BattleLocation> battleLocations = new List<BattleLocation>();
 
+  /// <summary>
+  /// 戦闘予定のロケーションを格納
+  /// </summary>
+  private BattleLocation battleLocationCandidate = null;
+
   //============================================================================
   // Methods
   //============================================================================
@@ -27,5 +32,21 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   public void RegistBattleLocation(BattleLocation location)
   {
     battleLocations.Add(location);
+  }
+
+  /// <summary>
+  /// 戦地の候補を予約する
+  /// </summary>
+  public void ReserveBattleLocation(BattleLocation location)
+  {
+    battleLocationCandidate = location;
+  }
+
+  /// <summary>
+  /// 戦地をキャンセルする
+  /// </summary>
+  public void CancelBattleLocation()
+  {
+    battleLocationCandidate = null;
   }
 }

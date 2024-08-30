@@ -132,7 +132,7 @@ public class BattleLocation : MonoBehaviour
     // WaveManagerにBattleLocationを予約する
     Logger.Log("[BattleLocation] OnHitPlayerEnter");
 
-    WaveManager.Instance.ReserveBattleLocation(this);
+    FieldManager.Instance.ReserveBattleLocation(this);
   }
 
   private void UpdateContact()
@@ -148,7 +148,7 @@ public class BattleLocation : MonoBehaviour
   {
     Logger.Log("[BattleLocation] OnHitPlayerExit");
     // WaveManagerにWaveデータの破棄を依頼する
-    WaveManager.Instance.CancelBattleLocation();
+    FieldManager.Instance.CancelBattleLocation();
   }
 
   //----------------------------------------------------------------------------
