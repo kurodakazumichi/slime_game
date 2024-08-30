@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,14 +10,14 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : Component
   private static T instance;
 
   /// <summary>
-  /// Instance‚ÌƒAƒNƒZƒbƒT
+  /// Instanceã®ã‚¢ã‚¯ã‚»ãƒƒã‚µ
   /// </summary>
   public static T Instance {
     get {
       if (instance == null) {
         instance = (T)FindFirstObjectByType(typeof(T));
         if (instance == null) {
-          Debug.LogError(typeof(T) + "‚ªƒV[ƒ“‚É‘¶İ‚µ‚Ü‚¹‚ñB");
+          Debug.LogError(typeof(T) + "ãŒã‚·ãƒ¼ãƒ³ã«å­˜åœ¨ã—ã¾ã›ã‚“ã€‚");
         }
       }
       return instance;
@@ -25,18 +25,19 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : Component
   }
 
   /// <summary>
-  /// ƒCƒ“ƒXƒ^ƒ“ƒX‚ª‚ ‚é‚©‚Ç‚¤‚©
+  /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒã‚ã‚‹ã‹ã©ã†ã‹
   /// </summary>
   public static bool HasInstance => (instance != null);
 
   /// <summary>
-  /// 2‚ÂˆÈã‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ª¶¬‚³‚ê‚½ê‡‚ÍA”jŠü‚µ‚ÄI—¹‚·‚éB
+  /// 2ã¤ä»¥ä¸Šã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒç”Ÿæˆã•ã‚ŒãŸå ´åˆã¯ã€ç ´æ£„ã—ã¦çµ‚äº†ã™ã‚‹ã€‚
   /// </summary>
   void Awake()
   {
     Debug.Log($"Done Awake Singleton of {gameObject.name}");
+
     if (this != Instance) {
-      Debug.LogWarning($"{typeof(T).Name} ‚ª1‰ñˆÈã¶¬‚³‚ê‚éƒtƒ[‚ª‘¶İ‚µ‚Ü‚·B");
+      Debug.LogWarning($"{typeof(T).Name} ãŒ1å›ä»¥ä¸Šç”Ÿæˆã•ã‚Œã‚‹ãƒ•ãƒ­ãƒ¼ãŒå­˜åœ¨ã—ã¾ã™ã€‚");
       Destroy(this);
       return;
     }
