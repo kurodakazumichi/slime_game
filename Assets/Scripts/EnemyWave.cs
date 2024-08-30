@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWave
@@ -8,14 +8,14 @@ public class EnemyWave
   //============================================================================
 
   /// <summary>
-  /// ó‘Ô
+  /// çŠ¶æ…‹
   /// </summary>
   private enum State
   {
-    Idle,              // ƒAƒCƒhƒ‹
-    ProductionWaiting, // ¶Y‘Ò‹@
-    Production,        // “G‚ğ¶Y
-    ProductionEnded,   // ¶YI—¹
+    Idle,              // ã‚¢ã‚¤ãƒ‰ãƒ«
+    ProductionWaiting, // ç”Ÿç”£å¾…æ©Ÿ
+    Production,        // æ•µã‚’ç”Ÿç”£
+    ProductionEnded,   // ç”Ÿç”£çµ‚äº†
   }
 
   //============================================================================
@@ -23,32 +23,32 @@ public class EnemyWave
   //============================================================================
 
   /// <summary>
-  /// ƒXƒe[ƒgƒ}ƒVƒ“
+  /// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³
   /// </summary>
   private StateMachine<State> state;
 
   /// <summary>
-  /// Waveƒpƒ‰ƒ[ƒ^
+  /// Waveãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
   /// </summary>
-  private EnemyWaveParam waveParam;
+  private EnemyWaveProperty waveParam;
 
   /// <summary>
-  /// ”Ä—pƒ^ƒCƒ}[
+  /// æ±ç”¨ã‚¿ã‚¤ãƒãƒ¼
   /// </summary>
   private float timer = 0;
 
   /// <summary>
-  /// Wave‚ª¶Y‚·‚é“G‚Ìc”‚ğŠÇ—
+  /// WaveãŒç”Ÿç”£ã™ã‚‹æ•µã®æ®‹æ•°ã‚’ç®¡ç†
   /// </summary>
   private int stock = 0;
 
   /// <summary>
-  /// Œ»İ‚ÌWave”‚ğŠÇ—
+  /// ç¾åœ¨ã®Waveæ•°ã‚’ç®¡ç†
   /// </summary>
   private int currentWaveIndex = 0;
 
   /// <summary>
-  /// Œ»‘¶‚µ‚Ä‚¢‚é“G‚Ì”
+  /// ç¾å­˜ã—ã¦ã„ã‚‹æ•µã®æ•°
   /// </summary>
   private int currentEnemyCount = 0;
 
@@ -57,28 +57,28 @@ public class EnemyWave
   //============================================================================
 
   /// <summary>
-  /// Idleó‘Ô‚Í‚±‚ÌWave‚ª‰Ò“­‚µ‚Ä‚¨‚ç‚¸A‚Ü‚½Wave‚ª¶¬‚µ‚½“G‚ª‘¶İ‚µ‚Ä‚¢‚È‚¢‚±‚Æ‚ğ•ÛØ‚·‚éB
+  /// IdleçŠ¶æ…‹ã¯ã“ã®WaveãŒç¨¼åƒã—ã¦ãŠã‚‰ãšã€ã¾ãŸWaveãŒç”Ÿæˆã—ãŸæ•µãŒå­˜åœ¨ã—ã¦ã„ãªã„ã“ã¨ã‚’ä¿è¨¼ã™ã‚‹ã€‚
   /// </summary>
   public bool IsIdle {
     get { return state.StateKey == State.Idle; }
   }
 
   /// <summary>
-  /// ‘S‚Ä‚Ì“G‚Ì¶Y‚ªI—¹‚µ‚½‚çtrue‚ğ•Ô‚·
+  /// å…¨ã¦ã®æ•µã®ç”Ÿç”£ãŒçµ‚äº†ã—ãŸã‚‰trueã‚’è¿”ã™
   /// </summary>
   public bool IsEmpty {
     get { return stock <= 0; }
   }
 
   /// <summary>
-  /// Wave‚ÉWaitTime‚ªİ’è‚³‚ê‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+  /// Waveã«WaitTimeãŒè¨­å®šã•ã‚Œã¦ã„ã‚Œã°trueã‚’è¿”ã™
   /// </summary>
   private bool hasWaitTime {
     get { return waveParam != null && 0 < waveParam.WaitTime; }
   }
 
   /// <summary>
-  /// I—¹’†
+  /// çµ‚äº†ä¸­
   /// </summary>
   public bool IsTerminating {
     get; private set;
@@ -93,7 +93,7 @@ public class EnemyWave
   //----------------------------------------------------------------------------
 
   /// <summary>
-  /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+  /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
   /// </summary>
   public EnemyWave()
   {
@@ -109,9 +109,9 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// ‰Šú‰»
+  /// åˆæœŸåŒ–
   /// </summary>
-  public void Init(EnemyWaveParam param)
+  public void Init(EnemyWaveProperty param)
   {
     if (!IsIdle) {
       Logger.Error("[EnemyWave] Init() can only be called in the Idle state.");
@@ -126,7 +126,7 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// Wave‚ğÀs‚·‚é
+  /// Waveã‚’å®Ÿè¡Œã™ã‚‹
   /// </summary>
   public void Run()
   {
@@ -150,7 +150,7 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// WaveŒo—R‚Å“G‚ğ‰ğ•ú‚·‚é
+  /// WaveçµŒç”±ã§æ•µã‚’è§£æ”¾ã™ã‚‹
   /// </summary>
   public void Release(Enemy enemy)
   {
@@ -159,13 +159,13 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// Wave‚ğI—¹‚·‚é
+  /// Waveã‚’çµ‚äº†ã™ã‚‹
   /// </summary>
   public void Terminate()
   {
     Logger.Log("[EnemyWave] Terminate is called.");
 
-    // Idleó‘Ô‚Å‚ ‚ê‚Î“Á‚É‚·‚é‚±‚Æ‚Í‚È‚¢
+    // IdleçŠ¶æ…‹ã§ã‚ã‚Œã°ç‰¹ã«ã™ã‚‹ã“ã¨ã¯ãªã„
     if (IsIdle) {
       return;
     }
@@ -185,7 +185,7 @@ public class EnemyWave
   }
 
   //----------------------------------------------------------------------------
-  // for ƒAƒCƒhƒ‹
+  // for ã‚¢ã‚¤ãƒ‰ãƒ«
   private void EnterIdle()
   {
     timer = 0;
@@ -196,7 +196,7 @@ public class EnemyWave
   }
 
   //----------------------------------------------------------------------------
-  // for “G¶¬‘Ò‹@ó‘Ô
+  // for æ•µç”Ÿæˆå¾…æ©ŸçŠ¶æ…‹
 
   private void EnterProductionWaiting()
   {
@@ -205,7 +205,7 @@ public class EnemyWave
 
   private void UpdateProductionWaiting()
   {
-    // I—¹ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚½‚çIdle‚Ö–ß‚é
+    // çµ‚äº†ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ãŸã‚‰Idleã¸æˆ»ã‚‹
     if (IsTerminating) {
       state.SetState(State.Idle);
       Logger.Log("[EnemyWave] StateChange ProductionWaiting --> Idle.");
@@ -214,7 +214,7 @@ public class EnemyWave
 
     timer += TimeSystem.Wave.DeltaTime;
 
-    // ‘Ò‹@ŠÔ‚ªŒo‰ß‚µ‚½‚ç“G¶¬ó‘Ô‚Ö‘JˆÚ
+    // å¾…æ©Ÿæ™‚é–“ãŒçµŒéã—ãŸã‚‰æ•µç”ŸæˆçŠ¶æ…‹ã¸é·ç§»
     if (waveParam.WaitTime <= timer) 
     {
       state.SetState(State.Production);
@@ -224,7 +224,7 @@ public class EnemyWave
   }
 
   //----------------------------------------------------------------------------
-  // for “G¶¬ó‘Ô
+  // for æ•µç”ŸæˆçŠ¶æ…‹
 
   private void EnterProduction()
   {
@@ -236,12 +236,12 @@ public class EnemyWave
 
   private void UpdateProduction()
   {
-    // I—¹ƒtƒ‰ƒO‚ª‚½‚Á‚Ä‚¢‚½‚çƒXƒgƒbƒN‚ğ0‚É‚·‚éAƒXƒgƒbƒN‚ğ0‚É‚·‚ê‚Î“G‚Í¶Y‚³‚ê‚È‚¢B
+    // çµ‚äº†ãƒ•ãƒ©ã‚°ãŒãŸã£ã¦ã„ãŸã‚‰ã‚¹ãƒˆãƒƒã‚¯ã‚’0ã«ã™ã‚‹ã€ã‚¹ãƒˆãƒƒã‚¯ã‚’0ã«ã™ã‚Œã°æ•µã¯ç”Ÿç”£ã•ã‚Œãªã„ã€‚
     if (IsTerminating) {
       stock = 0;
     }
 
-    // ƒXƒgƒbƒN‚ª‚È‚­‚È‚Á‚½‚ç¶YI—¹ó‘Ô‚Ö‘JˆÚ
+    // ã‚¹ãƒˆãƒƒã‚¯ãŒãªããªã£ãŸã‚‰ç”Ÿç”£çµ‚äº†çŠ¶æ…‹ã¸é·ç§»
     if (stock <= 0) 
     {
       state.SetState(State.ProductionEnded);
@@ -249,14 +249,14 @@ public class EnemyWave
       return;
     }
 
-    // ŠÔ‚ğŒo‰ß‚³‚¹‚Ätimer‚ª0ˆÈ‰º‚É‚È‚é‚Ì‚ğ‘Ò‚Â
+    // æ™‚é–“ã‚’çµŒéã•ã›ã¦timerãŒ0ä»¥ä¸‹ã«ãªã‚‹ã®ã‚’å¾…ã¤
     timer -= TimeSystem.Wave.DeltaTime;
 
     if (0 < timer){
       return;
     }
 
-    // Waveİ’è‚ÉŠî‚Ã‚¢‚Ä“G‚ğì‚é
+    // Waveè¨­å®šã«åŸºã¥ã„ã¦æ•µã‚’ä½œã‚‹
     Logger.Log($"[EnemyWave] Make wave[{currentWaveIndex}] enemies.");
 
     switch (waveParam.Shape) {
@@ -271,7 +271,7 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// ’è“_‚©‚ç“G‚ğ”­¶‚³‚¹‚éB
+  /// å®šç‚¹ã‹ã‚‰æ•µã‚’ç™ºç”Ÿã•ã›ã‚‹ã€‚
   /// </summary>
   private void MakeWaveEnemiesPoint()
   {
@@ -294,7 +294,7 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// ‰~ã‚É“G‚ğ”­¶‚³‚¹‚éB
+  /// å††ä¸Šã«æ•µã‚’ç™ºç”Ÿã•ã›ã‚‹ã€‚
   /// </summary>
   private void MakeWaveEnemiesCircle()
   {
@@ -324,7 +324,7 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// üã‚É“G‚ğ”­¶‚³‚¹‚éB
+  /// ç·šä¸Šã«æ•µã‚’ç™ºç”Ÿã•ã›ã‚‹ã€‚
   /// </summary>
   public void MakeWaveEnemiesLine()
   {
@@ -353,7 +353,7 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// w’è”ÍˆÍ“à‚Ìƒ‰ƒ“ƒ_ƒ€ˆÊ’u‚É“G‚ğ”­¶‚³‚¹‚éB
+  /// æŒ‡å®šç¯„å›²å†…ã®ãƒ©ãƒ³ãƒ€ãƒ ä½ç½®ã«æ•µã‚’ç™ºç”Ÿã•ã›ã‚‹ã€‚
   /// </summary>
   private void MakeWaveEnemiesRandom()
   {
@@ -374,7 +374,7 @@ public class EnemyWave
   }
 
   //----------------------------------------------------------------------------
-  // for “G¶¬I—¹ó‘Ô
+  // for æ•µç”Ÿæˆçµ‚äº†çŠ¶æ…‹
 
   private void UpdateProductionEnded()
   {
@@ -390,7 +390,7 @@ public class EnemyWave
   //----------------------------------------------------------------------------
   private Enemy GetEnemy()
   {
-    // “G‚ğ¶¬
+    // æ•µã‚’ç”Ÿæˆ
     var enemy = EnemyManager.Instance.Get(waveParam.Id);
     enemy.Init(waveParam.Id);
     enemy.SetBelongsTo(this);

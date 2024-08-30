@@ -250,18 +250,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2d768fb267f2c44184b786c59433a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyId: Enemy
-  WaveShape: Point
-  WaveCount: 10
-  WaveInterval: 1
-  EnemyAmountPerWave: 1
-  WaitTime: 0
-  OriginAngle: 0
-  WaveOffset: {x: 0, y: 0, z: 0}
-  WaveOffsetAngle: 0
-  InverseX: 0
-  InverseY: 0
-  InverseZ: 0
+  props:
+    EnemyId: Enemy
+    ShapeId: Point
+    BasePosition: {x: 0, y: 0, z: 0}
+    Area: {x: 0, y: 0, z: 0}
+    WaveCount: 10
+    WaveInterval: 1
+    EnemyAmountPerWave: 1
+    WaitTime: 0
+    OriginAngle: 0
+    WaveOffsetAngle: 0
+    WaveOffset: {x: 0, y: 0, z: 0}
+    InverseX: 0
+    InverseY: 0
+    InverseZ: 0
 --- !u!1 &255579271
 GameObject:
   m_ObjectHideFlags: 0

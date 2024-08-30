@@ -24,9 +24,9 @@ public class BattleLocation : MonoBehaviour
   private StateMachine<State> state = new StateMachine<State>();
 
   /// <summary>
-  /// WaveSettings
+  /// Waveデータ
   /// </summary>
-  private Dictionary<int, List<EnemyWaveSettings>> settings = new Dictionary<int, List<EnemyWaveSettings>>();
+  private Dictionary<int, List<EnemyWaveConfig>> data = new Dictionary<int, List<EnemyWaveConfig>>();
 
   /// <summary>
   /// Playerにヒットしているかどうかのフラグ
@@ -45,7 +45,7 @@ public class BattleLocation : MonoBehaviour
   /// </summary>
   public bool HasWaves {
     get {
-      return 0 < settings.Count;
+      return 0 < data.Count;
     }
   }
 
@@ -59,7 +59,7 @@ public class BattleLocation : MonoBehaviour
 
       ForeachWaveData((setting) => 
       {
-        var id = MyEnum.Parse<EnemyId>(setting.EnemyId);
+        var id = MyEnum.Parse<EnemyId>(setting.props.EnemyId);
 
         if (!list.Contains(id)) {
           list.Add(id);
@@ -125,7 +125,7 @@ public class BattleLocation : MonoBehaviour
 
   private void EnterContact()
   {
-    // WaveManagerにWaveデータを登録を依頼する
+    // WaveManagerにBattleLocationを予約する
     Logger.Log("[BattleLocation] OnHitPlayerEnter");
 
     WaveManager.Instance.ReserveBattleLocation(this);
@@ -174,38 +174,38 @@ public class BattleLocation : MonoBehaviour
       }
 
       // WaveXというオブジェクトの配下にあるEnemyWaveSettingsコンポーネントを取得、保持
-      var settings = wave.GetComponentsInChildren<EnemyWaveSettings>();
-      this.settings.Add(i, new List<EnemyWaveSettings>(settings));
+      var configs = wave.GetComponentsInChildren<EnemyWaveConfig>();
+      this.data.Add(i, new List<EnemyWaveConfig>(configs));
     }
   }
 
   /// <summary>
   /// WaveDataに含まれるEnemyWaveParamの数だけループをする
   /// </summary>
-  private void ForeachWaveData(Action<EnemyWaveSettings> action)
+  private void ForeachWaveData(Action<EnemyWaveConfig> action)
   {
-    foreach (var settings in settings.Values) 
+    foreach (var configs in data.Values) 
     {
-      if (settings == null) continue;
+      if (configs == null) continue;
 
-      foreach (var setting in settings) 
+      foreach (var config in configs) 
       {
-        if (setting != null) {
-          action(setting);
+        if (config != null) {
+          action(config);
         }
       }
     }
   }
 
-  public Dictionary<int, List<EnemyWaveParam>> MakeEnemyWaveParam()
+  public Dictionary<int, List<EnemyWaveProperty>> MakeEnemyWaveProperty()
   {
-    var data = new Dictionary<int, List<EnemyWaveParam>>();
+    var data = new Dictionary<int, List<EnemyWaveProperty>>();
 
-    foreach (var setting in settings) {
-      data.Add(setting.Key, new List<EnemyWaveParam>());
+    foreach (var kv in this.data) {
+      data.Add(kv.Key, new List<EnemyWaveProperty>());
 
-      foreach (var item in setting.Value) {
-        data[setting.Key].Add(EnemyWaveParam.Make(item));
+      foreach (var config in kv.Value) {
+        data[kv.Key].Add(config.props.Clone());
       }
     }
 
