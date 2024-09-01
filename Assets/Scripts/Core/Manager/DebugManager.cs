@@ -29,6 +29,12 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager>
   /// スクロール量
   /// </summary>
   private Vector2 scrollPosition = Vector2.zero;
+
+  /// <summary>
+  /// 非ピクセルパーフェクトなGUIのために画面サイズを定義しておく
+  /// </summary>
+  private Vector2 screenSize = new Vector2(640, 360);
+
 #endif
 
   //============================================================================
@@ -81,6 +87,9 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager>
   {
     if (!isShow) return;
 
+    // GUI用の解像度を更新
+    GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / screenSize.x, Screen.height / screenSize.y), Vector2.zero);
+
     using (var sv = new GUILayout.ScrollViewScope(scrollPosition)) {
 
       using (new GUILayout.HorizontalScope(GUI.skin.box)) {
@@ -95,7 +104,7 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager>
           }
         }
         
-        using (new GUILayout.VerticalScope(GUI.skin.box, GUILayout.Width(Screen.width - 120))) 
+        using (new GUILayout.VerticalScope(GUI.skin.box, GUILayout.Width(screenSize.x - 120))) 
         {
           if (current) {
             current.OnDebug();
@@ -103,6 +112,8 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager>
         }
       }
     }
+
+    GUI.matrix = Matrix4x4.identity;
   }
 #endif
 
