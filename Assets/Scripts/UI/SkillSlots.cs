@@ -43,8 +43,15 @@ public class SkillSlots : MyMonoBehaviour
 
   public void Run()
   {
-    for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) {
-      slots[i].Charge();
+    foreach (var slot in slots) {
+      slot.Charge();
+    }
+  }
+
+  public void Idle()
+  {
+    foreach (var slot in slots) {
+      slot.Idle();
     }
   }
 }

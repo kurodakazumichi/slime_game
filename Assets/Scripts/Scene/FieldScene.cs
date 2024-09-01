@@ -34,7 +34,7 @@ public class FieldScene : MyMonoBehaviour
     state.Add(State.LevelLoading, EnterLevelLoading, UpdateLevelLoading);
     state.Add(State.Serach, EnterSearch, UpdateSearch);
     state.Add(State.Battle, EnterBattle, UpdateBattle);
-    state.Add(State.Result);
+    state.Add(State.Result, EnterResult, UpdateResult);
     state.Add(State.Menu);
     state.SetState(State.Idle);
   }
@@ -106,16 +106,40 @@ public class FieldScene : MyMonoBehaviour
       return;
     }
 
+    // スキルセット、スキルUI稼働
     UIManager.Instance.HUD.SkillSlots.SetSkill(0, SkillManager.Instance.GetActiveSkill(0));
     UIManager.Instance.HUD.SkillSlots.Run();
 
     var fm = FieldManager.Instance;
     var wm = WaveManager.Instance;
+
     wm.SetEnemyWavePropertySet(fm.MakeCurrentEnemyWavePropertySet());
+    fm.CancelBattleLocation();          // もうWaveの情報は生成したので予約は解除
+    fm.SetActiveBattleLocations(false); // BattleLocationは非表示
     WaveManager.Instance.Run();
   }
 
   private void UpdateBattle()
+  {
+    // プレイヤーが死亡したか敵が全滅したらリザルトへ
+    if (PlayerManager.Instance.PlayerIsDead) {
+      state.SetState(State.Result);
+      return;
+    }
+
+    // WaveManagerがIdleになったらリザルトへ
+    if (WaveManager.Instance.IsIdle) {
+      state.SetState(State.Result);
+      return;
+    }
+  }
+
+  private void EnterResult()
+  {
+    UIManager.Instance.HUD.SkillSlots.Idle();
+  }
+
+  private void UpdateResult()
   {
 
   }
