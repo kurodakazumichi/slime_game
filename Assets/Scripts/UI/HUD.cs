@@ -4,10 +4,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
   [SerializeField]
-  private Image _HpGaugefillRect;
-
-  [SerializeField]
-  private Text _HpText;
+  private HpGauge hpGauge;
 
   [SerializeField]
   private Text _PhaseText;
@@ -15,17 +12,9 @@ public class HUD : MonoBehaviour
   [SerializeField]
   private SkillSlotManager _skillSlotManager;
 
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
-  void Start()
-  {
-    _HpGaugefillRect.fillAmount = 0.5f;
-    _HpText.text = 10.ToString();
-  }
 
-  public void SetHpGauge(int hp, float rate)
-  {
-    _HpText.text = hp.ToString();
-    _HpGaugefillRect.fillAmount = Mathf.Clamp(rate, 0f, 1f);
+  public HpGauge HpGauge { 
+    get { return hpGauge; } 
   }
 
   public void SetPhaseTextStart()

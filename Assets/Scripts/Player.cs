@@ -176,6 +176,6 @@ public class Player : MonoBehaviour
 
   private void SyncHpToHudHpGauge()
   {
-    UIManager.Instance.HUD.SetHpGauge((int)_hp.Now, _hp.Rate);
+    UIManager.Instance.HUD.HpGauge.Set(_hp.Now, _hp.Rate);
   }
 }
