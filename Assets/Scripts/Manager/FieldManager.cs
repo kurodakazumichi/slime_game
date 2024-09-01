@@ -62,6 +62,17 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   }
 
   /// <summary>
+  /// Field上のバトルロケーションのアクティブを設定
+  /// </summary>
+  public void SetActiveBattleLocations(bool flag)
+  {
+    foreach (var location in battleLocations)
+    {
+      location.SetActive(flag);
+    }
+  }
+
+  /// <summary>
   /// 現在設定されているBattleLocationからEnemyWaveProperty一式を生成する
   /// </summary>
   public Dictionary<int, List<EnemyWaveProperty>> MakeCurrentEnemyWavePropertySet()
@@ -77,6 +88,7 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   //----------------------------------------------------------------------------
   // For Debug
   //----------------------------------------------------------------------------
+  private bool _isShowBattleLocations = true;
 
   /// <summary>
   /// デバッグ用の基底メソッド
@@ -89,6 +101,12 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     GUILayout.Label("Reserved Battle Location");
     if (IsBattleReserved) {
       battleLocationCandidate.OnDebug();
+    }
+
+    var tmp = _isShowBattleLocations;
+    _isShowBattleLocations = GUILayout.Toggle(_isShowBattleLocations, "Show Battle Locations");
+    if (_isShowBattleLocations != tmp) {
+      SetActiveBattleLocations(_isShowBattleLocations);
     }
   }
 
