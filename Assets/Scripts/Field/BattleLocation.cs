@@ -213,7 +213,10 @@ public class BattleLocation : MyMonoBehaviour
     }
   }
 
-  public Dictionary<int, List<EnemyWaveProperty>> MakeEnemyWaveProperty()
+  /// <summary>
+  /// BattleLocationに設定されている設定から、敵Waveプロパティ一式を生成する
+  /// </summary>
+  public Dictionary<int, List<EnemyWaveProperty>> MakeEnemyWavePropertySet()
   {
     var data = new Dictionary<int, List<EnemyWaveProperty>>();
 

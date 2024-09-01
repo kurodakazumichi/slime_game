@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,7 +33,7 @@ public class FieldScene : MyMonoBehaviour
     state.Add(State.SystemSetup, EnterSystemSetup, UpdateSystemSetup);
     state.Add(State.LevelLoading, EnterLevelLoading, UpdateLevelLoading);
     state.Add(State.Serach, EnterSearch, UpdateSearch);
-    state.Add(State.Battle);
+    state.Add(State.Battle, EnterBattle, UpdateBattle);
     state.Add(State.Result);
     state.Add(State.Menu);
     state.SetState(State.Idle);
@@ -91,7 +91,17 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterBattle()
   {
+    // このフェーズはバトルが予約されている時にしか遷移してこないのでチェックしておく
+    if (!FieldManager.Instance.IsBattleReserved) 
+    {
+      Logger.Error("[FieldScene] Battle status must be reserved for the battle.");
+      return;
+    }
 
+    var fm = FieldManager.Instance;
+    var wm = WaveManager.Instance;
+    wm.SetEnemyWavePropertySet(fm.MakeCurrentEnemyWavePropertySet());
+    WaveManager.Instance.Run();
   }
 
   private void UpdateBattle()
@@ -105,7 +115,7 @@ public class FieldScene : MyMonoBehaviour
   //----------------------------------------------------------------------------
 
   /// <summary>
-  /// �f�o�b�O�p�̊�ꃁ�\�b�h
+  /// デバッグ用の基底メソッド
   /// </summary>
   public override void OnDebug()
   {

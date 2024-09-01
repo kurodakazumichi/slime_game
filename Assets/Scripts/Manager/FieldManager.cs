@@ -61,6 +61,18 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     battleLocationCandidate = null;
   }
 
+  /// <summary>
+  /// 現在設定されているBattleLocationからEnemyWaveProperty一式を生成する
+  /// </summary>
+  public Dictionary<int, List<EnemyWaveProperty>> MakeCurrentEnemyWavePropertySet()
+  {
+    if (IsBattleReserved) {
+      return battleLocationCandidate.MakeEnemyWavePropertySet();
+    } else {
+      return null;
+    }
+  }
+
 #if _DEBUG
   //----------------------------------------------------------------------------
   // For Debug

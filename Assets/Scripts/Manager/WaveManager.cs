@@ -27,6 +27,11 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
   private StateMachine<State> state;
 
   /// <summary>
+  /// EnemyWaveプロパティ一式
+  /// </summary>
+  private Dictionary<int, List<EnemyWaveProperty>> enemyWavePropertySet = null;
+
+  /// <summary>
   /// Waveデータ
   /// </summary>
   private Dictionary<int, List<EnemyWave>> waveData = null;
@@ -104,30 +109,6 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
   //============================================================================
 
   //----------------------------------------------------------------------------
-  // Base
-  //----------------------------------------------------------------------------
-  protected override void MyAwake()
-  {
-    base.MyAwake();
-
-    state = new StateMachine<State>();
-    state.Add(State.Idle);
-    state.Add(State.Running, EnterRunning, UpdateRunning);
-    state.SetState(State.Idle);
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-    //if (Input.GetKeyDown(KeyCode.A)) {
-    //  Run();
-    //}
-
-    state.Update();
-  }
-
-  
-  //----------------------------------------------------------------------------
   // Public
   //----------------------------------------------------------------------------
 
@@ -142,9 +123,36 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
       return;
     }
 
+    enemyWavePropertySet = null;
     waveData = null;
     currentWaves = null;
     currentWaveIndex = 0;
+  }
+
+  /// <summary>
+  /// 敵Waveのプロパティ群を設定する
+  /// </summary>
+  public void SetEnemyWavePropertySet(Dictionary<int, List<EnemyWaveProperty>> propertySet)
+  {
+    // SetEnemyWavePropertySet()はManagerがIdle状態でのみ呼び出すことができる
+    if (!IsIdle) {
+      Logger.Error("[WaveManager] SetEnemyWavePropertySet can only called in state of Idle.");
+      return;
+    }
+
+    waveData = new Dictionary<int, List<EnemyWave>>();
+
+    enemyWavePropertySet = propertySet;
+
+    foreach (var pair in enemyWavePropertySet)
+    {
+      foreach (var property in pair.Value)
+      {
+        var wave = new EnemyWave();
+        wave.Init(property);
+        Add(pair.Key, wave);
+      }
+    }
   }
 
   /// <summary>
@@ -205,6 +213,29 @@ public class WaveManager : SingletonMonoBehaviour<WaveManager>
     if (currentWaves != null) {
       TerminateWaves(currentWaves);
     }
+  }
+
+  //----------------------------------------------------------------------------
+  // Life Cycle
+  //----------------------------------------------------------------------------
+  protected override void MyAwake()
+  {
+    base.MyAwake();
+
+    state = new StateMachine<State>();
+    state.Add(State.Idle);
+    state.Add(State.Running, EnterRunning, UpdateRunning);
+    state.SetState(State.Idle);
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    //if (Input.GetKeyDown(KeyCode.A)) {
+    //  Run();
+    //}
+
+    state.Update();
   }
 
   //----------------------------------------------------------------------------
