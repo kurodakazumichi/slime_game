@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleLocation : MonoBehaviour
+public class BattleLocation : MyMonoBehaviour
 {
   //============================================================================
   // Enum
@@ -78,7 +78,7 @@ public class BattleLocation : MonoBehaviour
   // Unity Life Cycle
   //----------------------------------------------------------------------------
 
-  void Awake()
+  protected override void MyAwake()
   {
     collider = GetComponent<SphereCollider>();
     CollectWaveData();
