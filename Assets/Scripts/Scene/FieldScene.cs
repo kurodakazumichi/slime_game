@@ -97,6 +97,10 @@ public class FieldScene : MyMonoBehaviour
   /// </summary>
   public override void OnDebug()
   {
+    GUILayout.Label("FieldScene");
+
+    GUILayout.Label($"State = {state.StateKey.ToString()}");
+
     TimeSystem.OnDebug();
   }
 
