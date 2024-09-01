@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static TimeSystem;
 
 public class BattleLocation : MyMonoBehaviour
 {
@@ -34,6 +36,9 @@ public class BattleLocation : MyMonoBehaviour
   /// </summary>
   private bool isPlayerHit { get; set; } = false;
 
+  /// <summary>
+  /// BattleLocationのコライダー
+  /// </summary>
   new private SphereCollider collider;
 
   //============================================================================
@@ -68,6 +73,13 @@ public class BattleLocation : MyMonoBehaviour
 
       return list;
     }
+  }
+
+  /// <summary>
+  /// 戦地の名称
+  /// </summary>
+  public string LocationName {
+    get { return GetComponentInChildren<TextMesh>().text; }
   }
 
   //============================================================================
@@ -215,4 +227,30 @@ public class BattleLocation : MyMonoBehaviour
 
     return data;
   }
+
+#if _DEBUG
+  //----------------------------------------------------------------------------
+  // For Debug
+  //----------------------------------------------------------------------------
+
+  /// <summary>
+  /// デバッグ用の基底メソッド
+  /// </summary>
+  public override void OnDebug()
+  {
+    using (new GUILayout.VerticalScope(GUI.skin.box)) 
+    {
+      GUILayout.Label($"Location Name = {LocationName}");
+      GUILayout.Label("出現する敵");
+      string s = "";
+      foreach (var enemyId in AppearingEnemyIds)
+      {
+        s += enemyId + ",";
+      }
+      GUILayout.Label(s);
+    }
+  }
+
+#endif
+
 }

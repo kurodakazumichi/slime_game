@@ -72,6 +72,12 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   public override void OnDebug()
   {
     GUILayout.Label($"BattleLocationCount = {battleLocations.Count}");
+
+
+    GUILayout.Label("Reserved Battle Location");
+    if (IsBattleReserved) {
+      battleLocationCandidate.OnDebug();
+    }
   }
 
 #endif
