@@ -49,6 +49,14 @@ public class FieldScene : MyMonoBehaviour
     state.Update();
   }
 
+  private void LateUpdate()
+  {
+    // プレイヤーの攻撃と敵の衝突
+    if(state.StateKey == State.Battle) {
+      CollisionManager.Instance.CollidePlayerAttackWithEnemy();
+    }
+  }
+
   //----------------------------------------------------------------------------
   // for Update
   //----------------------------------------------------------------------------
@@ -97,6 +105,9 @@ public class FieldScene : MyMonoBehaviour
       Logger.Error("[FieldScene] Battle status must be reserved for the battle.");
       return;
     }
+
+    UIManager.Instance.HUD.SkillSlots.SetSkill(0, SkillManager.Instance.GetActiveSkill(0));
+    UIManager.Instance.HUD.SkillSlots.Run();
 
     var fm = FieldManager.Instance;
     var wm = WaveManager.Instance;
