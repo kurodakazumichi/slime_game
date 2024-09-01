@@ -84,6 +84,18 @@ public class FieldScene : MyMonoBehaviour
 
   private void UpdateSearch()
   {
+    if (FieldManager.Instance.IsBattleReserved && Input.GetKeyDown(KeyCode.A)) {
+      state.SetState(State.Battle);
+    }
+  }
+
+  private void EnterBattle()
+  {
+
+  }
+
+  private void UpdateBattle()
+  {
 
   }
 
