@@ -10,11 +10,15 @@ public class HUD : MonoBehaviour
   private Text _PhaseText;
 
   [SerializeField]
-  private SkillSlotManager _skillSlotManager;
+  private SkillSlots skillSlots;
 
 
   public HpGauge HpGauge { 
     get { return hpGauge; } 
+  }
+
+  public SkillSlots SkillSlots {
+    get { return skillSlots; }
   }
 
   public void SetPhaseTextStart()

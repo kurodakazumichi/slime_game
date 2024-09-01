@@ -4,8 +4,7 @@ using UnityEngine;
 public class SkillManager : SingletonMonoBehaviour<SkillManager>
 {
   private Dictionary<int, int> _exp;
-  private const int ACTIVE_SKILL_COUNT = 9;
-  private Skill[] _activeSkills = new Skill[ACTIVE_SKILL_COUNT];
+  private Skill[] _activeSkills = new Skill[App.ACTIVE_SKILL_MAX];
 
   protected override void MyAwake()
   {
@@ -18,7 +17,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     SetExp(SkillId.NormalBullet, 0);
 
     // アクティブスキルを初期化
-    for(int i = 0; i < ACTIVE_SKILL_COUNT; ++i) {
+    for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) {
       _activeSkills[i] = null;
     }
 
@@ -33,9 +32,9 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
 
   }
 
-  public ISkill GetSkill(int slotNo)
+  public ISkill GetActiveSkill(int slotIndex)
   {
-    return _activeSkills[slotNo];
+    return _activeSkills[slotIndex];
   }
 
   /// <summary>

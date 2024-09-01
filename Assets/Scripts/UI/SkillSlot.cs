@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillSlot : MonoBehaviour
+public class SkillSlot : MyMonoBehaviour
 {
   [SerializeField]
   private Image _overlayImage;
@@ -18,8 +18,6 @@ public class SkillSlot : MonoBehaviour
 
   private StateMachine<State> _state;
 
-  public RectTransform CacheRectTransform;
-
   private ISkill _skill;
 
   public void SetSkill(ISkill skill)
@@ -29,25 +27,42 @@ public class SkillSlot : MonoBehaviour
   
   public void Charge()
   {
+    if (_skill == null) { 
+      SetActive(false);
+      return;
+    }
+    SetActive(true);
     _state.SetState(State.Charge);
   }
 
-  private void Awake()
+  public void Idle()
   {
-    CacheRectTransform = GetComponent<RectTransform>();
-    _recastTime = 1f;
-    _state = new StateMachine<State>();
-    _overlayImage.fillAmount = 0;
+    _state.SetState(State.Idle);
+  }
 
-    _state.Add(State.Idle);
+  protected override void MyAwake()
+  {
+    _state = new StateMachine<State>();
+    
+    _state.Add(State.Idle, EnterIdle);
     _state.Add(State.Charge, EnterCharge, UpdateCharge);
     _state.Add(State.Fire, EnterFire, UpdateFire);
     _state.SetState(State.Idle);
+
+    _overlayImage.fillAmount = 0;
+  }
+
+  private void EnterIdle()
+  {
+    _recastTime = 0f;
+    _timer = 0f;
+    _overlayImage.fillAmount = 0;
   }
 
   private void EnterCharge()
   {
-    _timer = _skill.RecastTime;
+    _timer      = _skill.RecastTime;
+    _recastTime = _skill.RecastTime;
     _overlayImage.fillAmount = 1f;
   }
 

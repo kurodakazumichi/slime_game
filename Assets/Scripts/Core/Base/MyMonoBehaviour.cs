@@ -14,6 +14,10 @@ public class MyMonoBehaviour : MonoBehaviour
   /// </summary>
   public Transform CacheTransform {  get; private set; }
 
+  /// <summary>
+  /// RectTransformのキャッシュ(処理負荷軽減対策)
+  /// </summary>
+  public RectTransform CacheRectTransform { get; private set; }
   //============================================================================
   // Properities
   //============================================================================
@@ -34,6 +38,10 @@ public class MyMonoBehaviour : MonoBehaviour
   {
     if (CacheTransform == null) {
       CacheTransform = this.transform;
+    }
+
+    if (CacheRectTransform == null) {
+      CacheRectTransform = GetComponent<RectTransform>();
     }
 
     MyAwake();

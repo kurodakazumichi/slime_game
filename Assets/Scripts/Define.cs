@@ -1,18 +1,23 @@
-using UnityEngine;
+ï»¿using UnityEngine;
+
+static public class App
+{
+  public const int ACTIVE_SKILL_MAX = 10;
+}
 
 public enum SkillId
 {
-  NormalBullet, // ’Êí’e
+  NormalBullet, // é€šå¸¸å¼¾
 }
 
 public enum EnemyId
 {
-  Enemy, // Å‰‚É‚Æ‚è‚ ‚¦‚¸ì‚Á‚½’wå
-  Bat01, // “K“–‚É’Ç‰Á‚µ‚½ƒRƒEƒ‚ƒŠ
+  Enemy, // æœ€åˆã«ã¨ã‚Šã‚ãˆãšä½œã£ãŸèœ˜è››
+  Bat01, // é©å½“ã«è¿½åŠ ã—ãŸã‚³ã‚¦ãƒ¢ãƒª
 }
 
 /// <summary>
-/// Wave‚ÌŒ`ó
+/// Waveã®å½¢çŠ¶
 /// </summary>
 public enum WaveShape
 {
