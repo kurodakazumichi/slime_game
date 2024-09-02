@@ -20,7 +20,7 @@ public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
 
     foreach (var attack in attacks) 
     {
-      var bullet = attack.GetComponent<Bullet>();
+      var bullet = attack.GetComponent<StandardBullet>();
 
       if (bullet == null) continue;
 

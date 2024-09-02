@@ -12,7 +12,7 @@ public enum Attribute
   Dar = 1 << 7, // ˆÅ
 }
 
-public class AttackParams
+public class AttackStatus
 {
   public float Power = 0f;
   public Flag32 Attributes = new Flag32();

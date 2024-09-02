@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5394171355768362016}
   - component: {fileID: 3482095602604061529}
   m_Layer: 7
-  m_Name: Gel
+  m_Name: NormalBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

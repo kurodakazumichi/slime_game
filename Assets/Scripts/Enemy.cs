@@ -3,6 +3,7 @@ using UnityEngine;
 public interface IEnemy
 {
   public EnemyId Id { get; }
+  public void TakeDamage(AttackStatus p);
 }
 
 public class Enemy : MonoBehaviour, IEnemy
@@ -28,7 +29,7 @@ public class Enemy : MonoBehaviour, IEnemy
     get { return transform.position + _collider.center; }
   }
 
-  public void takeDamage(AttackParams p)
+  public void TakeDamage(AttackStatus p)
   {
     Debug.Log($"[Enemy] AttackParam.power = {p.Power}");
     HitTextManager.Instance.Get().SetDisplay(VisualPosition, (int)p.Power);
