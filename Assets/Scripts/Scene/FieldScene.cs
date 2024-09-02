@@ -64,6 +64,7 @@ public class FieldScene : MyMonoBehaviour
   {
     DebugManager.Instance.Regist(this);
     DebugManager.Instance.Regist(FieldManager.Instance);
+    DebugManager.Instance.Regist(BulletManager.Instance);
   }
 
   private void UpdateSystemSetup()
@@ -86,6 +87,7 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterSearch()
   {
+    FieldManager.Instance.SetActiveBattleLocations(true);
     PlayerManager.Instance.RespawnPlayer();
     PlayerManager.Instance.Playable();
   }
@@ -136,12 +138,16 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterResult()
   {
+    BulletManager.Instance.Terminate();
+    WaveManager.Instance.Terminate();
     UIManager.Instance.HUD.SkillSlots.Idle();
   }
 
   private void UpdateResult()
   {
-
+    if (Input.GetKeyDown(KeyCode.A)) {
+      state.SetState(State.Serach);
+    }
   }
 
 #if _DEBUG

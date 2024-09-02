@@ -6,6 +6,7 @@ public interface IBullet
   void Terminate();
   void Fire(ISkill skill);
   void Attack(IEnemy enemy);
+  GameObject gameObject { get; }
 }
 
 /// <summary>
@@ -144,7 +145,7 @@ public class StandardBullet : MyMonoBehaviour, IBullet
     state = new StateMachine<State>();
 
     state.Add(State.Idle, EnterIdle);
-    state.Add(State.Usual, EnterUsual, UpdateUsual);
+    state.Add(State.Usual, EnterUsual, UpdateUsual, ExitUrual);
     state.SetState(State.Idle);
   }
 
