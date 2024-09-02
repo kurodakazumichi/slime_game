@@ -36,7 +36,7 @@ public class FieldScene : MyMonoBehaviour
     state.Add(State.Serach, EnterSearch, UpdateSearch);
     state.Add(State.Battle, EnterBattle, UpdateBattle);
     state.Add(State.BattleEnded, EnterBattleEnded, UpdateBattleEnded);
-    state.Add(State.Result, EnterResult, UpdateResult);
+    state.Add(State.Result, EnterResult, UpdateResult, ExitResult);
     state.Add(State.Menu);
     state.SetState(State.Idle);
   }
@@ -175,6 +175,11 @@ public class FieldScene : MyMonoBehaviour
     if (Input.GetKeyDown(KeyCode.A)) {
       state.SetState(State.Serach);
     }
+  }
+
+  private void ExitResult()
+  {
+    TimeSystem.Player.Pause(false);
   }
 
 #if _DEBUG
