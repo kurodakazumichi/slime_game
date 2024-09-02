@@ -33,7 +33,7 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager>
   /// <summary>
   /// 非ピクセルパーフェクトなGUIのために画面サイズを定義しておく
   /// </summary>
-  private Vector2 screenSize = new Vector2(640, 360);
+  private Vector2 screenSize = new Vector2(768, 432);
 
 #endif
 
