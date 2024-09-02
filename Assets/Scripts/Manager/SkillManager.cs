@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class SkillManager : SingletonMonoBehaviour<SkillManager>
 {
-  private Dictionary<int, int> _exp;
-  private Skill[] _activeSkills = new Skill[App.ACTIVE_SKILL_MAX];
+  private Dictionary<int, int> exp;
+  private Skill[] activeSkills = new Skill[App.ACTIVE_SKILL_MAX];
 
   protected override void MyAwake()
   {
     base.MyAwake();
 
-    _exp = new Dictionary<int, int>();
+    exp = new Dictionary<int, int>();
 
     // スキルの種類の数だけ要素を追加
-    MyEnum.ForEach<SkillId>(id => _exp.Add((int)id, -1));
+    MyEnum.ForEach<SkillId>(id => exp.Add((int)id, -1));
     SetExp(SkillId.NormalBullet, 0);
 
     // アクティブスキルを初期化
     for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) {
-      _activeSkills[i] = null;
+      activeSkills[i] = null;
     }
 
     // 暫定で通常弾スキルをセット
@@ -28,13 +28,13 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     s.Setup(entity);
     s.SetExp(GetExp(SkillId.NormalBullet));
 
-    _activeSkills[0] = s;
+    activeSkills[0] = s;
 
   }
 
   public ISkill GetActiveSkill(int slotIndex)
   {
-    return _activeSkills[slotIndex];
+    return activeSkills[slotIndex];
   }
 
   /// <summary>
@@ -42,7 +42,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   /// </summary>
   public void SetExp(SkillId id, int value)
   {
-    _exp[(int)id] = value;
+    exp[(int)id] = value;
   }
 
   /// <summary>
@@ -50,10 +50,10 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   /// </summary>
   public void AddExp(SkillId id, int value)
   {
-    _exp[(int)id] += value;
+    exp[(int)id] += value;
 
     // Active Skillに経験値をセット
-    foreach (var skill in _activeSkills)
+    foreach (var skill in activeSkills)
     {
       if (skill != null && skill.Id == id) {
         skill.SetExp(GetExp(id));
@@ -66,6 +66,6 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   /// </summary>
   public int GetExp(SkillId id)
   {
-    return _exp[(int)id];
+    return exp[(int)id];
   }
 }
