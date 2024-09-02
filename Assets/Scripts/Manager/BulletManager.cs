@@ -10,6 +10,10 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
 
   private LinkedList<IBullet> bullets = new LinkedList<IBullet>();
 
+  public int ActiveBulletCount {
+    get { return bullets.Count; }
+  }
+
   private void Start()
   {
     bulletPool = new LinkedPool<GameObject>(

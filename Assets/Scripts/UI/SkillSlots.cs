@@ -48,7 +48,7 @@ public class SkillSlots : MyMonoBehaviour
     }
   }
 
-  public void Idle()
+  public void Stop()
   {
     foreach (var slot in slots) {
       slot.Idle();

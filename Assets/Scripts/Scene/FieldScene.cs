@@ -11,6 +11,7 @@ public class FieldScene : MyMonoBehaviour
     LevelLoading,
     Serach,
     Battle,
+    BattleEnded,
     Result,
     Menu,
   }
@@ -34,6 +35,7 @@ public class FieldScene : MyMonoBehaviour
     state.Add(State.LevelLoading, EnterLevelLoading, UpdateLevelLoading);
     state.Add(State.Serach, EnterSearch, UpdateSearch);
     state.Add(State.Battle, EnterBattle, UpdateBattle);
+    state.Add(State.BattleEnded, EnterBattleEnded, UpdateBattleEnded);
     state.Add(State.Result, EnterResult, UpdateResult);
     state.Add(State.Menu);
     state.SetState(State.Idle);
@@ -125,22 +127,47 @@ public class FieldScene : MyMonoBehaviour
   {
     // プレイヤーが死亡したか敵が全滅したらリザルトへ
     if (PlayerManager.Instance.PlayerIsDead) {
-      state.SetState(State.Result);
+      state.SetState(State.BattleEnded);
       return;
     }
 
     // WaveManagerがIdleになったらリザルトへ
     if (WaveManager.Instance.IsIdle) {
-      state.SetState(State.Result);
+      state.SetState(State.BattleEnded);
       return;
     }
   }
 
-  private void EnterResult()
+  //----------------------------------------------------------------------------
+  // for BattleEnded
+
+  private void EnterBattleEnded()
   {
+    TimeSystem.Player.Pause(true);
+    UIManager.Instance.HUD.SkillSlots.Stop();
     BulletManager.Instance.Terminate();
     WaveManager.Instance.Terminate();
-    UIManager.Instance.HUD.SkillSlots.Idle();
+  }
+
+  private void UpdateBattleEnded()
+  {
+    // 弾が残ってるならば待機
+    if (0 < BulletManager.Instance.ActiveBulletCount) {
+      return;
+    }
+
+    // WaveManagerが停止するまで待機
+    if (!WaveManager.Instance.IsIdle) {
+      return;
+    }
+
+    // Resultへ遷移
+    state.SetState(State.Result);
+  }
+
+  private void EnterResult()
+  {
+
   }
 
   private void UpdateResult()
