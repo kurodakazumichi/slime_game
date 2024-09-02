@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
 
     velocity = Vector3.Lerp(velocity, targetVelocity, 0.01f);
 
-    transform.position += velocity * TimeSystem.DeltaTime;
+    transform.position += velocity * TimeSystem.Player.DeltaTime;
 
     SyncCameraPosition();
   }
@@ -162,14 +162,14 @@ public class Player : MonoBehaviour
 
     velocity = Vector3.Lerp(velocity, targetVelocity, 0.01f);
 
-    transform.position += velocity * TimeSystem.DeltaTime;
+    transform.position += velocity * TimeSystem.Player.DeltaTime;
 
     if (timer < 0) {
       state.SetState(State.Usual);
       return;
     }
 
-    timer -= TimeSystem.DeltaTime;
+    timer -= TimeSystem.Player.DeltaTime;
 
     SyncCameraPosition();
   }

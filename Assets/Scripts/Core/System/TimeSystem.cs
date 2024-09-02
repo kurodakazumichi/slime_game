@@ -34,6 +34,9 @@ static public class TimeSystem
     set { _deltaTime.Scale = value ? 0f : 1f; }
   }
 
+  static private MyDeltaTime player = new MyDeltaTime();
+  static public MyDeltaTime Player { get { return player; } }
+
   static private MyDeltaTime _wave = new MyDeltaTime();
   static public MyDeltaTime Wave { get { return _wave; } }
 
@@ -92,6 +95,15 @@ static public class TimeSystem
         }
       }
       _deltaTime.Scale = GUILayout.HorizontalSlider(_deltaTime.Scale, 0f, 10f);
+
+      using (new GUILayout.HorizontalScope()) {
+        GUILayout.Label("PlayerTimeScale");
+        GUILayout.TextField(player.Scale.ToString(), GUILayout.Width(30));
+        if (GUILayout.Button("Reset")) {
+          player.Scale = 1f;
+        }
+      }
+      player.Scale = GUILayout.HorizontalSlider(player.Scale, 0f, 10f);
     }
   }
 
