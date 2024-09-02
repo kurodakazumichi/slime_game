@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour, IEnemy
         EnemyManager.Instance.Release(this);
       }
       
-      SkillManager.Instance.AddExp(SkillId.NormalBullet, 1);
+      SkillManager.Instance.StockExp(SkillId.NormalBullet, 1);
       return;
     }
 

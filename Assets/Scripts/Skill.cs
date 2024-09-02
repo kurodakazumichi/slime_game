@@ -3,6 +3,7 @@ using UnityEngine;
 public interface ISkill
 {
   SkillId Id { get; }
+  int Lv { get; }
   float RecastTime { get; }
   int Power { get; }
   void Fire();

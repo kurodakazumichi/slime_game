@@ -67,6 +67,7 @@ public class FieldScene : MyMonoBehaviour
     DebugManager.Instance.Regist(this);
     DebugManager.Instance.Regist(FieldManager.Instance);
     DebugManager.Instance.Regist(BulletManager.Instance);
+    DebugManager.Instance.Regist(SkillManager.Instance);
   }
 
   private void UpdateSystemSetup()
@@ -179,6 +180,7 @@ public class FieldScene : MyMonoBehaviour
 
   private void ExitResult()
   {
+    SkillManager.Instance.FixExps();
     TimeSystem.Player.Pause(false);
   }
 
