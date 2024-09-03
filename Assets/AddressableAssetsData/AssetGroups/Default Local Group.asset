@@ -16,7 +16,19 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: f3e80e085d4b5384487623b1e30ede70
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 43c2bdcd27be94640b61577df08548b6
+    m_Address: Icon/Enemy/Spider.PNG
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db27580c877dd864488e15c7341c109a
+    m_Address: Icon/Enemy/Bat.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9daedef162f765d438dae46452327a0c, type: 2}
   m_SchemaSet:
