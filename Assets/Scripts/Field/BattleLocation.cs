@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using UnityEngine;
-using static TimeSystem;
 
 public class BattleLocation : MyMonoBehaviour
 {
@@ -19,7 +18,10 @@ public class BattleLocation : MyMonoBehaviour
   //============================================================================
   // Variables
   //============================================================================
-  
+
+  [SerializeField]
+  private int lv = 1;
+
   /// <summary>
   /// ステートマシン
   /// </summary>
@@ -98,11 +100,13 @@ public class BattleLocation : MyMonoBehaviour
     state.Add(State.Idle);
     state.Add(State.Usual, EnterUsual, UpdateUsual);
     state.Add(State.Contact, EnterContact, UpdateContact, ExitContact);
-    state.SetState(State.Usual);
+    state.SetState(State.Idle);
 
     if (FieldManager.Instance) {
       FieldManager.Instance.RegistBattleLocation(this);
     }
+
+    Validate();
   }
 
   private void Update()
@@ -235,6 +239,16 @@ public class BattleLocation : MyMonoBehaviour
     }
 
     return data;
+  }
+
+  //----------------------------------------------------------------------------
+  // For Validation
+  //----------------------------------------------------------------------------
+
+  [Conditional("_DEBUG")]
+  private void Validate()
+  {
+    Logger.Log($"[BattleLocation] Validate {LocationName}");
   }
 
 #if _DEBUG

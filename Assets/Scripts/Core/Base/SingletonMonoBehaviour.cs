@@ -17,7 +17,7 @@ public class SingletonMonoBehaviour<T> : MyMonoBehaviour where T : MyMonoBehavio
       if (instance == null) {
         instance = (T)FindFirstObjectByType(typeof(T));
         if (instance == null) {
-          Debug.LogError(typeof(T) + "がシーンに存在しません。");
+          Logger.Warn(typeof(T) + "がシーンに存在しません。");
         }
       }
       return instance;
