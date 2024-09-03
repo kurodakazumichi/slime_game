@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 public class FieldScene : MyMonoBehaviour
@@ -8,6 +9,7 @@ public class FieldScene : MyMonoBehaviour
   private enum State { 
     Idle,
     SystemSetup,
+    ResrouceLoading,
     LevelLoading,
     Serach,
     Battle,
@@ -32,6 +34,7 @@ public class FieldScene : MyMonoBehaviour
 
     state.Add(State.Idle);
     state.Add(State.SystemSetup, EnterSystemSetup, UpdateSystemSetup);
+    state.Add(State.ResrouceLoading, EnterResourceLoading, UpdateResourceLoading);
     state.Add(State.LevelLoading, EnterLevelLoading, UpdateLevelLoading);
     state.Add(State.Serach, EnterSearch, UpdateSearch);
     state.Add(State.Battle, EnterBattle, UpdateBattle);
@@ -40,7 +43,7 @@ public class FieldScene : MyMonoBehaviour
     state.Add(State.Menu);
     state.SetState(State.Idle);
   }
-
+  private Sprite test;
   void Start()
   {
     state.SetState(State.SystemSetup);
@@ -62,18 +65,48 @@ public class FieldScene : MyMonoBehaviour
   //----------------------------------------------------------------------------
   // for Update
   //----------------------------------------------------------------------------
+
+  //----------------------------------------------------------------------------
+  // for Setup
+
   private void EnterSystemSetup()
   {
     DebugManager.Instance.Regist(this);
     DebugManager.Instance.Regist(FieldManager.Instance);
     DebugManager.Instance.Regist(BulletManager.Instance);
     DebugManager.Instance.Regist(SkillManager.Instance);
+    DebugManager.Instance.Regist(ResourceManager.Instance);
   }
 
   private void UpdateSystemSetup()
   {
+    state.SetState(State.ResrouceLoading);
+  }
+
+  //----------------------------------------------------------------------------
+  // for Resource Loading
+
+  private void EnterResourceLoading()
+  {
+    ResourceManager.Instance.Load<Sprite>("Icon/Enemy/Bat.png");
+    ResourceManager.Instance.Load<Sprite>("Icon/Enemy/Spider.png");
+  }
+
+  private void UpdateResourceLoading()
+  {
+    if (ResourceManager.Instance.IsLoading) {
+      Logger.Log("[FieldScene] Loading...");
+      return;
+    }
+
+    // ロード済リソースはGetCacheで取得できる
+    // ResourceManager.Instance.GetCache<Sprite>("Icon/Enemy/Bat.png");
+    
     state.SetState(State.LevelLoading);
   }
+
+  //----------------------------------------------------------------------------
+  // for Level Loading
 
   private void EnterLevelLoading()
   {
