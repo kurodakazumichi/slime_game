@@ -104,7 +104,7 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager>
           }
         }
         
-        using (new GUILayout.VerticalScope(GUI.skin.box, GUILayout.Width(screenSize.x - 120))) 
+        using (new GUILayout.VerticalScope(GUI.skin.box, GUILayout.Width(screenSize.x - 150))) 
         {
           if (current) {
             current.OnDebug();
