@@ -145,6 +145,10 @@ public class BattleLocation : MyMonoBehaviour
     Logger.Log("[BattleLocation] OnHitPlayerEnter");
 
     FieldManager.Instance.ReserveBattleLocation(this);
+
+    var bi = UIManager.Instance.BattleInfo;
+    bi.IsVisible = true;
+    bi.LocationName = LocationName;    
   }
 
   private void UpdateContact()
@@ -161,6 +165,8 @@ public class BattleLocation : MyMonoBehaviour
     Logger.Log("[BattleLocation] OnHitPlayerExit");
     // WaveManagerにWaveデータの破棄を依頼する
     FieldManager.Instance.CancelBattleLocation();
+
+    UIManager.Instance.BattleInfo.IsVisible = false;
   }
 
   //----------------------------------------------------------------------------

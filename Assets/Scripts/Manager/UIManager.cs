@@ -3,9 +3,12 @@ using UnityEngine;
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
   [SerializeField]
-  private HUD _hud;
+  private HUD hud;
 
-  public HUD HUD { get { return _hud; } }
+  [SerializeField]
+  private BattleInfo battleInfo;
 
+  public HUD HUD { get { return hud; } }
 
+  public BattleInfo BattleInfo { get { return battleInfo; } }
 }

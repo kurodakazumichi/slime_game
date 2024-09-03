@@ -115,6 +115,8 @@ public class FieldScene : MyMonoBehaviour
     UIManager.Instance.HUD.SkillSlots.SetSkill(0, SkillManager.Instance.GetActiveSkill(0));
     UIManager.Instance.HUD.SkillSlots.Run();
 
+    UIManager.Instance.BattleInfo.IsVisible = false;
+
     var fm = FieldManager.Instance;
     var wm = WaveManager.Instance;
 
