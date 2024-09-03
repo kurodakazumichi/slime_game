@@ -5,11 +5,6 @@ static public class App
   public const int ACTIVE_SKILL_MAX = 10;
 }
 
-public enum SkillId
-{
-  NormalBullet, // 通常弾
-}
-
 public enum EnemyId
 {
   Enemy, // 最初にとりあえず作った蜘蛛
@@ -26,4 +21,14 @@ public enum WaveShape
   Circle,
   Line,
   Random,
+}
+
+/// <summary>
+/// 成長度
+/// </summary>
+public enum Growth
+{
+  Normal, // 普通
+  Slow,   // 遅い
+  Fast,   // 速い
 }
