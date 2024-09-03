@@ -1,12 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public static class SkillRepository
 {
   public static List<ISkillEntityRO> entities = new List<ISkillEntityRO>() {
-    //             | ID                 | EXP | FirstRecastTime | LastRecastTime | FirstPower | LastPower | Attribute          | Name      |
-    //             +--------------------+-----+-----------------+----------------+------------+-----------+--------------------+-----------|
-    new SkillEntity(SkillId.NormalBullet, 30  , 1f              , 0.1f           , 1          , 10        , (int)Attribute.Non , "�ʏ�e"),
+
+
+    new SkillEntity() {
+      Id = SkillId.NormalBullet,
+      MaxExp = 100,
+      FirstRecastTime = 1f,
+      LastRecastTime = 0.2f,
+      FirstPower = 1,
+      LastPower = 10,
+      Attr = (uint)(Attribute.Fir|Attribute.Wat),
+      Name = "通常弾"
+    },
+
   };
 }

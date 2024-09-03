@@ -1,5 +1,5 @@
-/// <summary>
-/// ReadOnly‚ÌSkillEntityƒCƒ“ƒ^[ƒtƒF[ƒX
+ï»¿/// <summary>
+/// ReadOnlyã®SkillEntityã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 /// </summary>
 public interface ISkillEntityRO
 {
@@ -10,7 +10,7 @@ public interface ISkillEntityRO
   float LastRecastTime { get; }
   int FirstPower { get; }
   int LastPower { get; }
-  int Attr { get; }
+  uint Attr { get; }
   string Name { get; }
 }
 
@@ -19,17 +19,7 @@ public interface ISkillEntityRO
 /// </summary>
 public class SkillEntity : ISkillEntityRO
 {
-  public SkillEntity(SkillId id, int exp, float fr, float fl, int fp, int lp, int attr, string name)
-  {
-    Id              = id;
-    MaxExp          = exp;
-    FirstRecastTime = fr;
-    LastRecastTime  = fl;
-    FirstPower      = fp;
-    LastPower       = lp;
-    Attr            = attr;
-    Name            = name;
-  }
+
 
   /// <summary>
   /// Skill ID
@@ -37,37 +27,37 @@ public class SkillEntity : ISkillEntityRO
   public SkillId Id { get; set; }
 
   /// <summary>
-  /// LvMax‚É•K—v‚ÈŒoŒ±’l
+  /// LvMaxã«å¿…è¦ãªçµŒé¨“å€¤
   /// </summary>
   public int MaxExp { get; set; }
 
   /// <summary>
-  /// Lv Min‚ÌƒŠƒLƒƒƒXƒgƒ^ƒCƒ€
+  /// Lv Minæ™‚ã®ãƒªã‚­ãƒ£ã‚¹ãƒˆã‚¿ã‚¤ãƒ 
   /// </summary>
   public float FirstRecastTime { get; set; }
 
   /// <summary>
-  /// Lv Max‚ÌƒŠƒLƒƒƒXƒgƒ^ƒCƒ€
+  /// Lv Maxæ™‚ã®ãƒªã‚­ãƒ£ã‚¹ãƒˆã‚¿ã‚¤ãƒ 
   /// </summary>
   public float LastRecastTime { get; set; }
 
   /// <summary>
-  /// Lv Min‚Ìƒpƒ[
+  /// Lv Minæ™‚ã®ãƒ‘ãƒ¯ãƒ¼
   /// </summary>
   public int FirstPower { get; set; }
 
   /// <summary>
-  /// Lv Max‚Ìƒpƒ[
+  /// Lv Maxæ™‚ã®ãƒ‘ãƒ¯ãƒ¼
   /// </summary>
   public int LastPower { get; set; }
 
   /// <summary>
-  /// ‘®«
+  /// å±æ€§
   /// </summary>
-  public int Attr { get; set; }
+  public uint Attr { get; set; }
 
   /// <summary>
-  /// –¼Ì
+  /// åç§°
   /// </summary>
   public string Name { get; set; }
 }
