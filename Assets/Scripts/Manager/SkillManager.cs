@@ -141,7 +141,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   /// </summary>
   private Skill MakeSkill(SkillId id)
   {
-    var entity = SkillService.FindById(id);
+    var entity = SkillMaster.FindById(id);
 
     var s = new Skill();
     s.Setup(entity);

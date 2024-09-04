@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public static class SkillService
+public static class SkillMaster
 {
   public static ISkillEntityRO FindById(SkillId id)
   {
