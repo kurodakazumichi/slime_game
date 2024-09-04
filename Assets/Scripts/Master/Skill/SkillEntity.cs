@@ -19,8 +19,6 @@ public interface ISkillEntityRO
 /// </summary>
 public class SkillEntity : ISkillEntityRO
 {
-
-
   /// <summary>
   /// Skill ID
   /// </summary>
