@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public interface IEnemy
 {
@@ -6,63 +6,86 @@ public interface IEnemy
   public void TakeDamage(AttackStatus p);
 }
 
-public class Enemy : MonoBehaviour, IEnemy
+public class Enemy : MyMonoBehaviour, IEnemy
 {
-  public void Init(EnemyId id) { 
-    this.id = id;
-  }
-
-  private EnemyWave _wave;
-  public void SetBelongsTo(EnemyWave wave) { _wave = wave; }
-
-  public EnemyId Id { get { return id; } }
+  //============================================================================
+  // Variables
+  //============================================================================
   private EnemyId id;
-  private float hp = 2;
-  private bool destroyFlag { 
-    get { return hp <= 0f;} 
+  private RangedFloat hp;
+  private EnemyWave ownerWave;
+  new private SphereCollider collider;
+
+  //============================================================================
+  // Properities
+  //============================================================================
+  public EnemyId Id { get { return id; } }
+  private bool destroyFlag {
+    get { return hp.Now <= 0f; }
   }
-  private SphereCollider _collider;
-
-  public SphereCollider Collider { get { return _collider; } }
-
   public Vector3 VisualPosition {
-    get { return transform.position + _collider.center; }
+    get { return transform.position + collider.center; }
   }
+  public SphereCollider Collider { get { return collider; } }
+  //============================================================================
+  // Methods
+  //============================================================================
+
+  //----------------------------------------------------------------------------
+  // Public
+  //----------------------------------------------------------------------------
+
+  public void Init(EnemyId id) 
+  {
+    this.id = id;
+
+    var master = EnemyMaster.FindById(id);
+    hp.Init(master.HP);
+
+  }
+
+  
+  public void SetBelongsTo(EnemyWave wave) { ownerWave = wave; }
 
   public void TakeDamage(AttackStatus p)
   {
     Debug.Log($"[Enemy] AttackParam.power = {p.Power}");
     HitTextManager.Instance.Get().SetDisplay(VisualPosition, (int)p.Power);
 
-    hp -= p.Power;
+    hp.Now -= p.Power;
   }
 
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
-  void Start()
-  {
-    _collider = GetComponent<SphereCollider>(); 
-  }
 
-  private void OnEnable()
+
+
+
+
+
+  //----------------------------------------------------------------------------
+  // Life Cycle
+  //----------------------------------------------------------------------------
+  protected override void MyAwake()
   {
-    hp = 2;
+    collider = GetComponent<SphereCollider>();
+    hp = new RangedFloat(0);
   }
 
   // Update is called once per frame
   void Update()
   {
-    // Wave‚ÉI—¹ƒtƒ‰ƒO‚ª‚½‚Á‚Ä‚¢‚½‚ç“G‚Í‘¦À‚É€‚Ê
-    if (_wave != null && _wave.IsTerminating) {
-      hp = 0;
+    // Waveã«çµ‚äº†ãƒ•ãƒ©ã‚°ãŒãŸã£ã¦ã„ãŸã‚‰æ•µã¯å³åº§ã«æ­»ã¬
+    if (ownerWave != null && ownerWave.IsTerminating) {
+      hp.Empty();
     }
 
     if (destroyFlag) {
-      if (_wave != null) {
-        _wave.Release(this);
-      } else {
+      if (ownerWave != null) {
+        ownerWave.Release(this);
+      }
+      else {
         EnemyManager.Instance.Release(this);
       }
-      
+
       SkillManager.Instance.StockExp(SkillId.NormalBullet, 1);
       return;
     }
@@ -78,4 +101,11 @@ public class Enemy : MonoBehaviour, IEnemy
     }
 
   }
+
+  private void OnEnable()
+  {
+    hp.Now = 2;
+  }
+
+
 }

@@ -1,9 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// “Ç‚İæ‚èê—pLimitedFloat
+/// èª­ã¿å–ã‚Šå°‚ç”¨LimitedFloat
 /// </summary>
 public interface IRangedFloat
 {
@@ -15,12 +15,12 @@ public interface IRangedFloat
 }
 
 /// <summary>
-/// ”ÍˆÍ•t‚«•‚“®¬”“_
+/// ç¯„å›²ä»˜ãæµ®å‹•å°æ•°ç‚¹
 /// </summary>
 public class RangedFloat : IRangedFloat
 {
   /// <summary>
-  /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+  /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
   /// </summary>
   public RangedFloat(float value) {
     max = now = value;
@@ -30,12 +30,12 @@ public class RangedFloat : IRangedFloat
   // Member
 
   /// <summary>
-  /// Œ»İ‚Ì’l
+  /// ç¾åœ¨ã®å€¤
   /// </summary>
   private float now;
 
   /// <summary>
-  /// Å‘å’l
+  /// æœ€å¤§å€¤
   /// </summary>
   private float max;
 
@@ -43,7 +43,7 @@ public class RangedFloat : IRangedFloat
   // Public Properity
 
   /// <summary>
-  /// Œ»İ‚Ì’l
+  /// ç¾åœ¨ã®å€¤
   /// </summary>
   public float Now {
     get { return this.now; }
@@ -54,7 +54,7 @@ public class RangedFloat : IRangedFloat
   }
 
   /// <summary>
-  /// Å‘å’l
+  /// æœ€å¤§å€¤
   /// </summary>
   public float Max {
     get { return this.max; }
@@ -66,22 +66,22 @@ public class RangedFloat : IRangedFloat
   }
 
   /// <summary>
-  /// ·•ª
+  /// å·®åˆ†
   /// </summary>
   public float Diff => Max - Now;
 
   /// <summary>
-  /// Š„‡
+  /// å‰²åˆ
   /// </summary>
   public float Rate => (this.now / this.max);
 
   /// <summary>
-  /// –ƒ^ƒ“
+  /// æº€ã‚¿ãƒ³
   /// </summary>
   public bool IsFull => (this.now == this.max);
 
   /// <summary>
-  /// ‹ó‚Á‚Û
+  /// ç©ºã£ã½
   /// </summary>
   public bool IsEmpty => (this.now == 0);
 
@@ -89,7 +89,15 @@ public class RangedFloat : IRangedFloat
   // Public Method
 
   /// <summary>
-  /// ƒZƒbƒgƒAƒbƒv
+  /// åˆæœŸåŒ–
+  /// </summary>
+  public void Init(float value)
+  {
+    Init(value, value);
+  }
+
+  /// <summary>
+  /// åˆæœŸåŒ–
   /// </summary>
   public void Init(float now, float max)
   {
@@ -98,7 +106,7 @@ public class RangedFloat : IRangedFloat
   }
 
   /// <summary>
-  /// ‚¢‚Á‚Ï‚¢‚É‚È‚é
+  /// ã„ã£ã±ã„ã«ãªã‚‹
   /// </summary>
   public void Full()
   {
@@ -106,7 +114,7 @@ public class RangedFloat : IRangedFloat
   }
 
   /// <summary>
-  /// ‹ó‚É‚È‚é
+  /// ç©ºã«ãªã‚‹
   /// </summary>
   public void Empty()
   {

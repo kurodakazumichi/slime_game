@@ -43,7 +43,7 @@ public class FieldScene : MyMonoBehaviour
     state.Add(State.Menu);
     state.SetState(State.Idle);
   }
-  private Sprite test;
+  
   void Start()
   {
     state.SetState(State.SystemSetup);
