@@ -7,8 +7,9 @@ static public class App
 
 public enum EnemyId
 {
-  SpiderA, // 最初にとりあえず作った蜘蛛
-  BatA, // 適当に追加したコウモリ
+  Undefined = 0,
+  BatA, // コウモリ
+  SpiderA, // クモ
 }
 
 /// <summary>
