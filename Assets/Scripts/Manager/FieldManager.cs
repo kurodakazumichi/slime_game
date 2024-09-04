@@ -69,6 +69,9 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     foreach (var location in battleLocations)
     {
       location.SetActive(flag);
+      if (flag) {
+        location.Run();
+      }
     }
   }
 
