@@ -101,7 +101,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     // 全ての敵の中からもっとも近い敵を探す
     foreach (Enemy enemy in enemies) 
     {
-      var distance = (enemy.transform.position - position).sqrMagnitude;
+      var distance = (enemy.CachedTransform.position - position).sqrMagnitude;
 
       // 現時点で一番近い距離よりも近くだったら、その距離と敵を保持
       if (distance < nearestDistance) {

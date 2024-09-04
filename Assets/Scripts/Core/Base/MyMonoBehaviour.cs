@@ -12,12 +12,12 @@ public class MyMonoBehaviour : MonoBehaviour
   /// <summary>
   /// Transformのキャッシュ(処理負荷軽減対策)
   /// </summary>
-  public Transform CacheTransform {  get; private set; }
+  public Transform CachedTransform {  get; private set; }
 
   /// <summary>
   /// RectTransformのキャッシュ(処理負荷軽減対策)
   /// </summary>
-  public RectTransform CacheRectTransform { get; private set; }
+  public RectTransform CachedRectTransform { get; private set; }
   //============================================================================
   // Properities
   //============================================================================
@@ -36,12 +36,12 @@ public class MyMonoBehaviour : MonoBehaviour
   //----------------------------------------------------------------------------
   protected void Awake()
   {
-    if (CacheTransform == null) {
-      CacheTransform = this.transform;
+    if (CachedTransform == null) {
+      CachedTransform = this.transform;
     }
 
-    if (CacheRectTransform == null) {
-      CacheRectTransform = GetComponent<RectTransform>();
+    if (CachedRectTransform == null) {
+      CachedRectTransform = GetComponent<RectTransform>();
     }
 
     MyAwake();
@@ -57,7 +57,7 @@ public class MyMonoBehaviour : MonoBehaviour
   /// </summary>
   public void SetParent(Transform parent, bool worldPositionStays = true)
   {
-    this.CacheTransform.SetParent(parent, worldPositionStays);
+    this.CachedTransform.SetParent(parent, worldPositionStays);
   }
 
   /// <summary>
