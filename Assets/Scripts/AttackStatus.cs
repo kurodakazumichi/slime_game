@@ -1,15 +1,16 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public enum Attribute
 {
-  Non = 0,      // –³
-  Fir = 1 << 1, // ‰Î
-  Wat = 1 << 2, // …
-  Thu = 1 << 3, // —‹
-  Ice = 1 << 4, // •X
-  Tre = 1 << 5, // –Ø
-  Hol = 1 << 6, // ¹
-  Dar = 1 << 7, // ˆÅ
+  Nil = 0,      // è¨­å®šãªã—
+  Non = 1 << 0, // ç„¡
+  Fir = 1 << 1, // ç«
+  Wat = 1 << 2, // æ°´
+  Thu = 1 << 3, // é›·
+  Ice = 1 << 4, // æ°·
+  Tre = 1 << 5, // æœ¨
+  Hol = 1 << 6, // è–
+  Dar = 1 << 7, // é—‡
 }
 
 public class AttackStatus
