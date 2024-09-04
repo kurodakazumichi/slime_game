@@ -33,8 +33,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   private Enemy GetEnemyPrefab(EnemyId id)
   {
     switch(id) {
-      case EnemyId.Enemy: return enemyPrefab;
-      case EnemyId.Bat01: return Bat01Prefab;
+      case EnemyId.SpiderA: return enemyPrefab;
+      case EnemyId.BatA: return Bat01Prefab;
       default:
         Debug.LogError($"{id} Prefab isn't found.");
         return null;
