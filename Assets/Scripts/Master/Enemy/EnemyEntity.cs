@@ -1,9 +1,9 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ReadOnly‚ÌEnemyEntityƒCƒ“ƒ^[ƒtƒF[ƒX
+/// ReadOnlyã®EnemyEntityã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 /// </summary>
 public interface IEnemyEntityRO
 {
@@ -13,6 +13,7 @@ public interface IEnemyEntityRO
   float Power { get; }
   uint AttackAttr { get; }
   uint WeakAttr { get; }
+  uint ResistAttr { get; }
   uint NullfiedAttr { get; }
   SkillId SkillId { get; }
   int Exp { get; }
@@ -28,7 +29,7 @@ public class EnemyEntity : IEnemyEntityRO
   public EnemyId Id { get; set; }
 
   /// <summary>
-  /// –¼Ì
+  /// åç§°
   /// </summary>
   public string Name { get; set; }
 
@@ -38,42 +39,47 @@ public class EnemyEntity : IEnemyEntityRO
   public float HP { get; set; }
 
   /// <summary>
-  /// —ÍA“G‚ÌUŒ‚—Í‚Ég‚í‚ê‚é
+  /// åŠ›ã€æ•µã®æ”»æ’ƒåŠ›ã«ä½¿ã‚ã‚Œã‚‹
   /// </summary>
   public float Power { get; set; }
 
   /// <summary>
-  /// UŒ‚‘®«
+  /// æ”»æ’ƒå±æ€§
   /// </summary>
   public uint AttackAttr { get; set; }
 
   /// <summary>
-  /// ã“_‘®«
+  /// å¼±ç‚¹å±æ€§
   /// </summary>
   public uint WeakAttr { get; set; }
 
   /// <summary>
-  /// –³Œø‰»‘®«
+  /// è€æ€§å±æ€§
+  /// </summary>
+  public uint ResistAttr { get; set; }
+
+  /// <summary>
+  /// ç„¡åŠ¹åŒ–å±æ€§
   /// </summary>
   public uint NullfiedAttr { get; set; }
 
   /// <summary>
-  /// “G‚Ì‚ÂƒXƒLƒ‹ID
+  /// æ•µã®æŒã¤ã‚¹ã‚­ãƒ«ID
   /// </summary>
   public SkillId SkillId { get; set; }
 
   /// <summary>
-  /// “G‚ğ“|‚µ‚½‚É“¾‚ç‚ê‚éŒoŒ±’l
+  /// æ•µã‚’å€’ã—ãŸæ™‚ã«å¾—ã‚‰ã‚Œã‚‹çµŒé¨“å€¤
   /// </summary>
   public int Exp { get; set; }
 
   /// <summary>
-  /// “G‚ÌPrefab‚ª‚ ‚éƒpƒX
+  /// æ•µã®PrefabãŒã‚ã‚‹ãƒ‘ã‚¹
   /// </summary>
   public string PrefabPath { get; set; }
 
   /// <summary>
-  /// “G‚ÌƒAƒCƒRƒ“‰æ‘œ‚ª‚ ‚éƒpƒX
+  /// æ•µã®ã‚¢ã‚¤ã‚³ãƒ³ç”»åƒãŒã‚ã‚‹ãƒ‘ã‚¹
   /// </summary>
   public string IconPath { get; set; }
 }
