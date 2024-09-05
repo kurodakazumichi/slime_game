@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f3e80e085d4b5384487623b1e30ede70
   m_SerializeEntries:
+  - m_GUID: 0ffa9cdbd4958f44f8dd93a440d422cd
+    m_Address: Bullet/NormalBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 43c2bdcd27be94640b61577df08548b6
     m_Address: Icon/Enemy/Spider.png
     m_ReadOnly: 0
