@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-public class EnemyWaveConfig : MonoBehaviour
+public class EnemyWaveConfig : MyMonoBehaviour
 {
   public EnemyWaveProperty props = new EnemyWaveProperty();
 

@@ -66,10 +66,8 @@ public class BattleLocation : MyMonoBehaviour
 
       ForeachWaveData((setting) => 
       {
-        var id = MyEnum.Parse<EnemyId>(setting.props.EnemyId);
-
-        if (!list.Contains(id)) {
-          list.Add(id);
+        if (!list.Contains(setting.props.Id)) {
+          list.Add(setting.props.Id);
         }
       });
 
@@ -115,7 +113,10 @@ public class BattleLocation : MyMonoBehaviour
     if (FieldManager.Instance) {
       FieldManager.Instance.RegistBattleLocation(this);
     }
+  }
 
+  private void Start()
+  {
     Validate();
   }
 
@@ -258,7 +259,22 @@ public class BattleLocation : MyMonoBehaviour
   [Conditional("_DEBUG")]
   private void Validate()
   {
-    Logger.Log($"[BattleLocation] Validate {LocationName}");
+    Logger.Log($"[BattleLocation.Validate] {LocationName}");
+
+    ForeachWaveData((config) => 
+    {
+      if (!MyEnum.TryParse<EnemyId>(config.props.EnemyId, out var id)) {
+        ErrorLog(config, $"EnemyId parse error. id = {config.props.EnemyId}");
+      }
+    });
+  }
+
+  [Conditional("_DEBUG")]
+  private void ErrorLog(EnemyWaveConfig config, string msg)
+  {
+    var parentName = config.CachedTransform.parent.name;
+    var name       = config.CachedTransform.name;
+    Logger.Error($"[BattleLocation] {LocationName}.{parentName}.{name} {msg}");
   }
 
 #if _DEBUG
