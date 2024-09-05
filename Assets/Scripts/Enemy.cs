@@ -93,6 +93,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   private Flag32 attrW;
 
   /// <summary>
+  /// 耐性属性、攻撃を受ける時に参照
+  /// </summary>
+  private Flag32 attrR;
+
+  /// <summary>
   /// 無効属性、攻撃を受ける時に参照
   /// </summary>
   private Flag32 attrN;
@@ -218,9 +223,26 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   public void TakeDamage(AttackStatus p)
   {
-    HitTextManager.Instance.Get().SetDisplay(VisualPosition, (int)p.Power);
+    float damage = p.Power;
 
-    hp.Now -= p.Power;
+    // 無効属性かどうか
+    if (attrN.HasEither(p.Attributes)) {
+      damage = 0;
+    }
+
+    // 耐性属性かどうか
+    if (attrR.HasEither(p.Attributes)) {
+      damage *= 0.5f;
+    }
+
+    // 弱点属性かどうか
+    if (attrW.HasEither(p.Attributes)) {
+      damage *= 3.0f;
+    }
+
+    HitTextManager.Instance.Get().SetDisplay(VisualPosition, (int)damage);
+
+    hp.Now -= damage;
   }
 
   /// <summary>
@@ -271,6 +293,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     power   = 0;
     attrA   = new Flag32();
     attrW   = new Flag32();
+    attrR   = new Flag32();
     attrN   = new Flag32();
     skillId = SkillId.Undefined;
     exp     = 0;

@@ -114,8 +114,7 @@ public class StandardBullet : MyMonoBehaviour, IBullet
     }
 
     this.velocity = v;
-
-    status.Power = skill.Power;
+    status.Init(skill.Power, (uint)Attribute.Non);
     state.SetState(State.Usual);
   }
 

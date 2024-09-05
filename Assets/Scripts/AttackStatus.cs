@@ -13,8 +13,32 @@ public enum Attribute
   Dar = 1 << 7, // 闇
 }
 
+
+
 public class AttackStatus
 {
-  public float Power = 0f;
-  public Flag32 Attributes = new Flag32();
+
+  private float power = 0f;
+  private Flag32 attributes = new Flag32();
+
+  public void Init(float power, uint attributes)
+  {
+    this.power            = power;
+    this.attributes.Value = attributes;
+  }
+
+  public uint Attributes {
+    get { return attributes.Value; }
+  }
+
+  public float Power 
+  {
+    get {
+      if (attributes.Is((uint)Attribute.Non)) {
+        return power;
+      } else {
+        return power * 1.2f;
+      }
+    }
+  }
 }
