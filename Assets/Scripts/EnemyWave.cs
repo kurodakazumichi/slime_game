@@ -313,7 +313,7 @@ public class EnemyWave
           radian += offset;
 
       var x = area.x * 0.5f * Mathf.Cos(radian);
-      var z = area.y * 0.5f * Mathf.Sin(radian);
+      var z = area.z * 0.5f * Mathf.Sin(radian);
 
       var enemy = GetEnemy();
       enemy.CachedTransform.position = waveParam.BasePosition + new Vector3(x, 0, z);
