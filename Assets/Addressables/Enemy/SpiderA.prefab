@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8485382963005722006}
   - component: {fileID: 3215563202105258751}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: SpiderA
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
