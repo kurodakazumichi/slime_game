@@ -145,9 +145,9 @@ public class FieldScene : MyMonoBehaviour
       return;
     }
 
-    // スキルセット、スキルUI稼働
-    UIManager.Instance.HUD.SkillSlots.SetSkill(0, SkillManager.Instance.GetActiveSkill(0));
-    UIManager.Instance.HUD.SkillSlots.Run();
+
+    // スキルを起動
+    RunSkill();
 
     UIManager.Instance.BattleInfo.IsVisible = false;
 
@@ -220,6 +220,22 @@ public class FieldScene : MyMonoBehaviour
     TimeSystem.Player.Pause(false);
   }
 
+  //----------------------------------------------------------------------------
+  // For Me
+  //----------------------------------------------------------------------------
+
+  private void RunSkill()
+  {
+    // スキルセット、スキルUI稼働
+    UIManager.Instance.HUD.SkillSlots.SetSkill(0, SkillManager.Instance.GetActiveSkill(0));
+    UIManager.Instance.HUD.SkillSlots.Run();
+  }
+
+  private void StopSkill()
+  {
+    UIManager.Instance.HUD.SkillSlots.Stop();
+  }
+
 #if _DEBUG
   //----------------------------------------------------------------------------
   // For Debug
@@ -233,6 +249,14 @@ public class FieldScene : MyMonoBehaviour
     GUILayout.Label("FieldScene");
 
     GUILayout.Label($"State = {state.StateKey.ToString()}");
+
+    if (GUILayout.Button("スキルを実行")) {
+      RunSkill();
+    }
+
+    if (GUILayout.Button("スキルを停止")) {
+      StopSkill();
+    }
 
     TimeSystem.OnDebug();
   }
