@@ -5,46 +5,48 @@ using UnityEngine.Pool;
 
 public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 {
-  public GameObject enemyPrefab;
-  public GameObject Bat01Prefab;
+  //============================================================================
+  // Variables
+  //============================================================================
 
+  /// <summary>
+  /// オブジェクトプール、敵の種類ごとに管理
+  /// </summary>
   Dictionary<int, IObjectPool<GameObject>> enemyPools = new Dictionary<int, IObjectPool<GameObject>>();
 
+  /// <summary>
+  /// 現在アクティブな敵のリスト
+  /// </summary>
   List<IEnemy> enemies = new List<IEnemy>();
 
-  protected override void MyAwake()
-  {
-    base.MyAwake();
+  //============================================================================
+  // Methods
+  //============================================================================
 
+  //----------------------------------------------------------------------------
+  // Public
+  //----------------------------------------------------------------------------
+
+  /// <summary>
+  /// 暫定:全ての敵のPrefabリソースをロード
+  /// </summary>
+  public void Load()
+  {
     MyEnum.ForEach<EnemyId>((id) => 
     {
-      Debug.Log($"Create EnemyPool id = {id}");
-
-      var enemyPool = new LinkedPool<GameObject>(
-        () => Instantiate(GetEnemyPrefab(id)),
-        e => e.gameObject.SetActive(true),
-        e => e.gameObject.SetActive(false),
-        e => Destroy(e.gameObject)
-      );
-
-      enemyPools.Add((int)id, enemyPool);
+      if (id != EnemyId.Undefined) {
+        ResourceManager.Instance.Load<GameObject>(EnemyMaster.FindById(id).PrefabPath);
+      }
     });
   }
-  private GameObject GetEnemyPrefab(EnemyId id)
-  {
-    switch(id) {
-      case EnemyId.SpiderA: return enemyPrefab;
-      case EnemyId.BatA: return Bat01Prefab;
-      default:
-        Debug.LogError($"{id} Prefab isn't found.");
-        return null;
-    }
-  }
 
+  /// <summary>
+  /// IDを元に敵オブジェクトを取得
+  /// </summary>
   public IEnemy Get(EnemyId enemyId)
   {
     if (!enemyPools.TryGetValue((int)enemyId, out var enemyPool)) {
-      Logger.Error($"[EnemyManager.Get] EnemyPools[id] is null.");
+      Logger.Error($"[EnemyManager.Get] EnemyPools[{enemyId.ToString()}] is null.");
       return null;
     }
 
@@ -54,10 +56,13 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     return e;
   }
 
+  /// <summary>
+  /// 敵をオブジェクトプールに戻す
+  /// </summary>
   public void Release(IEnemy enemy)
   {
-    if(!enemyPools.TryGetValue((int)enemy.Id, out var enemyPool)) {
-      Debug.Log($"");
+    if (!enemyPools.TryGetValue((int)enemy.Id, out var enemyPool)) {
+      Logger.Error($"[EnemyManager.Release] EnemyPools[{enemy.Id.ToString()}] is null.");
       return;
     }
 
@@ -65,19 +70,25 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     enemies.Remove(enemy);
   }
 
+  /// <summary>
+  /// アクティブな敵を全てオブジェクトプールに戻す
+  /// </summary>
   public void Clear()
   {
     enemies.ForEach(e => enemyPools[(int)e.Id].Release(e.gameObject));
     enemies.Clear();
   }
 
+  /// <summary>
+  /// アクティブな敵をスキャン
+  /// </summary>
+  /// <param name="func"></param>
   public void Scan(Func<IEnemy, bool> func)
   {
-    for (int i = 0, count = enemies.Count; i < count; i++) 
-    {
+    for (int i = 0, count = enemies.Count; i < count; i++) {
       // funcの戻り値がfalseだったらそこでscan終了 
-      if (func(enemies[i]) == false) { 
-        break; 
+      if (func(enemies[i]) == false) {
+        break;
       }
     }
   }
@@ -99,8 +110,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     IEnemy nearestEnemy = null;
 
     // 全ての敵の中からもっとも近い敵を探す
-    foreach (IEnemy enemy in enemies) 
-    {
+    foreach (IEnemy enemy in enemies) {
       var distance = (enemy.CachedTransform.position - position).sqrMagnitude;
 
       // 現時点で一番近い距離よりも近くだったら、その距離と敵を保持
@@ -114,39 +124,89 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     return nearestEnemy;
   }
 
+
+  //----------------------------------------------------------------------------
+  // Life Cycle
+  //----------------------------------------------------------------------------
+  protected override void MyAwake()
+  {
+    base.MyAwake();
+
+    MyEnum.ForEach<EnemyId>((id) => 
+    {
+      Logger.Log($"[EnemyManager.MyAwake] Create EnemyPool id = {id}");
+
+      var enemyPool = new LinkedPool<GameObject>(
+        () => Instantiate(GetEnemyPrefab(id)),
+        e => e.gameObject.SetActive(true),
+        e => e.gameObject.SetActive(false),
+        e => Destroy(e.gameObject)
+      );
+
+      enemyPools.Add((int)id, enemyPool);
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // For Me
+  //----------------------------------------------------------------------------
+  /// <summary>
+  /// 敵のPrefabを取得する。事前にロードを済ませておく必要がある。
+  /// </summary>
+  private GameObject GetEnemyPrefab(EnemyId id)
+  {
+    var entity = EnemyMaster.FindById(id);
+
+    if (entity is null) {
+      Logger.Error($"[EnemyManager.GetEnemyPrefab] Prefab of {id} isn't found.");
+      return null;
+    }
+
+    return ResourceManager.Instance.GetCache<GameObject>(entity.PrefabPath);
+  }
+
 #if _DEBUG
+
   //----------------------------------------------------------------------------
   // For Debug
   //----------------------------------------------------------------------------
-
-  private string _enemyId = string.Empty;
-  private IEnemy _enemy = null;
-
   /// <summary>
   /// デバッグ用の基底メソッド
   /// </summary>
   public override void OnDebug()
   {
-    using (new GUILayout.HorizontalScope()) 
-    {
-      GUILayout.Label("EnemyID");
-      _enemyId = GUILayout.TextField(_enemyId);
+    EnemyManagerDebugger.OnGUI();
+  }
 
-      if (GUILayout.Button("Make")) 
-      {
-        if (_enemy !=  null) {
-          _enemy.Kill();
+  /// <summary>
+  /// EnemyManagerのdebugger
+  /// </summary>
+  public static class EnemyManagerDebugger
+  {
+    /// <summary>
+    /// 入力用EnemyID
+    /// </summary>
+    private static string inputEnemyId = string.Empty;
+
+    /// <summary>
+    /// 描画
+    /// </summary>
+    public static void OnGUI()
+    {
+      using (new GUILayout.HorizontalScope()) {
+        GUILayout.Label("EnemyID");
+        inputEnemyId = GUILayout.TextField(inputEnemyId);
+
+        if (GUILayout.Button("Make")) {
+          var enemy = Instance.Get(MyEnum.Parse<EnemyId>(inputEnemyId));
+          enemy.Run();
         }
-
-        _enemy = Get(MyEnum.Parse<EnemyId>(_enemyId));
-        _enemy.Run();
       }
-    }
 
-    if (GUILayout.Button("All Kill")) 
-    {
-      foreach (var enemy in enemies) {
-        enemy.Kill();
+      if (GUILayout.Button("All Kill")) {
+        foreach (var enemy in Instance.enemies) {
+          enemy.Kill();
+        }
       }
     }
   }

@@ -15,7 +15,7 @@ public static class EnemyRepository
       NullfiedAttr = (uint)(Attribute.Nil),
       SkillId      = SkillId.NormalBullet,
       Exp          = 1,
-      PrefabPath   = "Enemy/BatA",
+      PrefabPath   = "Enemy/BatA.prefab",
       IconPath     = "Icon/Enemy/BatA.png",
     },
 
@@ -30,7 +30,7 @@ public static class EnemyRepository
       NullfiedAttr = (uint)(Attribute.Nil),
       SkillId      = SkillId.NormalBullet,
       Exp          = 2,
-      PrefabPath   = "Enemy/SpiderA",
+      PrefabPath   = "Enemy/SpiderA.prefab",
       IconPath     = "Icon/Enemy/SpiderA.png",
     },
 

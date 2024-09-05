@@ -91,6 +91,7 @@ public class FieldScene : MyMonoBehaviour
   {
     ResourceManager.Instance.Load<Sprite>("Icon/Enemy/Bat.png");
     ResourceManager.Instance.Load<Sprite>("Icon/Enemy/Spider.png");
+    EnemyManager.Instance.Load();
   }
 
   private void UpdateResourceLoading()
