@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 
 
 static public class TimeSystem
 {
 
-  static private float _globalTimeScale = 1f;
+  static private float globalTimeScale = 1f;
 
   public class MyDeltaTime
   {
     public float Scale = 1f;
 
     public float DeltaTime {
-      get { return Time.deltaTime * Scale * _globalTimeScale; }
+      get { return Time.deltaTime * Scale * globalTimeScale; }
     }
 
     public void Pause(bool value)
@@ -22,26 +22,29 @@ static public class TimeSystem
   }
 
   /// <summary>
-  /// ƒfƒtƒHƒ‹ƒg‚Å—˜—p‚·‚éƒfƒ‹ƒ^ƒ^ƒCƒ€
+  /// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§åˆ©ç”¨ã™ã‚‹ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ 
   /// </summary>
-  static private MyDeltaTime _deltaTime = new MyDeltaTime();
+  static private MyDeltaTime deltaTime = new MyDeltaTime();
 
   static public float DeltaTime {
-    get { return _deltaTime.DeltaTime; }
+    get { return deltaTime.DeltaTime; }
   }
 
   static public bool Pause {
-    set { _deltaTime.Scale = value ? 0f : 1f; }
+    set { deltaTime.Scale = value ? 0f : 1f; }
   }
 
   static private MyDeltaTime player = new MyDeltaTime();
   static public MyDeltaTime Player { get { return player; } }
 
+  static private MyDeltaTime enemy = new MyDeltaTime();
+  static public MyDeltaTime Enemy {  get { return enemy; } }
+
   static private MyDeltaTime _wave = new MyDeltaTime();
   static public MyDeltaTime Wave { get { return _wave; } }
 
   /// <summary>
-  /// ƒV[ƒ“ƒtƒ[§Œä—p‚ÌŠÔ
+  /// ã‚·ãƒ¼ãƒ³ãƒ•ãƒ­ãƒ¼åˆ¶å¾¡ç”¨ã®æ™‚é–“
   /// </summary>
   static private MyDeltaTime _scene = new MyDeltaTime();
   static public MyDeltaTime Scene {
@@ -49,7 +52,7 @@ static public class TimeSystem
   }
 
   /// <summary>
-  /// UI§Œä—p‚ÌŠÔ
+  /// UIåˆ¶å¾¡ç”¨ã®æ™‚é–“
   /// </summary>
   static private MyDeltaTime _ui = new MyDeltaTime();
   static public MyDeltaTime UI {
@@ -57,7 +60,7 @@ static public class TimeSystem
   }
 
   /// <summary>
-  /// ƒXƒLƒ‹”­“®‚ğ§Œä‚·‚éŠÔ
+  /// ã‚¹ã‚­ãƒ«ç™ºå‹•ã‚’åˆ¶å¾¡ã™ã‚‹æ™‚é–“
   /// </summary>
   static private MyDeltaTime _skill = new MyDeltaTime();
   static public MyDeltaTime Skill {
@@ -70,7 +73,7 @@ static public class TimeSystem
   //----------------------------------------------------------------------------
 
   /// <summary>
-  /// ƒfƒoƒbƒO—p‚ÌŠî’êƒƒ\ƒbƒh
+  /// ãƒ‡ãƒãƒƒã‚°ç”¨ã®åŸºåº•ãƒ¡ã‚½ãƒƒãƒ‰
   /// </summary>
   static public void OnDebug()
   {
@@ -80,31 +83,29 @@ static public class TimeSystem
 
       using (new GUILayout.HorizontalScope()) {
         GUILayout.Label("GlobalTimeScale");
-        GUILayout.TextField(_globalTimeScale.ToString(), GUILayout.Width(30));
+        GUILayout.TextField(globalTimeScale.ToString(), GUILayout.Width(30));
         if (GUILayout.Button("Reset")) {
-          _globalTimeScale = 1f;
+          globalTimeScale = 1f;
         }
       }
-      _globalTimeScale = GUILayout.HorizontalSlider(_globalTimeScale, 0f, 10f);
+      globalTimeScale = GUILayout.HorizontalSlider(globalTimeScale, 0f, 10f);
 
-      using (new GUILayout.HorizontalScope()) {
-        GUILayout.Label("DefaultTimeScale");
-        GUILayout.TextField(_deltaTime.Scale.ToString(), GUILayout.Width(30));
-        if (GUILayout.Button("Reset")) {
-          _deltaTime.Scale = 1f;
-        }
-      }
-      _deltaTime.Scale = GUILayout.HorizontalSlider(_deltaTime.Scale, 0f, 10f);
-
-      using (new GUILayout.HorizontalScope()) {
-        GUILayout.Label("PlayerTimeScale");
-        GUILayout.TextField(player.Scale.ToString(), GUILayout.Width(30));
-        if (GUILayout.Button("Reset")) {
-          player.Scale = 1f;
-        }
-      }
-      player.Scale = GUILayout.HorizontalSlider(player.Scale, 0f, 10f);
+      OnDebugDeltaTime("DefaultTimeScale", deltaTime);
+      OnDebugDeltaTime("PlayerTimeScale", player);
+      OnDebugDeltaTime("EnemyTimeScale", enemy);
     }
+  }
+
+  private static void OnDebugDeltaTime(string title, MyDeltaTime delta)
+  {
+    using (new GUILayout.HorizontalScope()) {
+      GUILayout.Label(title);
+      GUILayout.TextField(delta.Scale.ToString(), GUILayout.Width(30));
+      if (GUILayout.Button("Reset")) {
+        delta.Scale = 1f;
+      }
+    }
+    delta.Scale = GUILayout.HorizontalSlider(delta.Scale, 0f, 10f);
   }
 
 #endif
