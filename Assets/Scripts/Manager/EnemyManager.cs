@@ -5,12 +5,12 @@ using UnityEngine.Pool;
 
 public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 {
-  public Enemy enemyPrefab;
-  public Enemy Bat01Prefab;
+  public GameObject enemyPrefab;
+  public GameObject Bat01Prefab;
 
-  Dictionary<int, IObjectPool<Enemy>> enemyPools = new Dictionary<int, IObjectPool<Enemy>>();
+  Dictionary<int, IObjectPool<GameObject>> enemyPools = new Dictionary<int, IObjectPool<GameObject>>();
 
-  List<Enemy> enemies = new List<Enemy>();
+  List<IEnemy> enemies = new List<IEnemy>();
 
   protected override void MyAwake()
   {
@@ -20,7 +20,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     {
       Debug.Log($"Create EnemyPool id = {id}");
 
-      var enemyPool = new LinkedPool<Enemy>(
+      var enemyPool = new LinkedPool<GameObject>(
         () => Instantiate(GetEnemyPrefab(id)),
         e => e.gameObject.SetActive(true),
         e => e.gameObject.SetActive(false),
@@ -30,7 +30,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
       enemyPools.Add((int)id, enemyPool);
     });
   }
-  private Enemy GetEnemyPrefab(EnemyId id)
+  private GameObject GetEnemyPrefab(EnemyId id)
   {
     switch(id) {
       case EnemyId.SpiderA: return enemyPrefab;
@@ -41,37 +41,37 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     }
   }
 
-  public Enemy Get(EnemyId enemyId)
+  public IEnemy Get(EnemyId enemyId)
   {
     if (!enemyPools.TryGetValue((int)enemyId, out var enemyPool)) {
       Debug.Log($"[EnemyManager.Get] EnemyPools[id] is null.");
       return null;
     }
 
-    var e = enemyPool.Get();
+    var e = enemyPool.Get().GetComponent<IEnemy>();
     e.Init(enemyId);
     enemies.Add(e);
     return e;
   }
 
-  public void Release(Enemy enemy)
+  public void Release(IEnemy enemy)
   {
     if(!enemyPools.TryGetValue((int)enemy.Id, out var enemyPool)) {
       Debug.Log($"");
       return;
     }
 
-    enemyPool.Release(enemy);
+    enemyPool.Release(enemy.gameObject);
     enemies.Remove(enemy);
   }
 
   public void Clear()
   {
-    enemies.ForEach(e => enemyPools[(int)e.Id].Release(e));
+    enemies.ForEach(e => enemyPools[(int)e.Id].Release(e.gameObject));
     enemies.Clear();
   }
 
-  public void Scan(Func<Enemy, bool> func)
+  public void Scan(Func<IEnemy, bool> func)
   {
     for (int i = 0, count = enemies.Count; i < count; i++) 
     {
@@ -85,7 +85,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   /// <summary>
   /// 指定した座標のもっとも近くにいる敵を探す
   /// </summary>
-  public Enemy FindNearestEnemy(Vector3 position)
+  public IEnemy FindNearestEnemy(Vector3 position)
   {
     // 敵がいなければ当然ながらnullを返す
     if (enemies.Count == 0) {
@@ -96,10 +96,10 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     float nearestDistance = float.MaxValue;
 
     // もっとも近い敵のインスタンス、最初はnullを設定しておく
-    Enemy nearestEnemy = null;
+    IEnemy nearestEnemy = null;
 
     // 全ての敵の中からもっとも近い敵を探す
-    foreach (Enemy enemy in enemies) 
+    foreach (IEnemy enemy in enemies) 
     {
       var distance = (enemy.CachedTransform.position - position).sqrMagnitude;
 

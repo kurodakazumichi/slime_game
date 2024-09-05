@@ -110,7 +110,7 @@ public class StandardBullet : MyMonoBehaviour, IBullet
     var v = Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up) * Vector3.forward;
 
     if (e != null) {
-      v = (e.transform.position - p).normalized;
+      v = (e.CachedTransform.position - p).normalized;
     }
 
     this.velocity = v;

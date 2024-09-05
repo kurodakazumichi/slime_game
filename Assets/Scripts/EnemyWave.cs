@@ -152,7 +152,7 @@ public class EnemyWave
   /// <summary>
   /// Wave経由で敵を解放する
   /// </summary>
-  public void Release(Enemy enemy)
+  public void Release(IEnemy enemy)
   {
     currentEnemyCount--;
     EnemyManager.Instance.Release(enemy);
@@ -286,7 +286,7 @@ public class EnemyWave
       var p  = waveParam.BasePosition;
           p += new Vector3(offsetX, offsetY, 0);
 
-      enemy.transform.position = p;
+      enemy.CachedTransform.position = p;
 
       stock--;
       currentEnemyCount++;
@@ -316,7 +316,7 @@ public class EnemyWave
       var z = area.y * 0.5f * Mathf.Sin(radian);
 
       var enemy = GetEnemy();
-      enemy.transform.position = waveParam.BasePosition + new Vector3(x, 0, z);
+      enemy.CachedTransform.position = waveParam.BasePosition + new Vector3(x, 0, z);
 
       stock--;
       currentEnemyCount++;
@@ -345,7 +345,7 @@ public class EnemyWave
       if (waveParam.InverseZ == true) { z *= -1; }
 
       var enemy = GetEnemy();
-      enemy.transform.position = waveParam.BasePosition + new Vector3(x, 0, z);
+      enemy.CachedTransform.position = waveParam.BasePosition + new Vector3(x, 0, z);
 
       stock--;
       currentEnemyCount++;
@@ -366,7 +366,7 @@ public class EnemyWave
       var p = waveParam.BasePosition;
           p += MyVector3.Random(waveParam.Area / 2f);
 
-      enemy.transform.position = p;
+      enemy.CachedTransform.position = p;
 
       stock--;
       currentEnemyCount++;
@@ -388,13 +388,13 @@ public class EnemyWave
   //----------------------------------------------------------------------------
   // for me
   //----------------------------------------------------------------------------
-  private Enemy GetEnemy()
+  private IEnemy GetEnemy()
   {
     // 敵を生成
     var enemy = EnemyManager.Instance.Get(waveParam.Id);
     enemy.Init(waveParam.Id);
-    enemy.SetBelongsTo(this);
-
+    enemy.SetOwnerWave(this);
+    enemy.Run();
     return enemy;
   }
 }

@@ -28,7 +28,7 @@ public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
 
       foreach (var enemy in enemies)
       {
-        var e = enemy.GetComponent<Enemy>();
+        var e = enemy.GetComponent<IEnemy>();
         bullet.Attack(e);
       }
     }
