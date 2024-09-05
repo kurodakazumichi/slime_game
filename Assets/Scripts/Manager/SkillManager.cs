@@ -143,8 +143,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     var entity = SkillMaster.FindById(id);
 
     var s = new Skill();
-    s.Setup(entity);
-    s.SetExp(GetExp(SkillId.NormalBullet));
+    s.Init(entity, GetExp(id));
 
     return s;
   }
