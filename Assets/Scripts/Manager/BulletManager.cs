@@ -1,10 +1,14 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class BulletManager : SingletonMonoBehaviour<BulletManager>
 {
-  IObjectPool<GameObject> bulletPool;
+  /// <summary>
+  /// Bulletのオブジェクトプール一式
+  /// </summary>
+  Dictionary<int, IObjectPool<GameObject>> bulletPools 
+     = new Dictionary<int, IObjectPool<GameObject>>();
 
   private LinkedList<IBullet> bullets = new LinkedList<IBullet>();
 
@@ -28,28 +32,44 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
     return ResourceManager.Instance.GetCache<GameObject>("Bullet/NormalBullet.prefab");
   }
 
-  private void Start()
+  protected override void MyAwake()
   {
-    bulletPool = new LinkedPool<GameObject>(
-      () => Instantiate(GetPrefab(SkillId.NormalBullet)),
-      b => b.gameObject.SetActive(true) ,
-      b => b.gameObject.SetActive(false),
-      b => Destroy(b.gameObject)
-    );
+    MyEnum.ForEach<SkillId>((id) => 
+    {
+      Logger.Log($"[BulletManager.MyAwake] Create bulletPool id = {id.ToString()}");
+
+      var pool = new LinkedPool<GameObject>(
+        () => Instantiate(GetPrefab(id)),
+        b => b.gameObject.SetActive(true),
+        b => b.gameObject.SetActive(false),
+        b => Destroy(b.gameObject)
+      );
+
+      bulletPools.Add((int)id, pool);
+    });
   }
 
-  public IBullet Get() 
+  public IBullet Get(SkillId id) 
   { 
-    var bullet = bulletPool.Get().GetComponent<IBullet>();
+    if (!bulletPools.TryGetValue((int)id, out var pool)) {
+      Logger.Error($"[BulletManager.Get] bulletPools[{id.ToString()}] is null.");
+      return null;
+    }
+
+    var bullet = pool.Get().GetComponent<IBullet>();
     bullets.AddFirst(bullet);
     return bullet;
-    
   }
 
   public void Release(IBullet bullet)
   {
+    if (!bulletPools.TryGetValue((int)bullet.Id, out var pool)) {
+      Logger.Error($"[BulletManager.Release] EnemyPools[{bullet.Id.ToString()}] is null.");
+      return;
+    }
+
+    pool.Release(bullet.gameObject);
     bullets.Remove(bullet);
-    bulletPool.Release(bullet.gameObject);
   }
 
   public void Terminate()
@@ -66,7 +86,7 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
   //----------------------------------------------------------------------------
 
   /// <summary>
-  /// �f�o�b�O�p�̊�ꃁ�\�b�h
+  /// デバッグ用の基底メソッド
   /// </summary>
   public override void OnDebug()
   {

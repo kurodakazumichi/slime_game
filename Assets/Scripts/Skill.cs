@@ -37,7 +37,7 @@ public class Skill : ISkill
 
   public virtual void Fire()
   {
-    var bullet = BulletManager.Instance.Get();
+    var bullet = BulletManager.Instance.Get(Id);
     bullet.Fire(this);
   }
 

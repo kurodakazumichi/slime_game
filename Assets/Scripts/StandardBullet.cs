@@ -2,6 +2,7 @@
 
 public interface IBullet
 {
+  SkillId Id { get; }
   bool IsIdle { get; }
   void Terminate();
   void Fire(ISkill skill);
@@ -61,6 +62,8 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   // Properities
   //============================================================================
 
+  public SkillId Id { get; private set; }
+
   public bool IsIdle {
     get { return state.StateKey == State.Idle; }
   }
@@ -102,6 +105,8 @@ public class StandardBullet : MyMonoBehaviour, IBullet
 
   public void Fire(ISkill skill)
   {
+    Id = skill.Id;
+
     var p = PlayerManager.Instance.PlayerVisualPosition;
     transform.position = p;
 
