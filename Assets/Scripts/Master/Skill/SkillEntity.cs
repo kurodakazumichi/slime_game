@@ -12,6 +12,7 @@ public interface ISkillEntityRO
   int LastPower { get; }
   uint Attr { get; }
   string Name { get; }
+  string Prefab { get; }
 }
 
 /// <summary>
@@ -58,5 +59,10 @@ public class SkillEntity : ISkillEntityRO
   /// 名称
   /// </summary>
   public string Name { get; set; }
+
+  /// <summary>
+  /// Prefabのパス
+  /// </summary>
+  public string Prefab { get; set; }
 }
 

@@ -23,13 +23,14 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
 
   private GameObject GetPrefab(SkillId id)
   {
-    //var entity = SkillMaster.FindById(id);
-    //if (entity is null) {
-    //  Logger.Error($"[BulletManager.GetPrefab] Prefab of {id.ToString()} isn't found.");
-    //  return null;
-    //}
+    var entity = SkillMaster.FindById(id);
 
-    return ResourceManager.Instance.GetCache<GameObject>("Bullet/NormalBullet.prefab");
+    if (entity is null) {
+      Logger.Error($"[BulletManager.GetPrefab] Prefab of {id.ToString()} isn't found.");
+      return null;
+    }
+
+    return ResourceManager.Instance.GetCache<GameObject>(entity.Prefab);
   }
 
   protected override void MyAwake()
