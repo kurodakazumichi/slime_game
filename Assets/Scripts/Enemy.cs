@@ -31,6 +31,11 @@ public interface IEnemy
   /// </summary>
   void Run();
 
+  /// <summary>
+  /// 敵を殺す
+  /// </summary>
+  void Kill();
+
   //----------------------------------------------------------------------------
   // MonoBehaviour系
 
@@ -183,6 +188,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   public void Init(EnemyId id) 
   {
+    Logger.Log($"[Enemy] Called Init({id.ToString()})");
     this.id = id;
 
     var master = EnemyMaster.FindById(id);
@@ -215,6 +221,14 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     HitTextManager.Instance.Get().SetDisplay(VisualPosition, (int)p.Power);
 
     hp.Now -= p.Power;
+  }
+
+  /// <summary>
+  /// 敵を殺す
+  /// </summary>
+  public void Kill()
+  {
+    hp.Empty();
   }
 
   //----------------------------------------------------------------------------

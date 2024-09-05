@@ -76,6 +76,7 @@ public class FieldScene : MyMonoBehaviour
     DebugManager.Instance.Regist(BulletManager.Instance);
     DebugManager.Instance.Regist(SkillManager.Instance);
     DebugManager.Instance.Regist(ResourceManager.Instance);
+    DebugManager.Instance.Regist(EnemyManager.Instance);
   }
 
   private void UpdateSystemSetup()

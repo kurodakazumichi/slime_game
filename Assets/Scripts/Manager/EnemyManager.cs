@@ -44,7 +44,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   public IEnemy Get(EnemyId enemyId)
   {
     if (!enemyPools.TryGetValue((int)enemyId, out var enemyPool)) {
-      Debug.Log($"[EnemyManager.Get] EnemyPools[id] is null.");
+      Logger.Error($"[EnemyManager.Get] EnemyPools[id] is null.");
       return null;
     }
 
@@ -113,4 +113,42 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     // 最後に残ったのが一番近い敵
     return nearestEnemy;
   }
+
+#if _DEBUG
+  //----------------------------------------------------------------------------
+  // For Debug
+  //----------------------------------------------------------------------------
+
+  private string _enemyId = string.Empty;
+  private IEnemy _enemy = null;
+
+  /// <summary>
+  /// デバッグ用の基底メソッド
+  /// </summary>
+  public override void OnDebug()
+  {
+    using (new GUILayout.HorizontalScope()) 
+    {
+      GUILayout.Label("EnemyID");
+      _enemyId = GUILayout.TextField(_enemyId);
+
+      if (GUILayout.Button("Make")) 
+      {
+        if (_enemy !=  null) {
+          _enemy.Kill();
+        }
+
+        _enemy = Get(MyEnum.Parse<EnemyId>(_enemyId));
+        _enemy.Run();
+      }
+    }
+
+    if (GUILayout.Button("All Kill")) 
+    {
+      foreach (var enemy in enemies) {
+        enemy.Kill();
+      }
+    }
+  }
+#endif
 }
