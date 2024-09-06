@@ -127,13 +127,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   public EnemyId Id { get { return id; } }
 
   /// <summary>
-  /// 見た目の位置
-  /// </summary>
-  public Vector3 VisualPosition {
-    get { return CachedTransform.position + collider.center; }
-  }
-
-  /// <summary>
   /// 表示制御
   /// </summary>
   protected bool isVisible 
@@ -240,7 +233,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
       damage *= 3.0f;
     }
 
-    HitTextManager.Instance.Get().SetDisplay(VisualPosition, (int)damage);
+    HitTextManager.Instance.Get().SetDisplay(CachedTransform.position + Vector3.up, (int)damage);
 
     hp.Now -= damage;
   }
