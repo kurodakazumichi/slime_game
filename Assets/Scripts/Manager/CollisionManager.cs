@@ -2,7 +2,7 @@
 
 public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
 {
-  private const float _serachRadius = 10f;
+  private const float serachRadius = 10f;
 
   /// <summary>
   /// プレイヤーの攻撃が敵に衝突する
@@ -16,15 +16,23 @@ public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
       return;
     }
 
-    var attacks = Physics.OverlapSphere(pm.PlayerOriginPosition, _serachRadius, LayerMask.GetMask("PlayerAttack"));
+    var bullets = Physics.OverlapSphere(
+      pm.PlayerOriginPosition, 
+      serachRadius, 
+      LayerMask.GetMask(LayerName.PlayerBullet)
+    );
 
-    foreach (var attack in attacks) 
+    foreach (var item in bullets) 
     {
-      var bullet = attack.GetComponent<IBullet>();
+      var bullet = item.GetComponent<IBullet>();
 
       if (bullet == null) continue;
 
-      var enemies = Physics.OverlapSphere(bullet.CachedTransform.position, bullet.collider.radius, LayerMask.GetMask("Enemy"));
+      var enemies = Physics.OverlapSphere(
+        bullet.CachedTransform.position, 
+        bullet.collider.radius, 
+        LayerMask.GetMask(LayerName.Enemy)
+      );
 
       foreach (var enemy in enemies)
       {

@@ -6,10 +6,17 @@ static public class App
   public const int SKILL_MAX_LEVEL = 10;
 }
 
+static public class LayerName
+{
+  public static string PlayerBullet = "PlayerBullet";
+  public static string EnemyBullet  = "EnemyBullet";
+  public static string Enemy        = "Enemy";
+}
+
 static public class Layer
 {
-  public static int PlayerAttack => LayerMask.NameToLayer("PlayerAttack");
-  public static int EnemyAttack => LayerMask.NameToLayer("EnemyAttack");
+  public static int PlayerBullet => LayerMask.NameToLayer(LayerName.PlayerBullet);
+  public static int EnemyBullet  => LayerMask.NameToLayer(LayerName.EnemyBullet);
 }
 
 public enum EnemyId
