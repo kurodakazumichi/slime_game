@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MyMonoBehaviour
 {
   private enum State
   {
@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
 
   new public SphereCollider collider { get; private set; }
 
-  public Vector3 OriginPosition {
-    get { return transform.position; }
+  public Vector3 Position {
+    get { return CachedTransform.position; }
   }
 
   public bool IsDead {
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     state.SetState(State.Usual);
   }
 
-  void Awake()
+  protected override void MyAwake()
   {
     collider = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
