@@ -5,9 +5,9 @@ public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
   private const float serachRadius = 10f;
 
   /// <summary>
-  /// プレイヤーの攻撃が敵に衝突する
+  /// プレイヤーの弾丸と敵の衝突
   /// </summary>
-  public void CollidePlayerAttackWithEnemy()
+  public void CollidePlayerBulletWithEnemy()
   {
     var pm = PlayerManager.Instance;
 
@@ -16,28 +16,48 @@ public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
       return;
     }
 
-    var bullets = Physics.OverlapSphere(
-      pm.PlayerOriginPosition, 
+    // Player付近にある弾丸を収集
+    var colliders = Physics.OverlapSphere(
+      pm.Position, 
       serachRadius, 
       LayerMask.GetMask(LayerName.PlayerBullet)
     );
 
-    foreach (var item in bullets) 
+    // 収集した弾丸の衝突判定を実行
+    foreach (var collider in colliders) 
     {
-      var bullet = item.GetComponent<IBullet>();
+      var bullet = collider.GetComponent<IBullet>();
+      
+      if (bullet is not null) {
+        bullet.Intersect();
+      }
+    }
+  }
 
-      if (bullet == null) continue;
+  /// <summary>
+  /// 敵の弾丸とプレイヤーの衝突
+  /// </summary>
+  public void CollideEnemyBulletWithPlayer()
+  { 
+    var pm = PlayerManager.Instance;
 
-      var enemies = Physics.OverlapSphere(
-        bullet.CachedTransform.position, 
-        bullet.collider.radius, 
-        LayerMask.GetMask(LayerName.Enemy)
-      );
+    if (!pm.PlayerExists) {
+      return;
+    }
 
-      foreach (var enemy in enemies)
-      {
-        var e = enemy.GetComponent<IEnemy>();
-        bullet.Attack(e);
+    // Playerに衝突している弾丸を収集
+    var colliders = Physics.OverlapSphere(
+      pm.Position,
+      pm.Collider.radius,
+      LayerMask.GetMask(LayerName.EnemyBullet)
+    );
+
+    // 収集した弾丸の衝突判定を実行
+    foreach (var collider in colliders) {
+      var bullet = collider.GetComponent<IBullet>();
+
+      if (bullet is not null) {
+        bullet.Intersect();
       }
     }
   }

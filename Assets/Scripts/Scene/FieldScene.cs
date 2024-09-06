@@ -56,9 +56,9 @@ public class FieldScene : MyMonoBehaviour
 
   private void LateUpdate()
   {
-    // プレイヤーの攻撃と敵の衝突
     if(state.StateKey == State.Battle) {
-      CollisionManager.Instance.CollidePlayerAttackWithEnemy();
+      CollisionManager.Instance.CollidePlayerBulletWithEnemy();
+      CollisionManager.Instance.CollideEnemyBulletWithPlayer();
     }
   }
 

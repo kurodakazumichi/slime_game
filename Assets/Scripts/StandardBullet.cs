@@ -4,12 +4,13 @@ public interface IBullet
 {
   SkillId Id { get; }
   bool IsIdle { get; }
+  
+  void Fire(Vector3 position, IActor target, ISkill skill, BulletOwner ownerType);
   void Terminate();
-  void Fire(Vector3 position, IActor target, ISkill skill);
   void Attack(IActor actor);
+  
+  void Intersect();
   GameObject gameObject { get; }
-  SphereCollider collider { get; }
-  Transform CachedTransform { get; }
 }
 
 /// <summary>
@@ -97,6 +98,18 @@ public class StandardBullet : MyMonoBehaviour, IBullet
     }
   }
 
+  /// <summary>
+  /// 弾丸のOwnerタイプを設定する
+  /// </summary>
+  private BulletOwner owner {
+    get {
+      return (layer == Layer.EnemyBullet)? BulletOwner.Enemy : BulletOwner.Player;
+    }
+    set {
+      layer = (value == BulletOwner.Enemy)? Layer.EnemyBullet : Layer.PlayerBullet;
+    }
+  }
+
   //============================================================================
   // Methods
   //============================================================================
@@ -105,9 +118,13 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   // Public
   //----------------------------------------------------------------------------
 
-  public void Fire(Vector3 position, IActor target, ISkill skill)
+  /// <summary>
+  /// 発射する
+  /// </summary>
+  public void Fire(Vector3 position, IActor target, ISkill skill, BulletOwner owner)
   {
     Id = skill.Id;
+    this.owner = owner;
 
     CachedTransform.position = position;
 
@@ -118,10 +135,14 @@ public class StandardBullet : MyMonoBehaviour, IBullet
     }
 
     this.velocity = v;
-    status.Init(skill.Power, (uint)Attribute.Non);
+
+    status.Init(skill.Power, skill.Attributes);
     state.SetState(State.Usual);
   }
 
+  /// <summary>
+  /// 終了する
+  /// </summary>
   public void Terminate()
   {
     if (IsIdle) {
@@ -130,6 +151,9 @@ public class StandardBullet : MyMonoBehaviour, IBullet
     isTerminating = true;
   }
 
+  /// <summary>
+  /// targetを攻撃する
+  /// </summary>
   public void Attack(IActor target)
   {
     if (isTerminating) {
@@ -138,6 +162,22 @@ public class StandardBullet : MyMonoBehaviour, IBullet
 
     target.TakeDamage(status);
     isTerminating = true;
+  }
+
+  /// <summary>
+  /// 衝突判定
+  /// </summary>
+  public void Intersect()
+  {
+    // Playerの弾丸なら敵との衝突判定を行う
+    if (owner is BulletOwner.Player) {
+      IntersectEnemies();
+    } 
+    
+    // Enemyの弾丸の場合、Intersectが呼ばれる=Playerに接触なのでPlayerに攻撃をする
+    else {
+      Attack(PlayerManager.Instance.Player);
+    }
   }
 
   //----------------------------------------------------------------------------
@@ -206,5 +246,21 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   // for Me
   //----------------------------------------------------------------------------
 
+  /// <summary>
+  /// 敵との衝突判定
+  /// </summary>
+  private void IntersectEnemies()
+  {
+    var enemies = Physics.OverlapSphere(
+        CachedTransform.position,
+        collider.radius,
+        LayerMask.GetMask(LayerName.Enemy)
+      );
+
+    foreach (var enemy in enemies) {
+      var e = enemy.GetComponent<IEnemy>();
+      Attack(e);
+    }
+  }
 
 }

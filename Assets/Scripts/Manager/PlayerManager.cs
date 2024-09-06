@@ -42,15 +42,15 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     player.TakeDamage(p);
   }
 
-  public Vector3 PlayerOriginPosition {
+  public Vector3 Position {
     get { return player.Position; }
   }
 
-  public SphereCollider PlayerCollider {
+  public SphereCollider Collider {
     get { return player.collider; }
   }
 
-  public MyMonoBehaviour Player {
+  public Player Player {
     get { return player; }
   }
 }

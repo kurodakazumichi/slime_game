@@ -27,6 +27,14 @@ public class MyMonoBehaviour : MonoBehaviour
   /// </summary>
   public bool IsActiveSelf => this.gameObject.activeSelf;
 
+  /// <summary>
+  /// Layerのショートカット
+  /// </summary>
+  protected int layer {
+    get { return  this.gameObject.layer; }
+    set { this.gameObject.layer = value; }
+  }
+
   //============================================================================
   // Methods
   //============================================================================

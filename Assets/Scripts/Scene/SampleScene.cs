@@ -86,7 +86,7 @@ public class SampleScene : MonoBehaviour
   private void LateUpdate()
   {
     // ƒvƒŒƒCƒ„[‚ÌUŒ‚‚Æ“G‚ÌÕ“Ë
-    CollisionManager.Instance.CollidePlayerAttackWithEnemy();
+    CollisionManager.Instance.CollidePlayerBulletWithEnemy();
   }
 
   private void OnGUI()

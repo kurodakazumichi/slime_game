@@ -131,9 +131,9 @@ public class BattleLocation : MyMonoBehaviour
       return;
     }
 
-    var a = PlayerManager.Instance.PlayerOriginPosition;
+    var a = PlayerManager.Instance.Position;
     var b = collider.transform.position;
-    var r = PlayerManager.Instance.PlayerCollider.radius + collider.radius;
+    var r = PlayerManager.Instance.Collider.radius + collider.radius;
     isPlayerHit = CollisionUtil.IsCollideAxB(a, b, r);
   }
 

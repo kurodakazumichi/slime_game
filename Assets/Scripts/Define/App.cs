@@ -38,6 +38,12 @@ public enum WaveShape
   Random,
 }
 
+public enum BulletOwner
+{
+  Player,
+  Enemy,
+}
+
 /// <summary>
 /// 成長度
 /// </summary>

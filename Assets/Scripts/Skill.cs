@@ -88,13 +88,13 @@ public class Skill : ISkill
   /// <summary>
   /// スキル発動
   /// </summary>
-  public virtual void Fire()
+  public void Fire()
   {
     var bullet = BulletManager.Instance.Get(Id);
 
     var pm = PlayerManager.Instance;
-    var enemy = EnemyManager.Instance.FindNearestEnemy(pm.PlayerOriginPosition);
-    bullet.Fire(pm.PlayerOriginPosition, enemy, this);
+    var enemy = EnemyManager.Instance.FindNearestEnemy(pm.Position);
+    bullet.Fire(pm.Position, enemy, this, BulletOwner.Player);
   }
 
   /// <summary>

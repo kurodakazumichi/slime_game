@@ -58,7 +58,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
       return;
     }
 
-    var v = PM.PlayerOriginPosition - CachedTransform.position;
+    var v = PM.Position - CachedTransform.position;
     CachedTransform.position += (v.normalized * Speed) * TimeSystem.Enemy.DeltaTime; 
   }
 
@@ -69,7 +69,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     }
 
     // 暫定
-    var d1 = (PlayerManager.Instance.PlayerOriginPosition - CachedTransform.position).sqrMagnitude;
+    var d1 = (PlayerManager.Instance.Position - CachedTransform.position).sqrMagnitude;
     var d2 = collider.radius * collider.radius;
 
     if (d1 < d2) {
