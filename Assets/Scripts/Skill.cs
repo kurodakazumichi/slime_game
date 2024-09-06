@@ -91,7 +91,10 @@ public class Skill : ISkill
   public virtual void Fire()
   {
     var bullet = BulletManager.Instance.Get(Id);
-    bullet.Fire(this);
+
+    var pm = PlayerManager.Instance;
+    var en = EnemyManager.Instance.FindNearestEnemy(pm.PlayerOriginPosition) as MyMonoBehaviour;
+    bullet.Fire(pm.PlayerOriginPosition, en, this);
   }
 
   /// <summary>

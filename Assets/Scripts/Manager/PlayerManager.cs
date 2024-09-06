@@ -49,4 +49,8 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
   public SphereCollider PlayerCollider {
     get { return player.collider; }
   }
+
+  public MyMonoBehaviour Player {
+    get { return player; }
+  }
 }

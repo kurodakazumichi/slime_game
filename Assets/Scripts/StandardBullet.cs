@@ -5,7 +5,7 @@ public interface IBullet
   SkillId Id { get; }
   bool IsIdle { get; }
   void Terminate();
-  void Fire(ISkill skill);
+  void Fire(Vector3 position, MyMonoBehaviour target, ISkill skill);
   void Attack(IEnemy enemy);
   GameObject gameObject { get; }
   SphereCollider collider { get; }
@@ -105,19 +105,16 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   // Public
   //----------------------------------------------------------------------------
 
-  public void Fire(ISkill skill)
+  public void Fire(Vector3 position, MyMonoBehaviour target, ISkill skill)
   {
     Id = skill.Id;
 
-    var p = PlayerManager.Instance.PlayerOriginPosition;
-    transform.position = p;
-
-    var e = EnemyManager.Instance.FindNearestEnemy(p);
+    CachedTransform.position = position;
 
     var v = Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up) * Vector3.forward;
 
-    if (e != null) {
-      v = (e.CachedTransform.position - p).normalized;
+    if (target != null) {
+      v = (target.CachedTransform.position - position).normalized;
     }
 
     this.velocity = v;
