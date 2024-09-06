@@ -188,9 +188,6 @@ public class StandardBullet : MyMonoBehaviour, IBullet
     p += velocity * TimeSystem.DeltaTime;
     transform.position = p;
 
-    var r = transform.rotation;
-    transform.rotation = r * Quaternion.AngleAxis(720f * TimeSystem.DeltaTime, Vector3.forward);
-
     if (isTerminating) {
       state.SetState(State.Idle);
       return;
