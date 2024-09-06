@@ -45,9 +45,6 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
   public Vector3 PlayerOriginPosition {
     get { return player.OriginPosition; }
   }
-  public Vector3 PlayerVisualPosition {
-    get { return player.VisualPosition; }
-  }
 
   public SphereCollider PlayerCollider {
     get { return player.collider; }

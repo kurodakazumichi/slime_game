@@ -107,7 +107,7 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   {
     Id = skill.Id;
 
-    var p = PlayerManager.Instance.PlayerVisualPosition;
+    var p = PlayerManager.Instance.PlayerOriginPosition;
     transform.position = p;
 
     var e = EnemyManager.Instance.FindNearestEnemy(p);

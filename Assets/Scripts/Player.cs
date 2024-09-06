@@ -24,10 +24,6 @@ public class Player : MonoBehaviour
     get { return transform.position; }
   }
 
-  public Vector3 VisualPosition {
-    get { return transform.position + collider.center; }
-  }
-
   public bool IsDead {
     get { return _hp.IsEmpty; }
   }
