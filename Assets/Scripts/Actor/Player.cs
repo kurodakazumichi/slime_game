@@ -1,7 +1,7 @@
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class Player : Actor
+public class Player : MyMonoBehaviour, IActor
 {
   private enum State
   {
@@ -31,7 +31,7 @@ public class Player : Actor
 
   private StateMachine<State> state = new StateMachine<State>();
 
-  public override void TakeDamage(AttackStatus p)
+  public void TakeDamage(AttackStatus p)
   {
     if (state.StateKey != State.Usual) {
       return;

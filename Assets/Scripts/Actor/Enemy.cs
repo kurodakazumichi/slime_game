@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 敵のインターフェース
 /// </summary>
-public interface IEnemy
+public interface IEnemy: IActor
 {
   /// <summary>
   /// 識別子の取得
@@ -15,11 +15,6 @@ public interface IEnemy
   /// 初期化
   /// </summary>
   void Init(EnemyId id);
-
-  /// <summary>
-  /// ダメージを受ける
-  /// </summary>
-  void TakeDamage(AttackStatus p);
 
   /// <summary>
   /// 所属Waveを設定する
@@ -35,18 +30,12 @@ public interface IEnemy
   /// 敵を殺す
   /// </summary>
   void Kill();
-
-  //----------------------------------------------------------------------------
-  // MonoBehaviour系
-
-  GameObject gameObject { get; }
-  Transform CachedTransform { get; }
 }
 
 /// <summary>
 /// 敵の基底クラス
 /// </summary>
-public abstract class Enemy<T> : Actor, IEnemy
+public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
 {
   //============================================================================
   // Variables
@@ -215,7 +204,7 @@ public abstract class Enemy<T> : Actor, IEnemy
   /// <summary>
   /// ダメージを受ける
   /// </summary>
-  public override void TakeDamage(AttackStatus p)
+  public void TakeDamage(AttackStatus p)
   {
     float damage = p.Power;
 

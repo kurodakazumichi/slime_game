@@ -93,8 +93,8 @@ public class Skill : ISkill
     var bullet = BulletManager.Instance.Get(Id);
 
     var pm = PlayerManager.Instance;
-    var actor = EnemyManager.Instance.FindNearestEnemy(pm.PlayerOriginPosition) as Actor;
-    bullet.Fire(pm.PlayerOriginPosition, actor, this);
+    var enemy = EnemyManager.Instance.FindNearestEnemy(pm.PlayerOriginPosition);
+    bullet.Fire(pm.PlayerOriginPosition, enemy, this);
   }
 
   /// <summary>

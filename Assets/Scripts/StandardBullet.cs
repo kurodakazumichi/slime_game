@@ -5,8 +5,8 @@ public interface IBullet
   SkillId Id { get; }
   bool IsIdle { get; }
   void Terminate();
-  void Fire(Vector3 position, Actor target, ISkill skill);
-  void Attack(Actor actor);
+  void Fire(Vector3 position, IActor target, ISkill skill);
+  void Attack(IActor actor);
   GameObject gameObject { get; }
   SphereCollider collider { get; }
   Transform CachedTransform { get; }
@@ -105,7 +105,7 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   // Public
   //----------------------------------------------------------------------------
 
-  public void Fire(Vector3 position, Actor target, ISkill skill)
+  public void Fire(Vector3 position, IActor target, ISkill skill)
   {
     Id = skill.Id;
 
@@ -130,7 +130,7 @@ public class StandardBullet : MyMonoBehaviour, IBullet
     isTerminating = true;
   }
 
-  public void Attack(Actor target)
+  public void Attack(IActor target)
   {
     if (isTerminating) {
       return;
