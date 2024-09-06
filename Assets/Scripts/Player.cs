@@ -1,6 +1,7 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
-public class Player : MyMonoBehaviour
+public class Player : Actor
 {
   private enum State
   {
@@ -30,6 +31,23 @@ public class Player : MyMonoBehaviour
 
   private StateMachine<State> state = new StateMachine<State>();
 
+  public override void TakeDamage(AttackStatus p)
+  {
+    if (state.StateKey != State.Usual) {
+      return;
+    }
+
+    _hp.Now -= p.Power;
+
+    SyncHpToHudHpGauge();
+
+    if (_hp.IsEmpty) {
+      state.SetState(State.Dead);
+    }
+    else {
+      state.SetState(State.Invincible);
+    }
+  }
   public void Respawn()
   {
     _hp.Full();
@@ -59,23 +77,6 @@ public class Player : MyMonoBehaviour
   void Start()
   {
     SyncHpToHudHpGauge();
-  }
-
-  public void takeDamage(float value)
-  {
-    if (state.StateKey != State.Usual) {
-      return;
-    }
-
-    _hp.Now -= value;
-
-    SyncHpToHudHpGauge();
-
-    if (_hp.IsEmpty) {
-      state.SetState(State.Dead);
-    } else {
-      state.SetState(State.Invincible);
-    }
   }
 
   private void Update()

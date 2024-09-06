@@ -33,13 +33,13 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     get { return player.IsDead; }
   }
 
-  public void takeDamage(float value)
+  public void AttackPlayer(AttackStatus p)
   {
     if (!PlayerExists) return;
 
     if (PlayerIsDead) return;
 
-    player.takeDamage(value);
+    player.TakeDamage(p);
   }
 
   public Vector3 PlayerOriginPosition {

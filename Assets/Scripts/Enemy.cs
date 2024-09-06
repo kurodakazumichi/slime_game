@@ -46,7 +46,7 @@ public interface IEnemy
 /// <summary>
 /// 敵の基底クラス
 /// </summary>
-public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
+public abstract class Enemy<T> : Actor, IEnemy
 {
   //============================================================================
   // Variables
@@ -83,11 +83,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   private float power = 0;
 
   /// <summary>
-  /// 攻撃属性
-  /// </summary>
-  private Flag32 attrA;
-
-  /// <summary>
   /// 弱点属性、攻撃を受ける時に参照
   /// </summary>
   private Flag32 attrW;
@@ -116,6 +111,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// 所属するWave
   /// </summary>
   protected EnemyWave ownerWave { get; private set; } = null;
+
+  /// <summary>
+  /// 攻撃ステータス
+  /// </summary>
+  protected AttackStatus attackStatus { get; private set; } = null;
 
   //============================================================================
   // Properities
@@ -191,12 +191,13 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
 
     var master = EnemyMaster.FindById(id);
     hp.Init(master.HP);
-    attrA.Value = master.AttackAttr;
     attrW.Value = master.WeakAttr;
     attrN.Value = master.NullfiedAttr;
     power       = master.Power;
     skillId     = master.SkillId;
     exp         = master.Exp;
+
+    attackStatus.Init(power, master.AttackAttr);
   }
 
   /// <summary>
@@ -214,7 +215,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// ダメージを受ける
   /// </summary>
-  public void TakeDamage(AttackStatus p)
+  public override void TakeDamage(AttackStatus p)
   {
     float damage = p.Power;
 
@@ -284,7 +285,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     // ステータス系パラメータの準備
     hp      = new RangedFloat(0);
     power   = 0;
-    attrA   = new Flag32();
     attrW   = new Flag32();
     attrR   = new Flag32();
     attrN   = new Flag32();
@@ -292,6 +292,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     exp     = 0;
 
     state = new StateMachine<T>();
+    attackStatus = new AttackStatus();
   }
 
   // Update is called once per frame
