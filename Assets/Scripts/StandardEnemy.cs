@@ -58,7 +58,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
       return;
     }
 
-    var v = PM.PlayerVisualPosition - CachedTransform.position;
+    var v = PM.PlayerOriginPosition - CachedTransform.position;
     CachedTransform.position += (v.normalized * Speed) * TimeSystem.Enemy.DeltaTime; 
   }
 
@@ -68,8 +68,8 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
       return;
     }
 
-    // Žb’è
-    var d1 = (PlayerManager.Instance.PlayerVisualPosition - transform.position).sqrMagnitude;
+    // æš«å®š
+    var d1 = (PlayerManager.Instance.PlayerOriginPosition - CachedTransform.position).sqrMagnitude;
     var d2 = collider.radius * collider.radius;
 
     if (d1 < d2) {
