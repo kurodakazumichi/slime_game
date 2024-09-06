@@ -8,6 +8,8 @@ public interface IBullet
   void Fire(ISkill skill);
   void Attack(IEnemy enemy);
   GameObject gameObject { get; }
+  SphereCollider collider { get; }
+  Transform CachedTransform { get; }
 }
 
 /// <summary>
@@ -133,6 +135,10 @@ public class StandardBullet : MyMonoBehaviour, IBullet
 
   public void Attack(IEnemy enemy)
   {
+    if (isTerminating) {
+      return;
+    }
+
     enemy.TakeDamage(status);
     isTerminating = true;
   }

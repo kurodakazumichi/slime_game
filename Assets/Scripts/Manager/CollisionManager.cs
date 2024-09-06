@@ -20,11 +20,11 @@ public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
 
     foreach (var attack in attacks) 
     {
-      var bullet = attack.GetComponent<StandardBullet>();
+      var bullet = attack.GetComponent<IBullet>();
 
       if (bullet == null) continue;
 
-      var enemies = Physics.OverlapSphere(bullet.transform.position, bullet.collider.radius, LayerMask.GetMask("Enemy"));
+      var enemies = Physics.OverlapSphere(bullet.CachedTransform.position, bullet.collider.radius, LayerMask.GetMask("Enemy"));
 
       foreach (var enemy in enemies)
       {
