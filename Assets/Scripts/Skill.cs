@@ -55,6 +55,13 @@ public class Skill : ISkill
   }
 
   /// <summary>
+  /// 名称
+  /// </summary>
+  public string Name {
+    get { return entity.Name; }
+  }
+
+  /// <summary>
   /// 属性
   /// </summary>
   public uint Attributes {
@@ -127,7 +134,21 @@ public class Skill : ISkill
   /// </summary>
   private float LerpParam(float min, float max, int lv)
   {
-    return Mathf.Lerp(min, max, lv / (float)(App.SKILL_MAX_LEVEL));
+    // 成長タイプ別係数
+    const float GROWTH_FAST_FACTOR = 0.3f;
+    const float GROWTH_SLOW_FACTOR = 3.0f;
+
+    // 最大レベルに対する比率
+    float rate = lv / (float)(App.SKILL_MAX_LEVEL);
+
+    // 成長タイプ補正
+    switch (entity.GrowthType) {
+      case Growth.Fast: rate = Mathf.Pow(rate, GROWTH_FAST_FACTOR); break;
+      case Growth.Slow: rate = Mathf.Pow(rate, GROWTH_SLOW_FACTOR); break;
+      default: break;
+    }
+
+    return Mathf.Lerp(min, max, rate);
   }
 
   /// <summary>
@@ -154,4 +175,73 @@ public class Skill : ISkill
     lv = Mathf.Clamp(lv, 0, App.SKILL_MAX_LEVEL);
     return (int)Mathf.Lerp(0, entity.MaxExp, (float)(lv) / App.SKILL_MAX_LEVEL);
   }
+
+  /// <summary>
+  /// 次のレベルの経験値
+  /// </summary>
+  private int GetNextExp()
+  {
+    return GetNeedExp(Lv + 1);
+  }
+
+#if _DEBUG
+  //----------------------------------------------------------------------------
+  // For Debug
+  //----------------------------------------------------------------------------
+
+  /// <summary>
+  /// デバッグ用の基底メソッド
+  /// </summary>
+  public void OnDebug()
+  {
+    SkillDebugger.OnGUI(this);
+  }
+
+  public static class SkillDebugger
+  {
+    private static Flag32 attributes = new Flag32();
+
+    private static void DrawProperty(string name, string value)
+    {
+      using (new GUILayout.HorizontalScope()) 
+      {
+        GUILayout.Label(name, GUILayout.Width(100));
+        GUILayout.Label(value);
+      }
+    }
+
+    public static void OnGUI(Skill skill)
+    {
+      var entity = skill.entity;
+      attributes.Value = skill.Attributes;
+
+      DrawProperty("Id"        , skill.Id.ToString());
+      DrawProperty("Name"      , skill.Name);
+      DrawProperty("Lv"        , $"{skill.Lv}");
+      DrawProperty("Power"     , $"{skill.Power} ({entity.FirstPower} - {entity.LastPower})");
+      DrawProperty("Recast"    , $"{skill.RecastTime} ({entity.FirstRecastTime} - {entity.LastRecastTime})");
+      DrawProperty("Max Exp"   , $"{entity.MaxExp}");
+      DrawProperty("Next Exp"  , $"{skill.GetNextExp()}");
+      DrawProperty("GrowthType", $"{entity.GrowthType.ToString()}");
+      DrawProperty("Prefab"    , $"{entity.Prefab}");
+
+      using (new GUILayout.HorizontalScope()) 
+      {
+        GUILayout.Toggle(attributes.Has((int)Attribute.Non), "無");
+        GUILayout.Toggle(attributes.Has((int)Attribute.Fir), "火");
+        GUILayout.Toggle(attributes.Has((int)Attribute.Wat), "水");
+        GUILayout.Toggle(attributes.Has((int)Attribute.Thu), "雷");
+        GUILayout.Toggle(attributes.Has((int)Attribute.Ice), "氷");
+        GUILayout.Toggle(attributes.Has((int)Attribute.Tre), "木");
+        GUILayout.Toggle(attributes.Has((int)Attribute.Hol), "聖");
+        GUILayout.Toggle(attributes.Has((int)Attribute.Dar), "闇");
+      }
+
+      if (GUILayout.Button("Fire")) {
+        skill.Fire();
+      }
+    }
+  }
+
+#endif
 }

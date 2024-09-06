@@ -14,6 +14,7 @@ public static class SkillRepository
       LastPower       = 10,
       Attr            = (uint)(Attribute.Non),
       Prefab          = "Bullet/NormalBullet.prefab",
+      GrowthType      = Growth.Normal,
     },
 
     new SkillEntity() {
@@ -25,7 +26,8 @@ public static class SkillRepository
       FirstPower      = 1,
       LastPower       = 10,
       Attr            = (uint)(Attribute.Non),
-      Prefab          = "",
+      Prefab          = "Bullet/NormalBullet.prefab",
+      GrowthType      = Growth.Normal,
     },
 
     new SkillEntity() {
@@ -37,7 +39,8 @@ public static class SkillRepository
       FirstPower      = 10,
       LastPower       = 100,
       Attr            = (uint)(Attribute.Non),
-      Prefab          = "",
+      Prefab          = "Bullet/NormalBullet.prefab",
+      GrowthType      = Growth.Normal,
     },
 
     new SkillEntity() {
@@ -49,7 +52,8 @@ public static class SkillRepository
       FirstPower      = 1,
       LastPower       = 10,
       Attr            = (uint)(Attribute.Fir),
-      Prefab          = "",
+      Prefab          = "Bullet/NormalBullet.prefab",
+      GrowthType      = Growth.Normal,
     },
 
   };

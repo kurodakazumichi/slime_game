@@ -40,7 +40,14 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     base.MyAwake();
 
     // スキルの種類の数だけ要素を追加
-    MyEnum.ForEach<SkillId>(id => exps.Add((int)id, -1));
+    MyEnum.ForEach<SkillId>((id) => 
+    {
+      if (id == SkillId.Undefined) {
+        return;
+      }
+
+      exps.Add((int)id, -1);
+    });
 
     // アクティブスキルを初期化
     for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) {
@@ -153,98 +160,138 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   // For Debug
   //----------------------------------------------------------------------------
 
-  private int _tabIndex = 0;
-
   /// <summary>
   /// デバッグ用の基底メソッド
   /// </summary>
   public override void OnDebug()
   {
-    GUILayout.Label("SkillManager");
+    SkillManagerDebugger.OnGUI();
+  }
 
-    using (new GUILayout.HorizontalScope()) 
+  public static class SkillManagerDebugger
+  {
+    private static int tabIndex = 0;
+
+    public static void OnGUI()
     {
-      if (GUILayout.Button("Exp")) {
-        _tabIndex = 0;
-      }
-
-      if (GUILayout.Button("ActiveSkills")) {
-        _tabIndex = 1;
-      }
-    }
-
-    switch(_tabIndex) {
-      case 0: OnDebug_DrawExp(); break;
-      case 1: OnDebug_DrawActiveSkill(); break;
-      default: break;
-    }
-  }
-
-  private void OnDebug_DrawExp()
-  {
-    using (new GUILayout.HorizontalScope()) {
-
-      using (new GUILayout.VerticalScope()) {
-        GUILayout.Box("Fixed");
-        OnDebug_DrawExpList(exps);
-      }
-
-      using (new GUILayout.VerticalScope()) {
-        GUILayout.Box("Stock");
-        OnDebug_DrawExpList(tmpExps);
-      }
-
-    }
-
-    if (GUILayout.Button("Fix")) {
-      FixExps();
-    }
-  }
-
-  private void OnDebug_DrawExpList(Dictionary<int, int> dic)
-  {
-    // 経験値リストをループ処理
-    for (int i = 0, count = dic.Count; i < count; i++) {
-      // 要素取得
-      var item = dic.ElementAt(i);
-      var name = ((SkillId)item.Key).ToString();
-
       using (new GUILayout.HorizontalScope()) {
-        // Label
-        GUILayout.Label(name);
+        if (GUILayout.Button("Exp")) {
+          tabIndex = 0;
+        }
 
-        // TextField
-        var value = GUILayout.TextField(item.Value.ToString(), GUILayout.Width(100));
+        if (GUILayout.Button("ActiveSkills")) {
+          tabIndex = 1;
+        }
 
-        if (int.TryParse(value, out var result)) {
-          dic[item.Key] = result;
+        if (GUILayout.Button("Simulator")) {
+          tabIndex = 2;
+        }
+      }
+
+      switch (tabIndex) {
+        case 0: DrawExp(); break;
+        case 1: DrawActiveSkill(); break;
+        case 2: DrawSimulater(); break;
+        default: break;
+      }
+    }
+
+    private static void DrawExp()
+    {
+      using (new GUILayout.HorizontalScope()) {
+
+        using (new GUILayout.VerticalScope()) {
+          GUILayout.Box("Fixed", GUILayout.Width(300));
+          DrawExpList(Instance.exps);
+        }
+
+        using (new GUILayout.VerticalScope()) {
+          GUILayout.Box("Stock");
+          DrawExpList(Instance.tmpExps);
+        }
+
+      }
+
+      if (GUILayout.Button("Fix")) {
+        Instance.FixExps();
+      }
+    }
+
+    private static void DrawExpList(Dictionary<int, int> dic)
+    {
+      // 経験値リストをループ処理
+      for (int i = 0, count = dic.Count; i < count; i++) {
+        // 要素取得
+        var item = dic.ElementAt(i);
+        var name = ((SkillId)item.Key).ToString();
+
+        using (new GUILayout.HorizontalScope(GUILayout.Width(300))) {
+          // Button
+          if (GUILayout.Button(name)) {
+            simulationSkillId = name;
+            tabIndex = 2;
+          }
+
+          // TextField
+          var value = GUILayout.TextField(item.Value.ToString(), GUILayout.Width(100));
+
+          if (int.TryParse(value, out var result)) {
+            dic[item.Key] = result;
+          }
         }
       }
     }
-  }
 
-  private void OnDebug_DrawActiveSkill()
-  {
-    using (new GUILayout.HorizontalScope()) {
-      GUILayout.Box("Index", GUILayout.Width(60));
-      GUILayout.Box("Lv", GUILayout.Width(30));
-      GUILayout.Box("Name");
+    private static void DrawActiveSkill()
+    {
+      using (new GUILayout.HorizontalScope()) {
+        GUILayout.Box("Index", GUILayout.Width(60));
+        GUILayout.Box("Lv", GUILayout.Width(30));
+        GUILayout.Box("Name");
+      }
+
+      for (int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) {
+        var skill = Instance.activeSkills[i];
+
+        if (skill == null) continue;
+
+        using (new GUILayout.HorizontalScope()) {
+          GUILayout.Box(i.ToString(), GUILayout.Width(60));
+          GUILayout.Box((skill.Lv + 1).ToString(), GUILayout.Width(30));
+          GUILayout.Box(skill.Id.ToString());
+        }
+      }
+
     }
 
-    for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) 
+    private static string simulationSkillId = "";
+    private static int simulationLv = 0;
+    private static Skill simulationSkill = null;
+    private static void DrawSimulater()
     {
-      var skill = activeSkills[i];
-
-      if (skill == null) continue;
-
       using (new GUILayout.HorizontalScope()) 
       {
-        GUILayout.Box(i.ToString(), GUILayout.Width(60));
-        GUILayout.Box((skill.Lv + 1).ToString(), GUILayout.Width(30));
-        GUILayout.Box(skill.Id.ToString());
+        GUILayout.Label("SkillId");
+        simulationSkillId = GUILayout.TextField(simulationSkillId);
+        GUILayout.Label($"Lv {simulationLv}");
+        simulationLv = (int)GUILayout.HorizontalSlider((float)simulationLv, 0f, App.ACTIVE_SKILL_MAX);
+
+        if (GUILayout.Button("Simulate")) 
+        {
+          var id = MyEnum.Parse<SkillId>(simulationSkillId);
+          var lv = Mathf.Clamp(simulationLv, 0, App.ACTIVE_SKILL_MAX);
+
+          simulationSkill = new Skill();
+          simulationSkill.Init(SkillMaster.FindById(id), 0);
+          simulationSkill.SetLv(lv);
+        }
+      }
+
+      if (simulationSkill is not null) {
+        simulationSkill.OnDebug();
       }
     }
-    
+
   }
 #endif
 
