@@ -37,11 +37,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: db27580c877dd864488e15c7341c109a
-    m_Address: Icon/Enemy/Bat.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9daedef162f765d438dae46452327a0c, type: 2}
   m_SchemaSet:
