@@ -28,7 +28,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63dc01e5b756a0f46a8c4834efded5bf
-    m_Address: Enemy/SpiderA.prefab
+    m_Address: Enemy/011.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

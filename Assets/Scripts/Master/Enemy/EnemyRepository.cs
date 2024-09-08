@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 public static class EnemyRepository
 {
-  public static List<IEnemyEntityRO> entities = new List<IEnemyEntityRO>()
+  public static List<IEnemyEntityRO> entities = new List<IEnemyEntityRO>() 
   {
     new EnemyEntity() {
       Id           = EnemyId.BatA,
-      Name         = "ÉRÉEÉÇÉä",
+      Name         = "„Ç≥„Ç¶„É¢„É™",
       HP           = 2,
       Power        = 1,
       AttackAttr   = (uint)(Attribute.Non),
@@ -18,10 +18,10 @@ public static class EnemyRepository
       PrefabPath   = "Enemy/BatA.prefab",
       IconPath     = "Icon/Enemy/BatA.png",
     },
-
+    
     new EnemyEntity() {
-      Id           = EnemyId.SpiderA,
-      Name         = "ÉNÉÇ",
+      Id           = EnemyId.Enemy011,
+      Name         = "„ÇØ„É¢",
       HP           = 5,
       Power        = 2,
       AttackAttr   = (uint)(Attribute.Non),
@@ -30,9 +30,9 @@ public static class EnemyRepository
       NullfiedAttr = (uint)(Attribute.Nil),
       SkillId      = SkillId.NormalBullet,
       Exp          = 2,
-      PrefabPath   = "Enemy/SpiderA.prefab",
+      PrefabPath   = "Enemy/011.prefab",
       IconPath     = "Icon/Enemy/SpiderA.png",
     },
-
+    
   };
 }

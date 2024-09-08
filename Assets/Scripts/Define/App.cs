@@ -19,13 +19,6 @@ static public class Layer
   public static int EnemyBullet  => LayerMask.NameToLayer(LayerName.EnemyBullet);
 }
 
-public enum EnemyId
-{
-  Undefined = 0,
-  BatA, // コウモリ
-  SpiderA, // クモ
-}
-
 /// <summary>
 /// Waveの形状
 /// </summary>

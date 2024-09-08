@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   props:
-    EnemyId: SpiderA
+    EnemyId: Enemy011
     ShapeId: Point
     BasePosition: {x: 0, y: 0, z: 0}
     Area: {x: 0, y: 0, z: 0}

@@ -1,4 +1,4 @@
-﻿public enum SkillId
+public enum SkillId 
 {
   Undefined = 0,
   NormalBullet, // 通常弾

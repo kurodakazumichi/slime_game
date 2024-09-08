@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 public static class SkillRepository
 {
-  public static List<ISkillEntityRO> entities = new List<ISkillEntityRO>()
+  public static List<ISkillEntityRO> entities = new List<ISkillEntityRO>() 
   {
     new SkillEntity() {
       Id              = SkillId.NormalBullet,
@@ -16,7 +16,7 @@ public static class SkillRepository
       Prefab          = "Bullet/NormalBullet.prefab",
       GrowthType      = Growth.Normal,
     },
-
+    
     new SkillEntity() {
       Id              = SkillId.RapidShot,
       Name            = "高速弾",
@@ -29,7 +29,7 @@ public static class SkillRepository
       Prefab          = "Bullet/NormalBullet.prefab",
       GrowthType      = Growth.Normal,
     },
-
+    
     new SkillEntity() {
       Id              = SkillId.HeavyShot,
       Name            = "重鉄弾",
@@ -42,7 +42,7 @@ public static class SkillRepository
       Prefab          = "Bullet/NormalBullet.prefab",
       GrowthType      = Growth.Normal,
     },
-
+    
     new SkillEntity() {
       Id              = SkillId.FireBullet,
       Name            = "火炎弾",
@@ -55,6 +55,6 @@ public static class SkillRepository
       Prefab          = "Bullet/NormalBullet.prefab",
       GrowthType      = Growth.Normal,
     },
-
+    
   };
 }
