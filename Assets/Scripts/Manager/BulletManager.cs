@@ -2,6 +2,34 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
+/// <summary>
+/// 弾丸発射時の情報
+/// </summary>
+public class BulletFireInfo
+{
+  public Vector3 Position  = Vector3.zero;       // 位置
+  public Vector3 Direction = Vector3.zero;       // 方向
+  public IActor Target     = null;               // ターゲット
+  public ISkill Skill      = null;               // 弾丸を生成したスキル
+  public BulletOwner Owner = BulletOwner.Player; // 弾の所有者
+}
+
+/// <summary>
+/// 弾丸インターフェース
+/// </summary>
+public interface IBullet
+{
+  SkillId Id { get; }
+  bool IsIdle { get; }
+
+  void Fire(BulletFireInfo info);
+  void Terminate();
+  void Attack(IActor actor);
+
+  void Intersect();
+  GameObject gameObject { get; }
+}
+
 public class BulletManager : SingletonMonoBehaviour<BulletManager>
 {
   /// <summary>

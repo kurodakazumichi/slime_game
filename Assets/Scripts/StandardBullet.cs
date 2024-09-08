@@ -1,22 +1,10 @@
-﻿using UnityEngine;
-
-public interface IBullet
-{
-  SkillId Id { get; }
-  bool IsIdle { get; }
-  
-  void Fire(Vector3 position, IActor target, ISkill skill, BulletOwner ownerType);
-  void Terminate();
-  void Attack(IActor actor);
-  
-  void Intersect();
-  GameObject gameObject { get; }
-}
+﻿using System.Threading;
+using UnityEngine;
 
 /// <summary>
 /// 通常弾のスクリプト
 /// </summary>
-public class StandardBullet : MyMonoBehaviour, IBullet
+public class StandardBullet : Bullet<StandardBullet.State>
 {
   //============================================================================
   // Enum
@@ -25,7 +13,7 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   /// <summary>
   /// 状態
   /// </summary>
-  private enum State
+  public enum State
   {
     Idle,
     Usual,
@@ -38,43 +26,25 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   /// <summary>
   /// コライダー
   /// </summary>
-  new public SphereCollider collider {  get; private set; }
+  new private SphereCollider collider = null;
 
   /// <summary>
   /// スプライトレンダラー
   /// </summary>
-  private SpriteRenderer spriteRenderer { get; set; }
-
-  /// <summary>
-  /// ステートマシン
-  /// </summary>
-  private StateMachine<State> state;
-
-  /// <summary>
-  /// 速度
-  /// </summary>
-  private Vector3 velocity;
-  private AttackStatus status = new AttackStatus();
-
-  /// <summary>
-  /// 終了フラグ
-  /// </summary>
-  private bool isTerminating = false;
+  private SpriteRenderer spriteRenderer = null;
 
   //============================================================================
   // Properities
   //============================================================================
 
-  public SkillId Id { get; private set; }
-
-  public bool IsIdle {
-    get { return state.StateKey == State.Idle; }
+  public override bool IsIdle {
+    get { return StateMachine.StateKey == State.Idle; }
   }
 
   /// <summary>
   /// 表示制御
   /// </summary>
-  private bool isVisible 
+  protected override bool IsVisible 
   {
     get {
       return spriteRenderer.enabled;
@@ -88,25 +58,13 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   /// <summary>
   /// 衝突制御
   /// </summary>
-  private bool isCollidable 
+  protected override bool IsCollidable 
   {
     get { 
       return collider.enabled;
     }
     set {
       collider.enabled = value;
-    }
-  }
-
-  /// <summary>
-  /// 弾丸のOwnerタイプを設定する
-  /// </summary>
-  private BulletOwner owner {
-    get {
-      return (layer == Layer.EnemyBullet)? BulletOwner.Enemy : BulletOwner.Player;
-    }
-    set {
-      layer = (value == BulletOwner.Enemy)? Layer.EnemyBullet : Layer.PlayerBullet;
     }
   }
 
@@ -121,63 +79,18 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   /// <summary>
   /// 発射する
   /// </summary>
-  public void Fire(Vector3 position, IActor target, ISkill skill, BulletOwner owner)
+  public override void Fire(BulletFireInfo info)
   {
-    Id = skill.Id;
-    this.owner = owner;
+    base.Fire(info);
 
-    CachedTransform.position = position;
-
-    var v = Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up) * Vector3.forward;
-
-    if (target != null) {
-      v = (target.CachedTransform.position - position).normalized;
-    }
-
-    this.velocity = v;
-
-    status.Init(skill.Power, skill.Attributes);
-    state.SetState(State.Usual);
-  }
-
-  /// <summary>
-  /// 終了する
-  /// </summary>
-  public void Terminate()
-  {
-    if (IsIdle) {
-      return;
-    }
-    isTerminating = true;
-  }
-
-  /// <summary>
-  /// targetを攻撃する
-  /// </summary>
-  public void Attack(IActor target)
-  {
-    if (isTerminating) {
-      return;
-    }
-
-    target.TakeDamage(status);
-    isTerminating = true;
-  }
-
-  /// <summary>
-  /// 衝突判定
-  /// </summary>
-  public void Intersect()
-  {
-    // Playerの弾丸なら敵との衝突判定を行う
-    if (owner is BulletOwner.Player) {
-      IntersectEnemies();
-    } 
+    direction = Vector3.forward;
     
-    // Enemyの弾丸の場合、Intersectが呼ばれる=Playerに接触なのでPlayerに攻撃をする
-    else {
-      Attack(PlayerManager.Instance.Player);
+    if (Target != null) 
+    {
+      direction = (Target.CachedTransform.position - info.Position).normalized;
     }
+
+    StateMachine.SetState(State.Usual);
   }
 
   //----------------------------------------------------------------------------
@@ -186,33 +99,23 @@ public class StandardBullet : MyMonoBehaviour, IBullet
 
   protected override void MyAwake()
   {
+    base.MyAwake();
+
     collider       = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-    state = new StateMachine<State>();
-
-    state.Add(State.Idle, EnterIdle);
-    state.Add(State.Usual, EnterUsual, UpdateUsual, ExitUrual);
-    state.SetState(State.Idle);
+    StateMachine.Add(State.Idle, EnterIdle);
+    StateMachine.Add(State.Usual, EnterUsual, UpdateUsual, ExitUrual);
+    StateMachine.SetState(State.Idle);
   }
-
-  // Update is called once per frame
-  void Update()
-  {
-    state.Update();
-  }
-
-  //----------------------------------------------------------------------------
-  // for Update
-  //----------------------------------------------------------------------------
 
   //----------------------------------------------------------------------------
   // for Idle State
 
   private void EnterIdle()
   {
-    isVisible    = false;
-    isCollidable = false;
+    IsVisible    = false;
+    IsCollidable = false;
   }
 
   //----------------------------------------------------------------------------
@@ -221,20 +124,27 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   private void EnterUsual()
   {
     isTerminating = false;
-    isVisible     = true;
-    isCollidable  = true;
+    IsVisible     = true;
+    IsCollidable  = true;
+    timer         = 0f;
   }
 
   private void UpdateUsual()
   {
-    var p = transform.position;
-    p += velocity * TimeSystem.DeltaTime;
-    transform.position = p;
-
-    if (isTerminating) {
-      state.SetState(State.Idle);
+    // 終了 or 寿命を迎えたらIdleへ
+    if (isTerminating || IsLifeOver(timer)) {
+      StateMachine.SetState(State.Idle);
       return;
     }
+
+    // 方向を更新
+    direction = CalcDirection(timer);
+
+    // スピードを更新
+    velocity = direction * CalcSpeed(timer) * Time.deltaTime;
+    CachedTransform.position  += velocity;
+
+    timer += TimeSystem.DeltaTime;
   }
 
   private void ExitUrual()
@@ -243,8 +153,23 @@ public class StandardBullet : MyMonoBehaviour, IBullet
   }
 
   //----------------------------------------------------------------------------
-  // for Me
+  // 衝突判定
   //----------------------------------------------------------------------------
+  /// <summary>
+  /// 衝突判定
+  /// </summary>
+  public override void Intersect()
+  {
+    // Playerの弾丸なら敵との衝突判定を行う
+    if (Owner is BulletOwner.Player) {
+      IntersectEnemies();
+    }
+
+    // Enemyの弾丸の場合、Intersectが呼ばれる=Playerに接触なのでPlayerに攻撃をする
+    else {
+      Attack(PlayerManager.Instance.Player);
+    }
+  }
 
   /// <summary>
   /// 敵との衝突判定

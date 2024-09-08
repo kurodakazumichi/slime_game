@@ -33,7 +33,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb6044dc3dac17a4eb214d31fe9e54fc
-    m_Address: Icon/Enemy/Enemies.png
+    m_Address: Icon/Enemies.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

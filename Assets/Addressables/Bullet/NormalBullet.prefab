@@ -46,6 +46,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a01b3eb851e3541a1ee2df9272d5fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsPenetrable: 0
+  MinSpeed: 1
+  MaxSpeed: 1
+  SpeedChangeTime: 1
+  SpeedChangeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  HomingPerformance: 0
+  HomingTime: 0
+  LifeTime: 0
 --- !u!135 &3482095602604061529
 SphereCollider:
   m_ObjectHideFlags: 0
