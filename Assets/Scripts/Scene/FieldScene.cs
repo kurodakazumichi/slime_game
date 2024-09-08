@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class FieldScene : MyMonoBehaviour
@@ -89,6 +86,9 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterResourceLoading()
   {
+    // MultipleSpriteのロード例
+    // ResourceManager.Instance.LoadSprites("Icon/Enemies.png");
+
     // 暫定
     EnemyManager.Instance.Load();
     BulletManager.Instance.Load();
@@ -101,9 +101,9 @@ public class FieldScene : MyMonoBehaviour
       return;
     }
 
-    // ロード済リソースはGetCacheで取得できる
-    // ResourceManager.Instance.GetCache<Sprite>("Icon/Enemy/Bat.png");
-    
+    // MultipleSpriteの取得例
+    // var sprites = ResourceManager.Instance.GetSpritesCache("Icon/Enemies.png");
+
     state.SetState(State.LevelLoading);
   }
 

@@ -21,6 +21,11 @@ public class ResourceManager : SingletonMonoBehaviour<ResourceManager>
     public UnityEngine.Object Resource = null;
 
     /// <summary>
+    /// Spritesリソース
+    /// </summary>
+    public IList<Sprite> Sprites = null;
+
+    /// <summary>
     /// コンストラクタで参照カウンタを1に設定
     /// </summary>
     /// <param name="resource"></param>
@@ -28,6 +33,16 @@ public class ResourceManager : SingletonMonoBehaviour<ResourceManager>
     {
       this.Count = 1;
       this.Resource = resource;
+    }
+
+    /// <summary>
+    /// コンストラクタで参照カウンタを1に設定
+    /// </summary>
+    /// <param name="resource"></param>
+    public CachedResource(IList<Sprite> resource)
+    {
+      this.Count = 1;
+      this.Sprites = resource;
     }
   }
 
@@ -53,9 +68,7 @@ public class ResourceManager : SingletonMonoBehaviour<ResourceManager>
   /// </summary>
   /// <typeparam name="T">ロードするリソースの種類</typeparam>
   /// <param name="address">Addressable Asssetsで登録したAddress</param>
-  /// <param name="pre">リソースロード前に呼ばれるコールバック関数</param>
   /// <param name="post">ロード完了したリソースを受け取る関数</param>
-  /// <param name="done">ロード完了時に呼ばれる関数</param>
   public void Load<T>(string address, Action<T> post = null) where T : UnityEngine.Object
   {
     loadCounter++;
@@ -66,7 +79,7 @@ public class ResourceManager : SingletonMonoBehaviour<ResourceManager>
       
       loadCounter--;
       if (op.Result == null) {
-        Logger.Error($"ResourceManager.Load:{address}がロードできませんでした。");
+        Logger.Error($"[ResourceManager.Load]:{address}がロードできませんでした。");
         return;
       }
 
@@ -86,11 +99,52 @@ public class ResourceManager : SingletonMonoBehaviour<ResourceManager>
   public T GetCache<T>(string address) where T : UnityEngine.Object
   {
     if (!this.cache.ContainsKey(address)) {
-      Logger.Log($"ResourceManager.LoadSync: {address} is not found.");
+      Logger.Log($"[ResourceManager.GetCache]: {address} is not found.");
       return null;
     }
     else {
       return this.cache[address].Resource as T;
+    }
+  }
+
+  /// <summary>
+  /// Multiple設定のSpriteをロードする
+  /// </summary>
+  public void LoadSprites(string address, Action<IList<Sprite>> post = null)
+  {
+    loadCounter++;
+
+    Addressables.LoadAssetAsync<IList<Sprite>>(address).Completed += op => {
+      // ロード完了時コールバックを実行
+      post?.Invoke(op.Result);
+
+      loadCounter--;
+      if (op.Result == null) {
+        Logger.Error($"[ResourceManager.LoadSprites]:{address}がロードできませんでした。");
+        return;
+      }
+
+      // 未キャッシュであればキャッシュ、キャッシュ済であれば参照カウンタを更新
+      if (!this.cache.ContainsKey(address)) {
+        this.cache[address] = new CachedResource(op.Result);
+      }
+      else {
+        this.cache[address].Count++;
+      }
+    };
+  }
+
+  /// <summary>
+  /// キャッシュ済のSpritesリソースを取得、参照カウンタは変化しない
+  /// </summary>
+  public IList<Sprite> GetSpritesCache(string address)
+  {
+    if (!this.cache.ContainsKey(address)) {
+      Logger.Log($"[ResourceManager.GetSpritesCache]: {address} is not found.");
+      return null;
+    }
+    else {
+      return this.cache[address].Sprites;
     }
   }
 
