@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 43c2bdcd27be94640b61577df08548b6
-    m_Address: Icon/Enemy/Spider.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 46e4ecb1a134ae14e8a269ab82ed4abb
     m_Address: Enemy/BatA.prefab
     m_ReadOnly: 0
@@ -34,6 +29,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63dc01e5b756a0f46a8c4834efded5bf
     m_Address: Enemy/SpiderA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb6044dc3dac17a4eb214d31fe9e54fc
+    m_Address: Icon/Enemy/Enemies.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
