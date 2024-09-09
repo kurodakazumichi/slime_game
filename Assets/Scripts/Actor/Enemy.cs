@@ -2,37 +2,6 @@
 using UnityEngine;
 
 /// <summary>
-/// 敵のインターフェース
-/// </summary>
-public interface IEnemy: IActor
-{
-  /// <summary>
-  /// 識別子の取得
-  /// </summary>
-  EnemyId Id { get; }
-
-  /// <summary>
-  /// 初期化
-  /// </summary>
-  void Init(EnemyId id, int lv);
-
-  /// <summary>
-  /// 所属Waveを設定する
-  /// </summary>
-  void SetOwnerWave(EnemyWave wave);
-
-  /// <summary>
-  /// 活動を開始する
-  /// </summary>
-  void Run();
-
-  /// <summary>
-  /// 敵を殺す
-  /// </summary>
-  void Kill();
-}
-
-/// <summary>
 /// 敵の基底クラス
 /// </summary>
 public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
