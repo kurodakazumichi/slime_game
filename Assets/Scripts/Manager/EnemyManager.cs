@@ -43,7 +43,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   /// <summary>
   /// IDを元に敵オブジェクトを取得
   /// </summary>
-  public IEnemy Get(EnemyId enemyId)
+  public IEnemy Get(EnemyId enemyId, int lv)
   {
     if (!enemyPools.TryGetValue((int)enemyId, out var enemyPool)) {
       Logger.Error($"[EnemyManager.Get] EnemyPools[{enemyId.ToString()}] is null.");
@@ -51,7 +51,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     }
 
     var e = enemyPool.Get().GetComponent<IEnemy>();
-    e.Init(enemyId);
+    e.Init(enemyId, lv);
     enemies.Add(e);
     return e;
   }
@@ -186,7 +186,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     /// <summary>
     /// 入力用EnemyID
     /// </summary>
-    private static string inputEnemyId = string.Empty;
+    private static string enemyId = string.Empty;
+    private static int lv = 1;
 
     /// <summary>
     /// 描画
@@ -195,10 +196,13 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     {
       using (new GUILayout.HorizontalScope()) {
         GUILayout.Label("EnemyID");
-        inputEnemyId = GUILayout.TextField(inputEnemyId);
+        enemyId = GUILayout.TextField(enemyId);
+
+        GUILayout.Label($"Lv {lv}");
+        lv = (int)GUILayout.HorizontalSlider(lv, 1f, 10f);
 
         if (GUILayout.Button("Make")) {
-          var enemy = Instance.Get(MyEnum.Parse<EnemyId>(inputEnemyId));
+          var enemy = Instance.Get(MyEnum.Parse<EnemyId>(enemyId), lv);
           enemy.Run();
         }
       }

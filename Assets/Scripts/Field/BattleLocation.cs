@@ -207,13 +207,16 @@ public class BattleLocation : MyMonoBehaviour
       var wave = waveDataObject.Find($"Wave{i}");
 
       if (wave == null) {
-        return;
+        break;
       }
 
       // WaveXというオブジェクトの配下にあるEnemyWaveSettingsコンポーネントを取得、保持
       var configs = wave.GetComponentsInChildren<EnemyWaveConfig>();
       this.data.Add(i, new List<EnemyWaveConfig>(configs));
     }
+
+    // BattleLocationに設定されているLvをconfigに設定する
+    ForeachWaveData((config) => { config.props.EnemyLv = lv; });
   }
 
   /// <summary>

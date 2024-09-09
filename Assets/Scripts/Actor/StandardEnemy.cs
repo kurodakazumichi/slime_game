@@ -48,10 +48,10 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   private void UpdateUsual()
   {
     if (isTerminationRequested) {
-      hp.Empty();
+      Kill();
     }
 
-    if (hp.IsEmpty) 
+    if (status.IsDead) 
     {
       state.SetState(State.Idle);
       Die();

@@ -14,7 +14,7 @@ public interface IEnemy: IActor
   /// <summary>
   /// 初期化
   /// </summary>
-  void Init(EnemyId id);
+  void Init(EnemyId id, int lv);
 
   /// <summary>
   /// 所属Waveを設定する
@@ -44,7 +44,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// ステートマシン
   /// </summary>
-  protected StateMachine<T> state { get; private set; }
+  protected StateMachine<T> state { get; private set; } = new();
 
   /// <summary>
   /// 敵に設定されているコライダー
@@ -57,44 +57,9 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   private SpriteRenderer spriteRenderer;
 
   /// <summary>
-  /// 識別子
+  /// 敵のステータス
   /// </summary>
-  private EnemyId id;
-  
-  /// <summary>
-  /// 体力、0になったら死亡する
-  /// </summary>
-  protected RangedFloat hp { get; private set; }
-
-  /// <summary>
-  /// 攻撃力、プレイヤーへの攻撃に使用する
-  /// </summary>
-  private float power = 0;
-
-  /// <summary>
-  /// 弱点属性、攻撃を受ける時に参照
-  /// </summary>
-  private Flag32 attrW;
-
-  /// <summary>
-  /// 耐性属性、攻撃を受ける時に参照
-  /// </summary>
-  private Flag32 attrR;
-
-  /// <summary>
-  /// 無効属性、攻撃を受ける時に参照
-  /// </summary>
-  private Flag32 attrN;
-
-  /// <summary>
-  /// 倒されたときに付与するスキルのID
-  /// </summary>
-  private SkillId skillId;
-
-  /// <summary>
-  /// 倒されたときに付与される経験値
-  /// </summary>
-  private int exp;
+  protected EnemyStatus status = new();
 
   /// <summary>
   /// 所属するWave
@@ -113,7 +78,9 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// 識別子
   /// </summary>
-  public EnemyId Id { get { return id; } }
+  public EnemyId Id { 
+    get { return status.Id; } 
+  }
 
   /// <summary>
   /// 表示制御
@@ -173,20 +140,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// 初期化
   /// </summary>
-  public void Init(EnemyId id) 
+  public void Init(EnemyId id, int lv) 
   {
     Logger.Log($"[Enemy] Called Init({id.ToString()})");
-    this.id = id;
-
-    var master = EnemyMaster.FindById(id);
-    hp.Init(master.HP);
-    attrW.Value = master.WeakAttr;
-    attrN.Value = master.NullfiedAttr;
-    power       = master.Power;
-    skillId     = master.SkillId;
-    exp         = master.Exp;
-
-    attackStatus.Init(power, master.AttackAttr);
+    status.Init(id, lv);
+    attackStatus = status.MakeAttackStatus();
   }
 
   /// <summary>
@@ -206,26 +164,10 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   public void TakeDamage(AttackStatus p)
   {
-    float damage = p.Power;
+    var damage = status.TakeDamage(p);
 
-    // 無効属性かどうか
-    if (attrN.HasEither(p.Attributes)) {
-      damage = 0;
-    }
-
-    // 耐性属性かどうか
-    if (attrR.HasEither(p.Attributes)) {
-      damage *= 0.5f;
-    }
-
-    // 弱点属性かどうか
-    if (attrW.HasEither(p.Attributes)) {
-      damage *= 3.0f;
-    }
-
-    HitTextManager.Instance.Get().SetDisplay(CachedTransform.position + Vector3.up, (int)damage);
-
-    hp.Now -= damage;
+    var position = CachedTransform.position + Vector3.up;
+    HitTextManager.Instance.Get().SetDisplay(position, (int)damage);
   }
 
   /// <summary>
@@ -233,7 +175,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   public void Kill()
   {
-    hp.Empty();
+    status.Hp.Empty();
   }
 
   //----------------------------------------------------------------------------
@@ -258,7 +200,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   protected void Die()
   {
-    SkillManager.Instance.StockExp(skillId, exp);
+    SkillManager.Instance.StockExp(status.SkillId, status.Exp);
     Release();
   }
 
@@ -270,18 +212,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     // コンポーネント収集
     collider       = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
-    // ステータス系パラメータの準備
-    hp      = new RangedFloat(0);
-    power   = 0;
-    attrW   = new Flag32();
-    attrR   = new Flag32();
-    attrN   = new Flag32();
-    skillId = SkillId.Undefined;
-    exp     = 0;
-
-    state = new StateMachine<T>();
-    attackStatus = new AttackStatus();
   }
 
   // Update is called once per frame

@@ -391,7 +391,7 @@ public class EnemyWave
   private IEnemy GetEnemy()
   {
     // 敵を生成
-    var enemy = EnemyManager.Instance.Get(waveParam.Id);
+    var enemy = EnemyManager.Instance.Get(waveParam.Id, waveParam.EnemyLv);
     enemy.SetOwnerWave(this);
     enemy.Run();
     return enemy;

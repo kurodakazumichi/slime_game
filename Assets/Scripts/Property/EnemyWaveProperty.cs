@@ -9,7 +9,7 @@ using UnityEngine;
 public class EnemyWaveProperty
 {
   //============================================================================
-  // Variables
+  // Inspector Variables
   //============================================================================
   /// <summary>
   /// 出現する敵のID
@@ -20,16 +20,6 @@ public class EnemyWaveProperty
   /// Waveの形状ID
   /// </summary>
   public string ShapeId = "";
-
-  /// <summary>
-  /// Waveの起点
-  /// </summary>
-  public Vector3 BasePosition = Vector3.zero;
-
-  /// <summary>
-  /// Waveが敵を生成するエリア
-  /// </summary>
-  public Vector3 Area = Vector3.zero;
 
   /// <summary>
   /// Wave数
@@ -82,6 +72,24 @@ public class EnemyWaveProperty
   /// このパラメーターはSphae.Lineのときのみ有効
   /// </summary>
   public bool InverseZ = false;
+
+  //============================================================================
+  // Variables
+  //============================================================================
+  /// <summary>
+  /// Waveの起点
+  /// </summary>
+  public Vector3 BasePosition = Vector3.zero;
+
+  /// <summary>
+  /// Waveが敵を生成するエリア
+  /// </summary>
+  public Vector3 Area = Vector3.zero;
+
+  /// <summary>
+  /// 敵のレベル
+  /// </summary>
+  public int EnemyLv = 1;
 
   //============================================================================
   // Properities
