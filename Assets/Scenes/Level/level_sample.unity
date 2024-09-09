@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props:
     EnemyId: Enemy011
-    ShapeId: Point
+    ShapeId: Random
     WaveCount: 10
     WaveInterval: 1
     EnemyAmountPerWave: 1
