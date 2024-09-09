@@ -20,8 +20,8 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
 
   private void ReCalcVelocity()
   {
-    var to = (PM.Position - Position).normalized;
-    velocity = EnemyManager.Instance.Boids(this, 1f, to) * Speed;
+    var target = (PM.Position - Position).normalized;
+    velocity = EnemyManager.Instance.Boids(this, 1f, target) * Speed;
   }
 
   protected override void MyAwake()
