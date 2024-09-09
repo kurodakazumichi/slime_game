@@ -232,8 +232,8 @@ Transform:
   m_GameObject: {fileID: 211332176}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: -2.82}
+  m_LocalScale: {x: 5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 652290889}
@@ -253,8 +253,6 @@ MonoBehaviour:
   props:
     EnemyId: Enemy011
     ShapeId: Point
-    BasePosition: {x: 0, y: 0, z: 0}
-    Area: {x: 0, y: 0, z: 0}
     WaveCount: 10
     WaveInterval: 1
     EnemyAmountPerWave: 1
@@ -265,6 +263,9 @@ MonoBehaviour:
     InverseX: 0
     InverseY: 0
     InverseZ: 0
+    BasePosition: {x: 0, y: 0, z: 0}
+    Area: {x: 0, y: 0, z: 0}
+    EnemyLv: 1
 --- !u!1 &255579271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,8 +1129,6 @@ MonoBehaviour:
   props:
     EnemyId: BatA
     ShapeId: Circle
-    BasePosition: {x: 0, y: 0, z: 0}
-    Area: {x: 0, y: 0, z: 0}
     WaveCount: 2
     WaveInterval: 5
     EnemyAmountPerWave: 10
@@ -1140,6 +1139,9 @@ MonoBehaviour:
     InverseX: 0
     InverseY: 0
     InverseZ: 0
+    BasePosition: {x: 0, y: 0, z: 0}
+    Area: {x: 0, y: 0, z: 0}
+    EnemyLv: 1
 --- !u!1 &2018682801
 GameObject:
   m_ObjectHideFlags: 0
