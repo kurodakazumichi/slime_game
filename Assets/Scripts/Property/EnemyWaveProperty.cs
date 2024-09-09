@@ -149,24 +149,25 @@ public class EnemyWaveProperty
   /// </summary>
   public EnemyWaveProperty Clone()
   {
-    var param = new EnemyWaveProperty();
+    var prop = new EnemyWaveProperty();
 
-    param.EnemyId = this.EnemyId;
-    param.ShapeId = this.ShapeId;
-    param.BasePosition = this.BasePosition;
-    param.Area = this.Area;
-    param.WaveCount = this.WaveCount;
-    param.WaveInterval = this.WaveInterval;
-    param.EnemyAmountPerWave = this.EnemyAmountPerWave;
-    param.WaitTime = this.WaitTime;
-    param.OriginAngle = this.OriginAngle;
-    param.WaveOffsetAngle = this.WaveOffsetAngle;
-    param.WaveOffset = this.WaveOffset;
-    param.InverseX = this.InverseX;
-    param.InverseY = this.InverseY;
-    param.InverseZ = this.InverseZ;
+    prop.EnemyId = this.EnemyId;
+    prop.EnemyLv = this.EnemyLv;
+    prop.ShapeId = this.ShapeId;
+    prop.BasePosition = this.BasePosition;
+    prop.Area = this.Area;
+    prop.WaveCount = this.WaveCount;
+    prop.WaveInterval = this.WaveInterval;
+    prop.EnemyAmountPerWave = this.EnemyAmountPerWave;
+    prop.WaitTime = this.WaitTime;
+    prop.OriginAngle = this.OriginAngle;
+    prop.WaveOffsetAngle = this.WaveOffsetAngle;
+    prop.WaveOffset = this.WaveOffset;
+    prop.InverseX = this.InverseX;
+    prop.InverseY = this.InverseY;
+    prop.InverseZ = this.InverseZ;
 
-    return param;
+    return prop;
   }
 }
 

@@ -216,7 +216,9 @@ public class BattleLocation : MyMonoBehaviour
     }
 
     // BattleLocationに設定されているLvをconfigに設定する
-    ForeachWaveData((config) => { config.props.EnemyLv = lv; });
+    ForeachWaveData((config) => { 
+      config.props.EnemyLv = lv; 
+    });
   }
 
   /// <summary>
