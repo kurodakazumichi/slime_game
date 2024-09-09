@@ -25,12 +25,12 @@ public class BattleLocation : MyMonoBehaviour
   /// <summary>
   /// ステートマシン
   /// </summary>
-  private StateMachine<State> state = new StateMachine<State>();
+  private readonly StateMachine<State> state = new();
 
   /// <summary>
   /// Waveデータ
   /// </summary>
-  private Dictionary<int, List<EnemyWaveConfig>> data = new Dictionary<int, List<EnemyWaveConfig>>();
+  private readonly Dictionary<int, List<EnemyWaveConfig>> data = new();
 
   /// <summary>
   /// Playerにヒットしているかどうかのフラグ
