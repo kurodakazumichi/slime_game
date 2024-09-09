@@ -108,6 +108,7 @@ public class Skill : ISkill
   /// </summary>
   public void SetExp(int exp)
   {
+    exp        = Mathf.Max(0, exp);
     Lv         = CalcLevelBy(exp);
     RecastTime = CalcRecastTimeBy(Lv);
     Power      = CalcPowerBy(Lv);

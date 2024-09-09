@@ -81,6 +81,33 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     activeSkills[slotIndex] = skill;
   }
 
+  public void SetActiveSkill(int slotIndex, SkillId id)
+  {
+    SetActiveSkill(slotIndex, MakeSkill(id));
+  }
+
+  /// <summary>
+  /// スロットのセットを試みる、スロットに空があれば最初に見つかったスロットにセットされる。
+  /// </summary>
+  /// <returns>スキルがセットされたスロットのIndex、セットできなかったら-1</returns>
+  public int TrySetActiveSkill(SkillId id)
+  {
+    for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) 
+    {
+      if (activeSkills[i] is null) {
+        SetActiveSkill(i, id);
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  public void RemoveActiveSkill(int slotIndex)
+  {
+    activeSkills[slotIndex] = null;
+  }
+
   /// <summary>
   /// スキル経験値をセットする
   /// </summary>
@@ -198,18 +225,14 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
 
     private static void DrawExp()
     {
-      using (new GUILayout.HorizontalScope()) {
+      using (new GUILayout.VerticalScope()) {
+        GUILayout.Box("Fixed", GUILayout.Width(300));
+        DrawExpList(Instance.exps);
+      }
 
-        using (new GUILayout.VerticalScope()) {
-          GUILayout.Box("Fixed", GUILayout.Width(300));
-          DrawExpList(Instance.exps);
-        }
-
-        using (new GUILayout.VerticalScope()) {
-          GUILayout.Box("Stock");
-          DrawExpList(Instance.tmpExps);
-        }
-
+      using (new GUILayout.VerticalScope()) {
+        GUILayout.Box("Stock");
+        DrawExpStockList(Instance.tmpExps);
       }
 
       if (GUILayout.Button("Fix")) {
@@ -225,12 +248,10 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
         var item = dic.ElementAt(i);
         var name = ((SkillId)item.Key).ToString();
 
-        using (new GUILayout.HorizontalScope(GUILayout.Width(300))) {
-          // Button
-          if (GUILayout.Button(name)) {
-            simulationSkillId = name;
-            tabIndex = 2;
-          }
+        using (new GUILayout.HorizontalScope(GUILayout.Width(300))) 
+        {
+          // Label
+          GUILayout.Label(name);
 
           // TextField
           var value = GUILayout.TextField(item.Value.ToString(), GUILayout.Width(100));
@@ -238,9 +259,35 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
           if (int.TryParse(value, out var result)) {
             dic[item.Key] = result;
           }
+
+          if (GUILayout.Button("Simulate")) {
+            simulationSkillId = name;
+            tabIndex = 2;
+          }
+
+          if (GUILayout.Button("Activate")) {
+            Instance.TrySetActiveSkill((SkillId)item.Key);
+          }
         }
       }
     }
+
+    private static void DrawExpStockList(Dictionary<int, int> dic)
+    {
+      // 経験値リストをループ処理
+      for (int i = 0, count = dic.Count; i < count; i++) {
+        // 要素取得
+        var item = dic.ElementAt(i);
+        var name = ((SkillId)item.Key).ToString();
+
+        using (new GUILayout.HorizontalScope(GUILayout.Width(300))) {
+          // Label
+          GUILayout.Label(name);
+          GUILayout.Label(item.Value.ToString());
+        }
+      }
+    }
+
 
     private static void DrawActiveSkill()
     {
@@ -259,14 +306,17 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
           GUILayout.Box(i.ToString(), GUILayout.Width(60));
           GUILayout.Box((skill.Lv + 1).ToString(), GUILayout.Width(30));
           GUILayout.Box(skill.Id.ToString());
+          if(GUILayout.Button("Remove")) {
+            Instance.RemoveActiveSkill(i);
+          }
         }
       }
-
     }
 
     private static string simulationSkillId = "";
     private static int simulationLv = 0;
     private static Skill simulationSkill = null;
+
     private static void DrawSimulater()
     {
       using (new GUILayout.HorizontalScope()) 

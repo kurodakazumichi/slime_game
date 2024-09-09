@@ -228,7 +228,10 @@ public class FieldScene : MyMonoBehaviour
   private void RunSkill()
   {
     // スキルセット、スキルUI稼働
-    UIManager.Instance.HUD.SkillSlots.SetSkill(0, SkillManager.Instance.GetActiveSkill(0));
+    for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) {
+      UIManager.Instance.HUD.SkillSlots.SetSkill(i, SkillManager.Instance.GetActiveSkill(i));
+    }
+    
     UIManager.Instance.HUD.SkillSlots.Run();
   }
 
