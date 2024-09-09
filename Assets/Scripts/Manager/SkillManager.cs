@@ -55,10 +55,10 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     }
 
     // 暫定: 通常弾に経験値をセット
-    SetExp(SkillId.NormalBullet, 0);
+    SetExp(SkillId.NormalBullet1, 0);
 
     // 暫定: アクティブスキル[0]に通常弾をセット
-    activeSkills[0] = MakeSkill(SkillId.NormalBullet);
+    activeSkills[0] = MakeSkill(SkillId.NormalBullet1);
   }
 
   //----------------------------------------------------------------------------

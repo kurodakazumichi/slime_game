@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 /// ReadOnlyのEnemyEntityインターフェース
 /// </summary>
 public interface IEnemyEntityRO
 {
   EnemyId Id { get; }
+  int No { get; }
   string Name { get; }
   float HP { get; }
   float Power { get; }
@@ -27,6 +24,11 @@ public class EnemyEntity : IEnemyEntityRO
   /// Enemy ID
   /// </summary>
   public EnemyId Id { get; set; }
+
+  /// <summary>
+  /// No
+  /// </summary>
+  public int No { get; set; }
 
   /// <summary>
   /// 名称
