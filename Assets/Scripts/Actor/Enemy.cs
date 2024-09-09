@@ -181,6 +181,8 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     // コンポーネント収集
     collider       = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+    spriteRenderer.transform.rotation = Quaternion.Euler(45f, 0, 0);
   }
 
   // Update is called once per frame
