@@ -18,6 +18,12 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     state.SetState(State.Usual);
   }
 
+  private void ReCalcVelocity()
+  {
+    var to = (PM.Position - Position).normalized;
+    velocity = EnemyManager.Instance.Boids(this, 1f, to) * Speed;
+  }
+
   protected override void MyAwake()
   {
     base.MyAwake();
@@ -41,6 +47,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   //----------------------------------------------------------------------------
   private void EnterUsual()
   {
+    velocity = (PM.Position - Position).normalized * Speed;
     isCollidable = true;
     isVisible    = true;
   }
@@ -58,15 +65,18 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
       return;
     }
 
-    var v = PM.Position - CachedTransform.position;
-    CachedTransform.position += (v.normalized * Speed) * TimeSystem.Enemy.DeltaTime; 
+    CachedTransform.position += velocity * TimeSystem.Enemy.DeltaTime; 
   }
+
+
 
   private void LateUpdate()
   {
     if (!isCollidable) {
       return;
     }
+
+    ReCalcVelocity();
 
     // 暫定
     var d1 = (PlayerManager.Instance.Position - CachedTransform.position).sqrMagnitude;

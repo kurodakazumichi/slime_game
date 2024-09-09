@@ -12,12 +12,18 @@ public class MyMonoBehaviour : MonoBehaviour
   /// <summary>
   /// Transformのキャッシュ(処理負荷軽減対策)
   /// </summary>
-  public Transform CachedTransform {  get; private set; }
+  public Transform CachedTransform { get; private set; }
 
   /// <summary>
   /// RectTransformのキャッシュ(処理負荷軽減対策)
   /// </summary>
   public RectTransform CachedRectTransform { get; private set; }
+
+  /// <summary>
+  /// 座標
+  /// </summary>
+  public Vector3 Position => CachedTransform.position;
+
   //============================================================================
   // Properities
   //============================================================================

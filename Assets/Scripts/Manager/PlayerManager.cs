@@ -42,7 +42,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     player.TakeDamage(info);
   }
 
-  public Vector3 Position {
+  new public Vector3 Position {
     get { return player.Position; }
   }
 

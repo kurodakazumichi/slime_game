@@ -317,7 +317,7 @@ public class EnemyWave
 
       var enemy = GetEnemy();
       enemy.CachedTransform.position = waveParam.BasePosition + new Vector3(x, 0, z);
-
+      enemy.Run();
       stock--;
       currentEnemyCount++;
     }
@@ -393,7 +393,6 @@ public class EnemyWave
     // 敵を生成
     var enemy = EnemyManager.Instance.Get(waveParam.Id, waveParam.EnemyLv);
     enemy.SetOwnerWave(this);
-    enemy.Run();
     return enemy;
   }
 }

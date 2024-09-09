@@ -16,4 +16,9 @@ public interface IActor
   /// Transformを持つ
   /// </summary>
   Transform CachedTransform { get; }
+
+  /// <summary>
+  /// 座標
+  /// </summary>
+  Vector3 Position { get; }
 }

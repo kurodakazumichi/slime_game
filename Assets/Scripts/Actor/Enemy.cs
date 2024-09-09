@@ -40,6 +40,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   protected AttackInfo attackInfo { get; private set; } = null;
 
+  /// <summary>
+  /// 速度
+  /// </summary>
+  protected Vector3 velocity;
+
   //============================================================================
   // Properities
   //============================================================================
@@ -49,6 +54,13 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   public EnemyId Id { 
     get { return status.Id; } 
+  }
+
+  /// <summary>
+  /// 速度
+  /// </summary>
+  public Vector3 Velocity 
+    { get { return velocity; } 
   }
 
   /// <summary>
