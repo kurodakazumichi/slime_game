@@ -73,7 +73,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     var d2 = collider.radius * collider.radius;
 
     if (d1 < d2) {
-      PlayerManager.Instance.AttackPlayer(attackStatus);
+      PlayerManager.Instance.AttackPlayer(attackInfo);
     }
   }
 

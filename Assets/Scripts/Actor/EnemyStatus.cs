@@ -122,11 +122,11 @@ public class EnemyStatus
   }
 
   /// <summary>
-  /// 攻撃用ステータスを作る
+  /// 攻撃情報を作る
   /// </summary>
-  public AttackStatus MakeAttackStatus()
+  public AttackInfo MakeAttackInfo()
   {
-    var status = new AttackStatus();
+    var status = new AttackInfo();
     status.Init(Power, attrA.Value);
     return status;
   }
@@ -134,22 +134,22 @@ public class EnemyStatus
   /// <summary>
   /// ダメージを受ける
   /// </summary>
-  public float TakeDamage(AttackStatus p)
+  public float TakeDamage(AttackInfo info)
   {
-    float damage = p.Power;
+    float damage = info.Power;
 
     // 無効属性かどうか
-    if (attrN.HasEither(p.Attributes)) {
+    if (attrN.HasEither(info.Attributes)) {
       damage = 0;
     }
 
     // 耐性属性かどうか
-    if (attrR.HasEither(p.Attributes)) {
+    if (attrR.HasEither(info.Attributes)) {
       damage *= 0.5f;
     }
 
     // 弱点属性かどうか
-    if (attrW.HasEither(p.Attributes)) {
+    if (attrW.HasEither(info.Attributes)) {
       damage *= 3.0f;
     }
 

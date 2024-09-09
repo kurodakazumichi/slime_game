@@ -1,4 +1,7 @@
-public class AttackStatus
+﻿/// <summary>
+/// 攻撃情報
+/// </summary>
+public class AttackInfo
 {
 
   private float power = 0f;

@@ -38,7 +38,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// 攻撃ステータス
   /// </summary>
-  protected AttackStatus attackStatus { get; private set; } = null;
+  protected AttackInfo attackInfo { get; private set; } = null;
 
   //============================================================================
   // Properities
@@ -113,7 +113,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   {
     Logger.Log($"[Enemy] Called Init({id.ToString()})");
     status.Init(id, lv);
-    attackStatus = status.MakeAttackStatus();
+    attackInfo = status.MakeAttackInfo();
   }
 
   /// <summary>
@@ -131,9 +131,9 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// ダメージを受ける
   /// </summary>
-  public void TakeDamage(AttackStatus p)
+  public void TakeDamage(AttackInfo info)
   {
-    var damage = status.TakeDamage(p);
+    var damage = status.TakeDamage(info);
 
     var position = CachedTransform.position + Vector3.up;
     HitTextManager.Instance.Get().SetDisplay(position, (int)damage);

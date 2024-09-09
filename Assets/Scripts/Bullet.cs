@@ -105,9 +105,9 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   protected IActor Target { get; private set; } = null;
 
   /// <summary>
-  /// 攻撃用ステータス
+  /// 攻撃情報
   /// </summary>
-  protected AttackStatus Status { get; private set; } = new AttackStatus();
+  protected AttackInfo AttackInfo { get; private set; } = new AttackInfo();
 
 
   //============================================================================
@@ -140,7 +140,7 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
       return;
     }
 
-    actor.TakeDamage(Status);
+    actor.TakeDamage(AttackInfo);
 
     // 貫通弾じゃなければ1度攻撃した時点で終了フラグを立てる
     isTerminating = !IsPenetrable;
@@ -227,7 +227,7 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   protected void SetStatusBy(ISkill skill)
   {
     Id = skill.Id;
-    Status.Init(skill.Power, skill.Attributes);
+    AttackInfo.Init(skill.Power, skill.Attributes);
   }
 
   /// <summary>

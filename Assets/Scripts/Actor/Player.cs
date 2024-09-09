@@ -31,13 +31,13 @@ public class Player : MyMonoBehaviour, IActor
 
   private StateMachine<State> state = new StateMachine<State>();
 
-  public void TakeDamage(AttackStatus p)
+  public void TakeDamage(AttackInfo info)
   {
     if (state.StateKey != State.Usual) {
       return;
     }
 
-    _hp.Now -= p.Power;
+    _hp.Now -= info.Power;
 
     SyncHpToHudHpGauge();
 
