@@ -5,6 +5,7 @@ static public class App
   public const int ACTIVE_SKILL_MAX = 10;
   public const int SKILL_MAX_LEVEL = 10;
   public const int ENEMY_MAX_LEVEL = 10;
+  public const float CAMERA_ANGLE_X = 45f;
 }
 
 static public class LayerName
