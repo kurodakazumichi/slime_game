@@ -228,8 +228,10 @@ public class FieldScene : MyMonoBehaviour
 
   private void OnGetNewSkill(int index)
   {
-    UIManager.Instance.HUD.SkillSlots.SetSkill(index, SkillManager.Instance.GetActiveSkill(index));
-    UIManager.Instance.HUD.SkillSlots.Run(index);
+    if (state.StateKey == State.Battle) {
+      UIManager.Instance.HUD.SkillSlots.SetSkill(index, SkillManager.Instance.GetActiveSkill(index));
+      UIManager.Instance.HUD.SkillSlots.Run(index);
+    }
   }
 
   private void RunSkill()
