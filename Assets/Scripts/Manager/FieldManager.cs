@@ -46,6 +46,10 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   protected override void MyAwake()
   {
     Area.gameObject.SetActive(false);
+
+#if _DEBUG
+    Application.targetFrameRate = 60;
+#endif
   }
 
   //----------------------------------------------------------------------------
