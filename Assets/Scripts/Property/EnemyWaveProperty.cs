@@ -17,9 +17,9 @@ public class EnemyWaveProperty
   public string EnemyId = "";
 
   /// <summary>
-  /// Waveの形状ID
+  /// Waveの役割ID
   /// </summary>
-  public string ShapeId = "";
+  public string RoleId = "";
 
   /// <summary>
   /// Wave数
@@ -41,50 +41,9 @@ public class EnemyWaveProperty
   /// </summary>
   public float WaitTime = 0f;
 
-  /// <summary>
-  /// 起点となる角度、このパラメータはShape.Circleのときのみ有効
-  /// </summary>
-  public float OriginAngle = 0f;
-
-  /// <summary>
-  /// Wave毎に適用される角度のオフセット
-  /// </summary>
-  public float WaveOffsetAngle = 0f;
-
-  /// <summary>
-  /// Wave毎に適用されるオフセット、zは角度に使う
-  /// </summary>
-  public Vector3 WaveOffset = Vector3.zero;
-
-  /// <summary>
-  /// 出現位置のX方向を反転する
-  /// このパラメーターはSphae.Lineのときのみ有効
-  /// </summary>
-  public bool InverseX = false;
-  /// <summary>
-  /// 出現位置のY方向を反転する
-  /// このパラメーターはSphae.Lineのときのみ有効
-  /// </summary>
-  public bool InverseY = false;
-
-  /// <summary>
-  /// 出現位置のZ方向を反転する
-  /// このパラメーターはSphae.Lineのときのみ有効
-  /// </summary>
-  public bool InverseZ = false;
-
   //============================================================================
   // Variables
   //============================================================================
-  /// <summary>
-  /// Waveの起点
-  /// </summary>
-  public Vector3 BasePosition = Vector3.zero;
-
-  /// <summary>
-  /// Waveが敵を生成するエリア
-  /// </summary>
-  public Vector3 Area = Vector3.zero;
 
   /// <summary>
   /// 敵のレベル
@@ -105,8 +64,8 @@ public class EnemyWaveProperty
   /// <summary>
   /// Waveの形状
   /// </summary>
-  public WaveShape Shape {
-    get { return MyEnum.Parse<WaveShape>(ShapeId); }
+  public EnemyWaveRole Role {
+    get { return MyEnum.Parse<EnemyWaveRole>(RoleId); }
   }
 
   /// <summary>
@@ -116,29 +75,7 @@ public class EnemyWaveProperty
     get { return WaveCount * EnemyAmountPerWave; }
   }
 
-  /// <summary>
-  /// Wave毎に適用されるX方向オフセット
-  /// </summary>
-  public float WaveOffsetX {
-    get { return WaveOffset.x; }
-    set { WaveOffset.x = value; }
-  }
 
-  /// <summary>
-  /// Wave毎に適用されるY方向オフセット
-  /// </summary>
-  public float WaveOffsetY {
-    get { return WaveOffset.y; }
-    set { WaveOffset.y = value; }
-  }
-
-  /// <summary>
-  /// Wave毎に適用されるZ方向オフセット
-  /// </summary>
-  public float WaveOffsetZ {
-    get { return WaveOffset.z; }
-    set { WaveOffset.z = value; }
-  }
 
   //============================================================================
   // Methods
@@ -151,21 +88,14 @@ public class EnemyWaveProperty
   {
     var prop = new EnemyWaveProperty();
 
-    prop.EnemyId = this.EnemyId;
-    prop.EnemyLv = this.EnemyLv;
-    prop.ShapeId = this.ShapeId;
-    prop.BasePosition = this.BasePosition;
-    prop.Area = this.Area;
-    prop.WaveCount = this.WaveCount;
-    prop.WaveInterval = this.WaveInterval;
+    prop.EnemyId            = this.EnemyId;
+    prop.RoleId             = this.RoleId;
+    prop.EnemyLv            = this.EnemyLv;
+    prop.WaveCount          = this.WaveCount;
+    prop.WaveInterval       = this.WaveInterval;
     prop.EnemyAmountPerWave = this.EnemyAmountPerWave;
-    prop.WaitTime = this.WaitTime;
-    prop.OriginAngle = this.OriginAngle;
-    prop.WaveOffsetAngle = this.WaveOffsetAngle;
-    prop.WaveOffset = this.WaveOffset;
-    prop.InverseX = this.InverseX;
-    prop.InverseY = this.InverseY;
-    prop.InverseZ = this.InverseZ;
+    prop.WaitTime           = this.WaitTime;
+    
 
     return prop;
   }
@@ -177,51 +107,43 @@ public class EnemyWaveProperty
 public class EnemyWavePropertyDrawer : PropertyDrawer
 {
   private bool initialized = false;
+
   // GUI parameters
-  private int waveShapeIndex = 0;
-  private string[] waveShapeOptions = {
-    "None",
-    "Point",
-    "Circle",
-    "Line",
+  private int enemyWaveRoleIndex = 0;
+
+  private string[] enemyWaveRoleOptions = {
+    "Wait",
     "Random",
+    "Circle",
+    "Forward",
+    "Backword",
+    "Left",
+    "Right",
   };
 
   private int displayedPropertyCount = 0;
 
   // Properties
   private SerializedProperty enemyId;
-  private SerializedProperty shapeId;
+  private SerializedProperty roleId;
   private SerializedProperty waveCount;
   private SerializedProperty waveInterval;
   private SerializedProperty enemyAmountPerWave;
   private SerializedProperty waitTime;
-  private SerializedProperty originAngle;
-  private SerializedProperty waveOffsetAngle;
-  private SerializedProperty waveOffset;
-  private SerializedProperty inverseX;
-  private SerializedProperty inverseY;
-  private SerializedProperty inverseZ;
   
 
   private void Initialize(Rect position, SerializedProperty property, GUIContent label)
   {
     enemyId            = property.FindPropertyRelative("EnemyId");
-    shapeId            = property.FindPropertyRelative("ShapeId");
+    roleId             = property.FindPropertyRelative("RoleId");
     waveCount          = property.FindPropertyRelative("WaveCount");
     waveInterval       = property.FindPropertyRelative("WaveInterval");
     enemyAmountPerWave = property.FindPropertyRelative("EnemyAmountPerWave");
     waitTime           = property.FindPropertyRelative("WaitTime");
-    originAngle        = property.FindPropertyRelative("OriginAngle");
-    waveOffsetAngle    = property.FindPropertyRelative("WaveOffsetAngle");
-    waveOffset         = property.FindPropertyRelative("WaveOffset");
-    inverseX           = property.FindPropertyRelative("InverseX");
-    inverseY           = property.FindPropertyRelative("InverseY");
-    inverseZ           = property.FindPropertyRelative("InverseZ");
 
-    for (int i = 0; i < waveShapeOptions.Length; i++) {
-      if (shapeId.stringValue == waveShapeOptions[i]) {
-        waveShapeIndex = i;
+    for (int i = 0; i < enemyWaveRoleOptions.Length; i++) {
+      if (roleId.stringValue == enemyWaveRoleOptions[i]) {
+        enemyWaveRoleIndex = i;
         break;
       }
     }
@@ -240,37 +162,22 @@ public class EnemyWavePropertyDrawer : PropertyDrawer
 
     EditorGUI.LabelField(rect(p, 0), label);
 
-    waveShapeIndex = EditorGUI.Popup(rect(p, 1), "Waveの形状", waveShapeIndex, waveShapeOptions);
-    shapeId.stringValue = waveShapeOptions[waveShapeIndex];
+    enemyWaveRoleIndex = EditorGUI.Popup(rect(p, 1), "Waveの役割", enemyWaveRoleIndex, enemyWaveRoleOptions);
+    roleId.stringValue = enemyWaveRoleOptions[enemyWaveRoleIndex];
 
     EditorGUI.PropertyField(rect(p, 2), waitTime);
 
     displayedPropertyCount = 3;
 
-    if (shapeId.stringValue != "None")
+    if (roleId.stringValue != "Wait")
     {
       EditorGUI.PropertyField(rect(p, 3), enemyId);
       EditorGUI.PropertyField(rect(p, 4), waveCount);
       EditorGUI.PropertyField(rect(p, 5), waveInterval);
       EditorGUI.PropertyField(rect(p, 6), enemyAmountPerWave);
-      EditorGUI.PropertyField(rect(p, 7), waveOffset);
 
       displayedPropertyCount = 8;
     }
-
-    if (shapeId.stringValue == "Circle") {
-      EditorGUI.PropertyField(rect(p, 8), originAngle);
-      EditorGUI.PropertyField(rect(p, 9), waveOffsetAngle);
-      displayedPropertyCount = 10;
-    }
-
-    if (shapeId.stringValue == "Line") {
-      EditorGUI.PropertyField(rect(p, 8), inverseX);
-      EditorGUI.PropertyField(rect(p, 9), inverseY);
-      EditorGUI.PropertyField(rect(p, 10), inverseZ);
-      displayedPropertyCount = 11;
-    }
-
 
     EditorGUI.EndProperty();
   }

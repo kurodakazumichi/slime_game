@@ -22,15 +22,18 @@ static public class Layer
 }
 
 /// <summary>
-/// Waveの形状
+/// EnemyWaveの役割
 /// </summary>
-public enum WaveShape
+public enum EnemyWaveRole
 {
   None,
-  Point,
-  Circle,
-  Line,
+  Wait,
   Random,
+  Circle,
+  Forward,
+  Backword,
+  Left,
+  Right,
 }
 
 public enum BulletOwner

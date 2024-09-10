@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyWave
 {
+  private const float MakeEnemyDistance = 15f;
+
   //============================================================================
   // Enum
   //============================================================================
@@ -82,6 +84,19 @@ public class EnemyWave
   /// </summary>
   public bool IsTerminating {
     get; private set;
+  }
+
+  /// <summary>
+  /// 敵を生成する起点となる位置
+  /// </summary>
+  private Vector3 BasePosition {
+    get {
+      if (PlayerManager.Instance) {
+        return PlayerManager.Instance.Position;
+      } else {
+        return Vector3.zero;
+      }
+    }
   }
 
   //============================================================================
@@ -259,34 +274,17 @@ public class EnemyWave
     // Wave設定に基づいて敵を作る
     Logger.Log($"[EnemyWave] Make wave[{currentWaveIndex}] enemies.");
 
-    switch (waveParam.Shape) {
-      case WaveShape.Circle : MakeWaveEnemiesCircle(); break;
-      case WaveShape.Line   : MakeWaveEnemiesLine();   break;
-      case WaveShape.Random : MakeWaveEnemiesRandom(); break;
-      default               : MakeWaveEnemiesPoint();  break;
+    switch (waveParam.Role) {
+      case EnemyWaveRole.Circle   : MakeWaveEnemiesCircle();          break;
+      case EnemyWaveRole.Forward  : MakeWaveEnemyFB(Vector3.forward); break;
+      case EnemyWaveRole.Backword : MakeWaveEnemyFB(Vector3.back);    break;
+      case EnemyWaveRole.Left     : MakeWaveEnemyLR(Vector3.left);    break;
+      case EnemyWaveRole.Right    : MakeWaveEnemyLR(Vector3.right);   break;
+      default: MakeWaveEnemiesRandom(); break;
     }
 
     currentWaveIndex++;
     timer = waveParam.WaveInterval;
-  }
-
-  /// <summary>
-  /// 定点から敵を発生させる。
-  /// </summary>
-  private void MakeWaveEnemiesPoint()
-  {
-    int   max     = waveParam.EnemyAmountPerWave;
-    float offsetX = waveParam.WaveOffsetX;
-    float offsetY = waveParam.WaveOffsetZ;
-
-    for(int i = 0; i < max; ++i) 
-    {
-      var p  = waveParam.BasePosition + new Vector3(offsetX, offsetY, 0);
-      var enemy = GetEnemy(p);
-
-      stock--;
-      currentEnemyCount++;
-    }
   }
 
   /// <summary>
@@ -295,23 +293,15 @@ public class EnemyWave
   private void MakeWaveEnemiesCircle()
   {
     int     max         = waveParam.EnemyAmountPerWave;
-    float   originAngle = waveParam.OriginAngle;
-    float   offsetAngle = waveParam.WaveOffsetAngle;
-    Vector3 area        = waveParam.Area;
 
-    for (int i = 0; i < max; ++i) 
-    {
-      
-      var offset  = MyMath.Deg2Rad(originAngle);
-          offset += MyMath.Deg2Rad(offsetAngle * currentWaveIndex);
+    for (int i = 0; i < max; ++i) {
 
       var radian  = MyMath.Rate2Rad((float)i /  max);
-          radian += offset;
 
-      var x = area.x * 0.5f * Mathf.Cos(radian);
-      var z = area.z * 0.5f * Mathf.Sin(radian);
+      var x = MakeEnemyDistance * Mathf.Cos(radian);
+      var z = MakeEnemyDistance * Mathf.Sin(radian);
 
-      var position = waveParam.BasePosition + new Vector3(x, 0, z);
+      var position = BasePosition + new Vector3(x, 0, z);
       var enemy = GetEnemy(position);
       stock--;
       currentEnemyCount++;
@@ -319,27 +309,39 @@ public class EnemyWave
   }
 
   /// <summary>
-  /// 線上に敵を発生させる。
+  /// 奥か手前に敵を発生させる
   /// </summary>
-  public void MakeWaveEnemiesLine()
+  private void MakeWaveEnemyFB(Vector3 dir)
   {
-    int     max         = waveParam.EnemyAmountPerWave;
-    float   offsetX = waveParam.WaveOffsetX;
-    float   offsetY = waveParam.WaveOffsetZ;
-    Vector3 area        = waveParam.Area / 2f;
+    int max = waveParam.EnemyAmountPerWave;
 
     for (int i = 0; i < max; ++i) 
     {
-      var x  = Mathf.Lerp(-area.x, area.x, i / Mathf.Max(max-1, 1f));
-          x += offsetX * currentWaveIndex;
-      var z  = Mathf.Lerp(-area.y, area.y, i / Mathf.Max(max-1, 1f));
-          z += offsetY * currentWaveIndex;
+      var offset = dir * MakeEnemyDistance;
 
-      if (waveParam.InverseX == true) { x *= -1; }
+      offset.x = Random.Range(-MakeEnemyDistance, MakeEnemyDistance);
 
-      if (waveParam.InverseZ == true) { z *= -1; }
+      var position = BasePosition + offset;
+      var enemy = GetEnemy(position);
 
-      var position = waveParam.BasePosition + new Vector3(x, 0, z);
+      stock--;
+      currentEnemyCount++;
+    }
+  }
+
+  /// <summary>
+  /// 右か左に敵を発生させる
+  /// </summary>
+  private void MakeWaveEnemyLR(Vector3 dir)
+  {
+    int max = waveParam.EnemyAmountPerWave;
+
+    for (int i = 0; i < max; ++i) {
+      var offset = dir * MakeEnemyDistance;
+
+      offset.z = Random.Range(-MakeEnemyDistance, MakeEnemyDistance);
+
+      var position = BasePosition + offset;
       var enemy = GetEnemy(position);
 
       stock--;
@@ -356,7 +358,11 @@ public class EnemyWave
 
     for (int i = 0; i < max; ++i) 
     {
-      var position = waveParam.BasePosition + MyVector3.Random(waveParam.Area / 2f);
+      var offset = Vector3.forward * Random.Range(MakeEnemyDistance-5f, MakeEnemyDistance);
+      offset = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up) * offset;
+
+
+      var position = BasePosition + offset;
       var enemy = GetEnemy(position);
 
       stock--;

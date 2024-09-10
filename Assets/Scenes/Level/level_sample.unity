@@ -232,8 +232,8 @@ Transform:
   m_GameObject: {fileID: 211332176}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.82}
-  m_LocalScale: {x: 5, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 652290889}
@@ -252,19 +252,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props:
     EnemyId: Enemy011
-    ShapeId: Random
-    WaveCount: 10
+    RoleId: Forward
+    WaveCount: 2
     WaveInterval: 1
-    EnemyAmountPerWave: 1
+    EnemyAmountPerWave: 10
     WaitTime: 0
-    OriginAngle: 0
-    WaveOffsetAngle: 0
-    WaveOffset: {x: 0, y: 0, z: 0}
-    InverseX: 0
-    InverseY: 0
-    InverseZ: 0
-    BasePosition: {x: 0, y: 0, z: 0}
-    Area: {x: 0, y: 0, z: 0}
     EnemyLv: 1
 --- !u!1001 &246589781
 PrefabInstance:
@@ -945,19 +937,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props:
     EnemyId: Enemy016
-    ShapeId: Circle
+    RoleId: Random
     WaveCount: 10
     WaveInterval: 2
     EnemyAmountPerWave: 1
     WaitTime: 1
-    OriginAngle: 0
-    WaveOffsetAngle: 0
-    WaveOffset: {x: 0, y: 0, z: 0}
-    InverseX: 0
-    InverseY: 0
-    InverseZ: 0
-    BasePosition: {x: 0, y: 0, z: 0}
-    Area: {x: 0, y: 0, z: 0}
     EnemyLv: 1
 --- !u!1001 &1433048817
 PrefabInstance:
@@ -1242,19 +1226,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props:
     EnemyId: Enemy013
-    ShapeId: Random
+    RoleId: Random
     WaveCount: 10
     WaveInterval: 1
     EnemyAmountPerWave: 1
     WaitTime: 1
-    OriginAngle: 0
-    WaveOffsetAngle: 0
-    WaveOffset: {x: 0, y: 0, z: 0}
-    InverseX: 0
-    InverseY: 0
-    InverseZ: 0
-    BasePosition: {x: 0, y: 0, z: 0}
-    Area: {x: 0, y: 0, z: 0}
     EnemyLv: 1
 --- !u!1 &1679947868
 GameObject:
@@ -1334,19 +1310,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props:
     EnemyId: BatA
-    ShapeId: Circle
-    WaveCount: 2
-    WaveInterval: 5
-    EnemyAmountPerWave: 10
+    RoleId: Circle
+    WaveCount: 5
+    WaveInterval: 2
+    EnemyAmountPerWave: 20
     WaitTime: 1
-    OriginAngle: 0
-    WaveOffsetAngle: 36
-    WaveOffset: {x: 0, y: 0, z: 0}
-    InverseX: 0
-    InverseY: 0
-    InverseZ: 0
-    BasePosition: {x: 0, y: 0, z: 0}
-    Area: {x: 0, y: 0, z: 0}
     EnemyLv: 1
 --- !u!1 &1990515360
 GameObject:

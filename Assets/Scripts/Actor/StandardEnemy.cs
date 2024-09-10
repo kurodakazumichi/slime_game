@@ -24,7 +24,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     velocity = (PM.Position - Position).normalized * Speed;
 
     // Boidsアルゴリズムによって補正をする
-    velocity = EnemyManager.Instance.Boids(this, 1f) * Speed;
+    velocity = EnemyManager.Instance.Boids(this, collider.radius) * Speed;
   }
 
   protected override void MyAwake()
