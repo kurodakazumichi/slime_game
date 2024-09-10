@@ -83,8 +83,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  HomingPerformance: 1
-  HomingTime: 0.1
+  HomingPerformance: 0.1
+  HomingTime: 1
   LifeTime: 2
   SyncDirectionAndRotation: 1
 --- !u!135 &3482095602604061529

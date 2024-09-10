@@ -76,7 +76,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   HomingPerformance: 0
   HomingTime: 0
-  LifeTime: 0
+  LifeTime: 5
+  SyncDirectionAndRotation: 0
 --- !u!135 &3482095602604061529
 SphereCollider:
   m_ObjectHideFlags: 0
