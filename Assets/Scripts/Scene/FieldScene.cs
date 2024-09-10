@@ -74,6 +74,8 @@ public class FieldScene : MyMonoBehaviour
     DebugManager.Instance.Regist(SkillManager.Instance);
     DebugManager.Instance.Regist(ResourceManager.Instance);
     DebugManager.Instance.Regist(EnemyManager.Instance);
+
+    SkillManager.Instance.OnGetNewSkill = OnGetNewSkill;
   }
 
   private void UpdateSystemSetup()
@@ -223,6 +225,12 @@ public class FieldScene : MyMonoBehaviour
   //----------------------------------------------------------------------------
   // For Me
   //----------------------------------------------------------------------------
+
+  private void OnGetNewSkill(int index)
+  {
+    UIManager.Instance.HUD.SkillSlots.SetSkill(index, SkillManager.Instance.GetActiveSkill(index));
+    UIManager.Instance.HUD.SkillSlots.Run(index);
+  }
 
   private void RunSkill()
   {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -26,6 +27,11 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   /// 設定済のアクティブスキル
   /// </summary>
   private ISkill[] activeSkills = new ISkill[App.ACTIVE_SKILL_MAX];
+
+  //----------------------------------------------------------------------------
+  // Callback
+  //----------------------------------------------------------------------------
+  public Action<int> OnGetNewSkill { private get; set; } = null;
 
   //============================================================================
   // Methods
@@ -137,8 +143,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
       var index = TrySetActiveSkill(id);
 
       if (index != -1) {
-        UIManager.Instance.HUD.SkillSlots.SetSkill(index, activeSkills[index]);
-        UIManager.Instance.HUD.SkillSlots.Run(index);
+        OnGetNewSkill?.Invoke(index);
       }
     }
 
