@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
 public class Player : MyMonoBehaviour, IActor
@@ -111,16 +111,30 @@ public class Player : MyMonoBehaviour, IActor
 
     transform.position += velocity * TimeSystem.Player.DeltaTime;
 
-    if (FieldManager.Instance.IsLockArea) 
-    {
-      var v1 = Position - FieldManager.Instance.BattlePosition;
-
-      if (10f <= v1.magnitude) {
-        CachedTransform.position = FieldManager.Instance.BattlePosition + v1.normalized * 10f;
-      }
-    }
+    RestrictMovement();
 
     SyncCameraPosition();
+  }
+
+  private void RestrictMovement()
+  {
+    // ロックされてなければ移動制限はしない
+    if (!FieldManager.Instance.IsLockArea) {
+      return;
+    }
+
+    // BattleLocationからPlayerに向かうベクトル
+    var v = Position - FieldManager.Instance.BattlePosition;
+
+    var radius = App.BATTLE_CIRCLE_RADIUS;
+
+    // BattleCircleの中心から離れすぎていたら、Circle内に戻す
+    if (radius * radius <= v.sqrMagnitude) 
+    {
+      CachedTransform.position 
+        = FieldManager.Instance.BattlePosition + v.normalized * radius;
+    }
+    
   }
 
   private void SyncCameraPosition()
