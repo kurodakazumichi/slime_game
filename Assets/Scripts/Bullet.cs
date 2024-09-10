@@ -9,7 +9,7 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   // Variables for Inspector
   //============================================================================
   [SerializeField, Tooltip("貫通フラグ")]
-  private bool IsPenetrable = false;
+  private int PenetrableCount = 0;
 
   [SerializeField, Tooltip("最低速度")]
   private float MinSpeed = 1.0f;
@@ -59,7 +59,10 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// </summary>
   protected Vector3 velocity = Vector3.zero;
 
-
+  /// <summary>
+  /// 貫通可能数
+  /// </summary>
+  private int penetrableCount = 0;
 
   //============================================================================
   // Properities
@@ -91,6 +94,13 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   protected abstract bool IsCollidable { get; set; }
 
   /// <summary>
+  /// 貫通可能か？
+  /// </summary>
+  private bool IsPenetrable {
+    get { return 0 < penetrableCount; }
+  }
+
+  /// <summary>
   /// BulletがPlayerのものか、Enemyものかを制御するプロパティ
   /// </summary>
   protected BulletOwner Owner {
@@ -120,10 +130,11 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   public virtual void Fire(BulletFireInfo info)
   {
     SetStatusBy(info.Skill);
-    Owner  = info.Owner;
-    Target = info.Target;
+    Owner                    = info.Owner;
+    Target                   = info.Target;
     CachedTransform.position = info.Position;
-    direction = info.Direction;
+    direction                = info.Direction;
+    penetrableCount          = PenetrableCount;
   }
 
   public void Terminate()
@@ -144,8 +155,9 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
     }
 
     actor.TakeDamage(AttackInfo);
+    penetrableCount--;
 
-    // 貫通弾じゃなければ1度攻撃した時点で終了フラグを立てる
+    // 貫通しないなら攻撃した時点で終了フラグを立てる
     isTerminating = !IsPenetrable;
   }
 

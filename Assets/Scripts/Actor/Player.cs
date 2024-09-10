@@ -21,10 +21,6 @@ public class Player : MyMonoBehaviour, IActor
 
   new public SphereCollider collider { get; private set; }
 
-  public Vector3 Position {
-    get { return CachedTransform.position; }
-  }
-
   public bool IsDead {
     get { return _hp.IsEmpty; }
   }
