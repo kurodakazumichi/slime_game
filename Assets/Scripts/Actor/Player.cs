@@ -121,8 +121,8 @@ public class Player : MyMonoBehaviour, IActor
   private void SyncCameraPosition()
   {
     var p = transform.position;
-    p.y = 12.5f;
-    p.z -= 12.5f;
+    p.y = 14f;
+    p.z -= 14f;
     
     Camera.main.transform.position = p;
   }
