@@ -42,8 +42,7 @@ public class Toaster : MyMonoBehaviour
   //----------------------------------------------------------------------------
   protected override void MyAwake()
   {
-    toast = Instantiate(toastPrefab).GetComponent<Toast>();
-    toast.SetParent(CachedRectTransform);
+    toast = Instantiate(toastPrefab, CachedRectTransform).GetComponent<Toast>();
   }
 
   private void Update()

@@ -71,3 +71,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 doc/
+Build2/
+Assets/Designer/Font/GenRyuMin2-B.ttc
+Assets/Designer/Font/
