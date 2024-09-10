@@ -181,7 +181,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   protected void Die()
   {
-    SkillManager.Instance.StockExp(status.SkillId, status.Exp);
+    SkillManager.Instance.AddExp(status.SkillId, status.Exp);
     Release();
   }
 

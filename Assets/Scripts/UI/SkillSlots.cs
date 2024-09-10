@@ -49,6 +49,11 @@ public class SkillSlots : MyMonoBehaviour
     }
   }
 
+  public void Run(int index)
+  {
+    slots[index].Charge();
+  }
+
   public void Stop()
   {
     foreach (var slot in slots) {

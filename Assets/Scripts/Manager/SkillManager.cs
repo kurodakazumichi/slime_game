@@ -13,14 +13,14 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   //============================================================================
 
   /// <summary>
-  /// 一時的にストックしておく経験値
-  /// </summary>
-  private Dictionary<int, int> tmpExps = new Dictionary<int, int>();
-
-  /// <summary>
   /// 獲得済の経験値
   /// </summary>
   private Dictionary<int, int> exps = new Dictionary<int, int>();
+
+  /// <summary>
+  /// 全スキルリスト
+  /// </summary>
+  private Dictionary<int, ISkill> skills = new();
 
   /// <summary>
   /// 設定済のアクティブスキル
@@ -49,16 +49,26 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
       exps.Add((int)id, -1);
     });
 
+    // 暫定: 通常弾に経験値をセット
+    SetExp(SkillId.NormalBullet1, 0);
+
+    // 全スキルリストを作成
+    MyEnum.ForEach<SkillId>((id) => 
+    {
+      if (id == SkillId.Undefined) {
+        return;
+      }
+
+      skills.Add((int)id, MakeSkill(id));
+    });
+
     // アクティブスキルを初期化
     for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) {
       activeSkills[i] = null;
     }
 
-    // 暫定: 通常弾に経験値をセット
-    SetExp(SkillId.NormalBullet1, 0);
-
     // 暫定: アクティブスキル[0]に通常弾をセット
-    activeSkills[0] = MakeSkill(SkillId.NormalBullet1);
+    SetActiveSkill(0, SkillId.NormalBullet1);
   }
 
   //----------------------------------------------------------------------------
@@ -83,7 +93,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
 
   public void SetActiveSkill(int slotIndex, SkillId id)
   {
-    SetActiveSkill(slotIndex, MakeSkill(id));
+    SetActiveSkill(slotIndex, skills[(int)id]);
   }
 
   /// <summary>
@@ -117,30 +127,30 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   }
 
   /// <summary>
-  /// 経験値をストックする
-  /// </summary>
-  public void StockExp(SkillId id, int value)
-  {
-    if(tmpExps.TryGetValue((int)id, out int exp)) {
-      tmpExps[(int)id] += value;
-    } else {
-      tmpExps.Add((int)id, value);
-    }
-  }
-
-  /// <summary>
   /// スキル経験値を追加する
   /// </summary>
-  public void AddExp(SkillId id, int value)
+  public void AddExp(SkillId id, int exp)
   {
-    exps[(int)id] += value;
+    if (GetExp(id) < 0) {
+      Logger.Log($"[SkillManager.AddExp] New {id.ToString()}");
 
-    // Active Skillに経験値をセット
-    foreach (var skill in activeSkills)
-    {
-      if (skill != null && skill.Id == id) {
-        skill.SetExp(GetExp(id));
+      var index = TrySetActiveSkill(id);
+
+      if (index != -1) {
+        UIManager.Instance.HUD.SkillSlots.SetSkill(index, activeSkills[index]);
+        UIManager.Instance.HUD.SkillSlots.Run(index);
       }
+    }
+
+    var preLv = GetLevel(id);
+
+    exps[(int)id] += exp;
+    skills[(int)id].SetExp(GetExp(id));
+
+    var lv = GetLevel(id);
+
+    if (preLv < lv) {
+      Logger.Log($"[SkillManager.AddExp] {id.ToString()} Lv {preLv} -> {lv}");
     }
   }
 
@@ -152,17 +162,14 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     return exps[(int)id];
   }
 
-  /// <summary>
-  /// 一時的にストックしていた経験値を取得済にする
-  /// </summary>
-  public void FixExps()
+  public int GetLevel(SkillId id)
   {
-    foreach(var item in tmpExps) 
-    {
-      AddExp((SkillId)item.Key, item.Value);
-    }
+    return skills[(int)id].Lv;
+  }
 
-    tmpExps.Clear();
+  private ISkill GetSkill(SkillId id)
+  {
+    return skills[(int)id];
   }
 
   //----------------------------------------------------------------------------
@@ -229,15 +236,6 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
         GUILayout.Box("Fixed", GUILayout.Width(300));
         DrawExpList(Instance.exps);
       }
-
-      using (new GUILayout.VerticalScope()) {
-        GUILayout.Box("Stock");
-        DrawExpStockList(Instance.tmpExps);
-      }
-
-      if (GUILayout.Button("Fix")) {
-        Instance.FixExps();
-      }
     }
 
     private static void DrawExpList(Dictionary<int, int> dic)
@@ -271,23 +269,6 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
         }
       }
     }
-
-    private static void DrawExpStockList(Dictionary<int, int> dic)
-    {
-      // 経験値リストをループ処理
-      for (int i = 0, count = dic.Count; i < count; i++) {
-        // 要素取得
-        var item = dic.ElementAt(i);
-        var name = ((SkillId)item.Key).ToString();
-
-        using (new GUILayout.HorizontalScope(GUILayout.Width(300))) {
-          // Label
-          GUILayout.Label(name);
-          GUILayout.Label(item.Value.ToString());
-        }
-      }
-    }
-
 
     private static void DrawActiveSkill()
     {

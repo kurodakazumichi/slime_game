@@ -217,7 +217,6 @@ public class FieldScene : MyMonoBehaviour
 
   private void ExitResult()
   {
-    SkillManager.Instance.FixExps();
     TimeSystem.Player.Pause(false);
   }
 

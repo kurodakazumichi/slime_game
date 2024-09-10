@@ -281,12 +281,8 @@ public class EnemyWave
 
     for(int i = 0; i < max; ++i) 
     {
-      var enemy = GetEnemy();
-
-      var p  = waveParam.BasePosition;
-          p += new Vector3(offsetX, offsetY, 0);
-
-      enemy.CachedTransform.position = p;
+      var p  = waveParam.BasePosition + new Vector3(offsetX, offsetY, 0);
+      var enemy = GetEnemy(p);
 
       stock--;
       currentEnemyCount++;
@@ -315,9 +311,8 @@ public class EnemyWave
       var x = area.x * 0.5f * Mathf.Cos(radian);
       var z = area.z * 0.5f * Mathf.Sin(radian);
 
-      var enemy = GetEnemy();
-      enemy.CachedTransform.position = waveParam.BasePosition + new Vector3(x, 0, z);
-      enemy.Run();
+      var position = waveParam.BasePosition + new Vector3(x, 0, z);
+      var enemy = GetEnemy(position);
       stock--;
       currentEnemyCount++;
     }
@@ -344,8 +339,8 @@ public class EnemyWave
 
       if (waveParam.InverseZ == true) { z *= -1; }
 
-      var enemy = GetEnemy();
-      enemy.CachedTransform.position = waveParam.BasePosition + new Vector3(x, 0, z);
+      var position = waveParam.BasePosition + new Vector3(x, 0, z);
+      var enemy = GetEnemy(position);
 
       stock--;
       currentEnemyCount++;
@@ -361,12 +356,8 @@ public class EnemyWave
 
     for (int i = 0; i < max; ++i) 
     {
-      var enemy = GetEnemy();
-
-      var p = waveParam.BasePosition;
-          p += MyVector3.Random(waveParam.Area / 2f);
-
-      enemy.CachedTransform.position = p;
+      var position = waveParam.BasePosition + MyVector3.Random(waveParam.Area / 2f);
+      var enemy = GetEnemy(position);
 
       stock--;
       currentEnemyCount++;
@@ -388,11 +379,13 @@ public class EnemyWave
   //----------------------------------------------------------------------------
   // for me
   //----------------------------------------------------------------------------
-  private IEnemy GetEnemy()
+  private IEnemy GetEnemy(Vector3 startPosition)
   {
     // 敵を生成
     var enemy = EnemyManager.Instance.Get(waveParam.Id, waveParam.EnemyLv);
     enemy.SetOwnerWave(this);
+    enemy.CachedTransform.position = startPosition;
+    enemy.Run();
     return enemy;
   }
 }
