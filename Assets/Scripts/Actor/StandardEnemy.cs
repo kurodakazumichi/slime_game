@@ -20,8 +20,11 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
 
   private void ReCalcVelocity()
   {
-    var target = (PM.Position - Position).normalized;
-    velocity = EnemyManager.Instance.Boids(this, 1f, target) * Speed;
+    // まずPlayerに向かう速度ベクトルをセットする
+    velocity = (PM.Position - Position).normalized * Speed;
+
+    // Boidsアルゴリズムによって補正をする
+    velocity = EnemyManager.Instance.Boids(this, 1f) * Speed;
   }
 
   protected override void MyAwake()
@@ -47,7 +50,6 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   //----------------------------------------------------------------------------
   private void EnterUsual()
   {
-    velocity = (PM.Position - Position).normalized * Speed;
     isCollidable = true;
     isVisible    = true;
   }

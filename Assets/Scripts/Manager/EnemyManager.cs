@@ -163,7 +163,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   /// <summary>
   /// 群れアルゴリズムにより進むべき方向を求める
   /// </summary>
-  public Vector3 Boids(IEnemy main, float radius, Vector3 toTarget)
+  public Vector3 Boids(IEnemy main, float radius)
   {
     List<IEnemy> list = new();
 
@@ -181,43 +181,31 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     // 周りに個体がいなければ現状維持とする
     if (list.Count == 0) {
-      return toTarget;
+      return main.Velocity;
     }
 
-    Vector3 v1;                // 分離、一番近い個体と反対方向のベクトル
+    Vector3 v1 = Vector3.zero; // 分離、一番近い個体と反対方向のベクトル
     Vector3 v2 = Vector3.zero; // 整列、周囲の固体の速度の平均
     Vector3 v3 = Vector3.zero; // 結合、群れの中心に向かうベクトル
 
-    // もっとも近い距離、最初はfloatの最大値を設定しておく
-    float nearestDistance = float.MaxValue;
-
-    // もっとも近い敵のインスタンス、最初はnullを設定しておく
-    IEnemy nearestEnemy = null;
-
     foreach (var enemy in list) 
     {
-      var distance = (main.Position - enemy.Position).sqrMagnitude;
-
-      if (distance < nearestDistance) {
-        nearestEnemy = enemy;
-      }
-
+      v1 += (main.Position - enemy.Position);
       v2 += enemy.Velocity;
       v3 += enemy.Position;
     }
 
     // 分離ベクトル
-    v1 = (main.Position - nearestEnemy.Position).normalized;
+    v1 /= list.Count;
 
     // 整列ベクトル
     v2 /= list.Count;
-    v2.Normalize();
 
     // 結合ベクトル
     v3 /= list.Count;
-    v3.Normalize();
+    v3 = v3 - main.Position;
 
-    var v = (toTarget*0.2f)+(v1*0.3f)+(v2*0.3f)+(v3*0.2f);
+    var v = (v1*0.6f)+(v2*0.2f)+(v3*0.2f);
     
     return v.normalized;
   }
