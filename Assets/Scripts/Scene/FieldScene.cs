@@ -142,6 +142,8 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterBattle()
   {
+    UIManager.Instance.Toaster.Bake("戦闘開始!!");
+
     // このフェーズはバトルが予約されている時にしか遷移してこないのでチェックしておく
     if (!FieldManager.Instance.IsBattleReserved) 
     {
@@ -185,6 +187,7 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterBattleEnded()
   {
+    UIManager.Instance.Toaster.Bake("戦闘終了!!");
     TimeSystem.Player.Pause(true);
     UIManager.Instance.HUD.SkillSlots.Stop();
     BulletManager.Instance.Terminate();
@@ -231,15 +234,24 @@ public class FieldScene : MyMonoBehaviour
 
   private void OnGetNewSkill(int index)
   {
-    if (state.StateKey == State.Battle) {
-      UIManager.Instance.HUD.SkillSlots.SetSkill(index, SkillManager.Instance.GetActiveSkill(index));
+    if (state.StateKey == State.Battle) 
+    {
+      var skill = SkillManager.Instance.GetActiveSkill(index);
+
+      UIManager.Instance.HUD.SkillSlots.SetSkill(index, skill);
       UIManager.Instance.HUD.SkillSlots.Run(index);
+
+      UIManager.Instance.Toaster.Bake($"New {skill.Name}を覚えた!!");
     }
   }
 
   private void OnLevelUpSkill(SkillId id, int preLv, int lv)
   {
-    Logger.Log($"Level Up: {id.ToString()} Lv {preLv} -> {lv}");
+    if (state.StateKey == State.Battle) {
+      var master = SkillMaster.FindById(id);
+      var msg = $"Lv+ {master.Name} Lv {preLv} → {lv}";
+      UIManager.Instance.Toaster.Bake(msg);
+    }
   }
 
   private void RunSkill()

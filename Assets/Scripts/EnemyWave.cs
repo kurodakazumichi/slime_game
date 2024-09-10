@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyWave
 {
-  private const float MakeEnemyDistance = 15f;
+  private const float MakeEnemyDistance = App.BATTLE_CIRCLE_RADIUS;
 
   //============================================================================
   // Enum

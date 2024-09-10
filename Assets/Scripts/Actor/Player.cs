@@ -122,8 +122,6 @@ public class Player : MyMonoBehaviour, IActor
 
   private void UpdateStateUsual()
   {
-    targetVelocity = GetInputVelocity();
-
     velocity = CalcVelocity();
 
     transform.position += velocity * TimeSystem.Player.DeltaTime;
@@ -143,11 +141,7 @@ public class Player : MyMonoBehaviour, IActor
 
   private void UpdateStateInvisible()
   {
-    Vector3 v = GetInputVelocity();
-
-    targetVelocity = v;
-
-    velocity = Vector3.Lerp(velocity, targetVelocity, 0.01f);
+    velocity = CalcVelocity();
 
     transform.position += velocity * TimeSystem.Player.DeltaTime;
 
@@ -201,7 +195,7 @@ public class Player : MyMonoBehaviour, IActor
     var duration = 1f;
     var target = GetInputVelocity();
     var rate = duration * delta;
-    return Vector3.Slerp(velocity, target, Mathf.Pow(rate, 0.8f));
+    return Vector3.Lerp(velocity, target, Mathf.Pow(rate, 0.8f));
   }
 
   private Vector3 GetInputVelocity()

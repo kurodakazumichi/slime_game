@@ -5,6 +5,7 @@ public interface ISkill
   SkillId Id { get; }
   int Lv { get; }
   float RecastTime { get; }
+  string Name { get; }
   int Power { get; }
   uint Attributes { get; }
   void Fire();
