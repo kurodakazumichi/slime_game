@@ -144,6 +144,10 @@ public class StandardBullet : Bullet<StandardBullet.State>
     velocity = direction * CalcSpeed(timer) * Time.deltaTime;
     CachedTransform.position  += velocity;
 
+    if (SyncDirectionAndRotation) {
+      CachedTransform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+    }
+    
     timer += TimeSystem.DeltaTime;
   }
 

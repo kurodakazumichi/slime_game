@@ -32,6 +32,9 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   [SerializeField, Tooltip("寿命、0を設定すると寿命なし")]
   protected float LifeTime = 0f;
 
+  [SerializeField, Tooltip("方向と回転を同期する")]
+  protected bool SyncDirectionAndRotation = false;
+
   //============================================================================
   // Variables
   //============================================================================
@@ -192,8 +195,13 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// </summary>
   protected Vector3 CalcDirection(float timer)
   {
+    // ホーミング時間が過ぎたら方向維持
+    if (HomingTime < timer) {
+      return direction;
+    }
+
     // ターゲットが存在しなければ方向維持
-    if (Target is null) {
+    if (Target is null || !Target.gameObject.activeSelf) {
       return direction;
     }
 
