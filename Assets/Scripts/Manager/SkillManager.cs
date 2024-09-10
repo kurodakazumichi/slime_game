@@ -33,6 +33,8 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   //----------------------------------------------------------------------------
   public Action<int> OnGetNewSkill { private get; set; } = null;
 
+  public Action<SkillId, int, int> OnLevelUpSkill { private get; set; } = null;
+
   //============================================================================
   // Methods
   //============================================================================
@@ -155,7 +157,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     var lv = GetLevel(id);
 
     if (preLv < lv) {
-      Logger.Log($"[SkillManager.AddExp] {id.ToString()} Lv {preLv} -> {lv}");
+      OnLevelUpSkill?.Invoke(id, preLv, lv);
     }
   }
 

@@ -75,7 +75,8 @@ public class FieldScene : MyMonoBehaviour
     DebugManager.Instance.Regist(ResourceManager.Instance);
     DebugManager.Instance.Regist(EnemyManager.Instance);
 
-    SkillManager.Instance.OnGetNewSkill = OnGetNewSkill;
+    SkillManager.Instance.OnGetNewSkill  = OnGetNewSkill;
+    SkillManager.Instance.OnLevelUpSkill = OnLevelUpSkill;
   }
 
   private void UpdateSystemSetup()
@@ -232,6 +233,11 @@ public class FieldScene : MyMonoBehaviour
       UIManager.Instance.HUD.SkillSlots.SetSkill(index, SkillManager.Instance.GetActiveSkill(index));
       UIManager.Instance.HUD.SkillSlots.Run(index);
     }
+  }
+
+  private void OnLevelUpSkill(SkillId id, int preLv, int lv)
+  {
+    Logger.Log($"Level Up: {id.ToString()} Lv {preLv} -> {lv}");
   }
 
   private void RunSkill()
