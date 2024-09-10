@@ -111,6 +111,15 @@ public class Player : MyMonoBehaviour, IActor
 
     transform.position += velocity * TimeSystem.Player.DeltaTime;
 
+    if (FieldManager.Instance.IsLockArea) 
+    {
+      var v1 = Position - FieldManager.Instance.BattlePosition;
+
+      if (10f <= v1.magnitude) {
+        CachedTransform.position = FieldManager.Instance.BattlePosition + v1.normalized * 10f;
+      }
+    }
+
     SyncCameraPosition();
   }
 

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a01b3eb851e3541a1ee2df9272d5fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PenetrableCount: 10
+  PenetrableCount: 3
   MinSpeed: 0
   MaxSpeed: 10
   SpeedChangeTime: 1

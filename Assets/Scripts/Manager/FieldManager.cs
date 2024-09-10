@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FieldManager : SingletonMonoBehaviour<FieldManager>
 {
+  public ParticleSystem Area;
+
   //============================================================================
   // Variables
   //============================================================================
@@ -18,6 +20,8 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   /// </summary>
   private BattleLocation battleLocationCandidate = null;
 
+  
+
   //============================================================================
   // Properities
   //============================================================================
@@ -29,9 +33,20 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     get { return battleLocationCandidate != null; }
   }
 
+  public Vector3 BattlePosition { get; private set; } = Vector3.zero;
+
+  public bool IsLockArea {
+    get { return BattlePosition != Vector3.zero; }
+  }
+
   //============================================================================
   // Methods
   //============================================================================
+
+  protected override void MyAwake()
+  {
+    Area.gameObject.SetActive(false);
+  }
 
   //----------------------------------------------------------------------------
   // Public
@@ -51,6 +66,21 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   public void ReserveBattleLocation(BattleLocation location)
   {
     battleLocationCandidate = location;
+  }
+
+  public void LockArea()
+  {
+    if (battleLocationCandidate is not null) {
+      BattlePosition = battleLocationCandidate.Position;
+      Area.transform.position = BattlePosition;
+      Area.gameObject.SetActive(true);
+    }
+  }
+
+  public void UnlockArea()
+  {
+    BattlePosition = Vector3.zero;
+    Area.gameObject.SetActive(false);
   }
 
   /// <summary>

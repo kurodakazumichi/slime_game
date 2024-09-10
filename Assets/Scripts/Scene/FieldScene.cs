@@ -159,6 +159,7 @@ public class FieldScene : MyMonoBehaviour
     var wm = WaveManager.Instance;
 
     wm.SetEnemyWavePropertySet(fm.MakeCurrentEnemyWavePropertySet());
+    fm.LockArea();
     fm.CancelBattleLocation();          // もうWaveの情報は生成したので予約は解除
     fm.SetActiveBattleLocations(false); // BattleLocationは非表示
     WaveManager.Instance.Run();
@@ -188,6 +189,7 @@ public class FieldScene : MyMonoBehaviour
     UIManager.Instance.HUD.SkillSlots.Stop();
     BulletManager.Instance.Terminate();
     WaveManager.Instance.Terminate();
+    FieldManager.Instance.UnlockArea();
   }
 
   private void UpdateBattleEnded()
