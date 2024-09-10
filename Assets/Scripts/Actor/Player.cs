@@ -3,7 +3,15 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class Player : MyMonoBehaviour, IActor
 {
+  //============================================================================
+  // Const
+  //============================================================================
+
   const float SPEED = 5f;
+
+  //============================================================================
+  // Enum
+  //============================================================================
 
   private enum State
   {
@@ -13,42 +21,58 @@ public class Player : MyMonoBehaviour, IActor
     Dead,
   }
 
-  private float timer = 0;
-  private Vector3 velocity = Vector3.zero;
-  private Vector3 targetVelocity = Vector3.zero;
-
-  private RangedFloat _hp;
-
+  //============================================================================
+  // Variables
+  //============================================================================
   private SpriteRenderer spriteRenderer;
 
-  new public SphereCollider collider { get; private set; }
+  private StateMachine<State> state = new();
+  private float timer = 0;
+
+  private Vector3 velocity = Vector3.zero;
+
+  private Vector3 targetVelocity = Vector3.zero;
+
+  private RangedFloat hp = new(0);
+  
+  //============================================================================
+  // Properities
+  //============================================================================
+
+  public SphereCollider Collider { get; private set; }
 
   public bool IsDead {
-    get { return _hp.IsEmpty; }
+    get { return hp.IsEmpty; }
   }
 
-  private StateMachine<State> state = new StateMachine<State>();
+  //============================================================================
+  // Methods
+  //============================================================================
 
+  //----------------------------------------------------------------------------
+  // Public
+  //----------------------------------------------------------------------------
   public void TakeDamage(AttackInfo info)
   {
     if (state.StateKey != State.Usual) {
       return;
     }
 
-    _hp.Now -= info.Power;
+    hp.Now -= info.Power;
 
     SyncHpToHudHpGauge();
 
-    if (_hp.IsEmpty) {
+    if (hp.IsEmpty) {
       state.SetState(State.Dead);
     }
     else {
       state.SetState(State.Invincible);
     }
   }
+
   public void Respawn()
   {
-    _hp.Full();
+    hp.Full();
     state.SetState(State.Idle);
     SyncHpToHudHpGauge();
   }
@@ -58,11 +82,16 @@ public class Player : MyMonoBehaviour, IActor
     state.SetState(State.Usual);
   }
 
+  //----------------------------------------------------------------------------
+  // Lief Cycle
+  //----------------------------------------------------------------------------
+
   protected override void MyAwake()
   {
-    collider = GetComponent<SphereCollider>();
+    Collider       = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    _hp = new RangedFloat(10f);
+
+    hp.Init(10f);
 
     state.Add(State.Idle);
     state.Add(State.Usual, EnterStateUsual, UpdateStateUsual);
@@ -81,6 +110,10 @@ public class Player : MyMonoBehaviour, IActor
   {
     state.Update();
   }
+
+  //----------------------------------------------------------------------------
+  // State
+  //----------------------------------------------------------------------------
 
   private void EnterStateUsual()
   {
@@ -128,6 +161,9 @@ public class Player : MyMonoBehaviour, IActor
     SyncCameraPosition();
   }
 
+  //----------------------------------------------------------------------------
+  // 移動
+  //----------------------------------------------------------------------------
 
   private void RestrictMovement()
   {
@@ -157,12 +193,6 @@ public class Player : MyMonoBehaviour, IActor
     p.z -= 14f;
     
     Camera.main.transform.position = p;
-  }
-
-
-  private void SyncHpToHudHpGauge()
-  {
-    UIManager.Instance.HUD.HpGauge.Set(_hp.Now, _hp.Rate);
   }
 
   private Vector3 CalcVelocity()
@@ -195,5 +225,14 @@ public class Player : MyMonoBehaviour, IActor
     }
 
     return v;
+  }
+
+  //----------------------------------------------------------------------------
+  // UI
+  //----------------------------------------------------------------------------
+
+  private void SyncHpToHudHpGauge()
+  {
+    UIManager.Instance.HUD.HpGauge.Set(hp.Now, hp.Rate);
   }
 }
