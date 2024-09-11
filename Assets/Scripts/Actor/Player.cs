@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+﻿using System;
+using UnityEngine;
 
 public class Player : MyMonoBehaviour, IActor
 {
@@ -44,6 +44,8 @@ public class Player : MyMonoBehaviour, IActor
   public bool IsDead {
     get { return hp.IsEmpty; }
   }
+
+  public Action<int, float> OnChangeHP { private get; set; } = null;
 
   //============================================================================
   // Methods
@@ -227,6 +229,6 @@ public class Player : MyMonoBehaviour, IActor
 
   private void SyncHpToHudHpGauge()
   {
-    UIManager.Instance.HUD.HpGauge.Set(hp.Now, hp.Rate);
+    OnChangeHP?.Invoke((int)hp.Now, hp.Rate);
   }
 }

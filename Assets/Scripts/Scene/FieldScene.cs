@@ -77,6 +77,10 @@ public class FieldScene : MyMonoBehaviour
 
     SkillManager.Instance.OnGetNewSkill  = OnGetNewSkill;
     SkillManager.Instance.OnLevelUpSkill = OnLevelUpSkill;
+
+    PlayerManager.Instance.OnChangePlayerHP = (int hp, float rate) => {
+      UIManager.Instance.HUD.HpGauge.Set(hp, rate);
+    };
   }
 
   private void UpdateSystemSetup()

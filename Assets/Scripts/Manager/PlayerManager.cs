@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,6 +14,12 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     base.MyAwake();
 
     player = Instantiate(playerPrefab).GetComponent<Player>();
+  }
+
+  public Action<int, float> OnChangePlayerHP { 
+    set { 
+      player.OnChangeHP = value;
+    }
   }
 
   public void RespawnPlayer()
