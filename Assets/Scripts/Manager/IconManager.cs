@@ -17,4 +17,11 @@ public class IconManager : SingletonMonoBehaviour<IconManager>
     var sprites = ResourceManager.Instance.GetSpritesCache("Icon/Bullets.png");
     return sprites[index];
   }
+
+  public Sprite Enemy(EnemyId id)
+  {
+    var index = EnemyMaster.FindById(id).No;
+    var sprites = ResourceManager.Instance.GetSpritesCache("Icon/Enemies.png");
+    return sprites[index];
+  }
 }
