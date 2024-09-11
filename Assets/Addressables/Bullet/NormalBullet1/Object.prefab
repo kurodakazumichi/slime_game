@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5394171355768362016}
   - component: {fileID: 3482095602604061529}
   m_Layer: 7
-  m_Name: NormalBullet1
+  m_Name: Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,12 +173,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2091312775, guid: 6c559c8d15289fd4c8a55228ee0ed0e2, type: 3}
+  m_Sprite: {fileID: -748103954, guid: 9a6b50ebb89fef048b14da5fa6f2802b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

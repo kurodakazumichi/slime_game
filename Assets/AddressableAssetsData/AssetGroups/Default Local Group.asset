@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: f3e80e085d4b5384487623b1e30ede70
   m_SerializeEntries:
   - m_GUID: 0ffa9cdbd4958f44f8dd93a440d422cd
-    m_Address: Bullet/NormalBullet1.prefab
+    m_Address: Bullet/NormalBullet1/Object.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -52,8 +52,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2ea4c2ff81c40f48961ee75d68ed687
+    m_Address: Bullet/NormalBullet1/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb6044dc3dac17a4eb214d31fe9e54fc
     m_Address: Icon/Enemies.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6e577b8d85f3f34a8cecb7b52368d85
+    m_Address: Bullet/NormalBullet1/Usual.anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
