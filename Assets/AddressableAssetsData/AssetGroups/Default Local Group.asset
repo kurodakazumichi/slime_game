@@ -47,6 +47,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a6b50ebb89fef048b14da5fa6f2802b
+    m_Address: Icon/Bullets.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb6044dc3dac17a4eb214d31fe9e54fc
     m_Address: Icon/Enemies.png
     m_ReadOnly: 0
