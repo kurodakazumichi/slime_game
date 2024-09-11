@@ -12,13 +12,6 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   private const float BREAKTIME_AFTER_ATTACK = 0.4f;
 
   //============================================================================
-  // Inspector
-  //============================================================================
-
-  [SerializeField]
-  private float Speed = 1f;
-
-  //============================================================================
   // Enum
   //============================================================================
   public enum State
@@ -129,10 +122,10 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     }
 
     // まずPlayerに向かう速度ベクトルをセットする
-    velocity = (PM.Position - Position).normalized * Speed;
+    velocity = (PM.Position - Position).normalized * status.Speed;
 
     // Boidsアルゴリズムによって補正をする
-    velocity = EnemyManager.Instance.Boids(this, Collider.radius) * Speed;
+    velocity = EnemyManager.Instance.Boids(this, Collider.radius) * status.Speed;
   }
 
 }

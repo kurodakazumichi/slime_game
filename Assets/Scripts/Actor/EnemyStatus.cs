@@ -27,6 +27,11 @@ public class EnemyStatus
   private float power = 0;
 
   /// <summary>
+  /// 敵の速さ
+  /// </summary>
+  private float speed = 0;
+
+  /// <summary>
   /// 攻撃属性
   /// </summary>
   private Flag32 attrA = new();
@@ -66,14 +71,19 @@ public class EnemyStatus
   public EnemyId Id => id;
 
   /// <summary>
+  /// HP
+  /// </summary>
+  public RangedFloat Hp => hp;
+
+  /// <summary>
   /// PowerにはLvがかかる
   /// </summary>
   private float Power => power * lv;
 
   /// <summary>
-  /// HP
+  /// 速さ
   /// </summary>
-  public RangedFloat Hp => hp;
+  public float Speed => speed;
 
   /// <summary>
   /// 倒した時に得られるスキル
@@ -103,14 +113,20 @@ public class EnemyStatus
 
     var master = EnemyMaster.FindById(id);
 
+    // 強さ系
     hp.Init(master.HP);
+    power = master.Power;
+    speed = master.Speed;
+
+    // 属性
     attrA.Value = master.AttackAttr;
     attrW.Value = master.WeakAttr;
     attrR.Value = master.ResistAttr;
     attrN.Value = master.NullfiedAttr;
-    power       = master.Power;
-    skillId     = master.SkillId;
-    exp         = master.Exp;
+
+    // スキル
+    skillId = master.SkillId;
+    exp     = master.Exp;
   }
 
   /// <summary>
