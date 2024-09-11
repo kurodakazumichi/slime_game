@@ -23,7 +23,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 208a9a5f83ee25d4681d4c5e1202397c
-    m_Address: Bullet/PiercingBullet1.prefab
+    m_Address: Bullet/PiercingBullet1/Object.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -34,6 +34,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 46e4ecb1a134ae14e8a269ab82ed4abb
     m_Address: Enemy/000.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5688effb8000f1f45a4d96b854dcd819
+    m_Address: Bullet/PiercingBullet1/PiercingBullet.controller
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -64,6 +69,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6e577b8d85f3f34a8cecb7b52368d85
     m_Address: Bullet/NormalBullet1/Usual.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f966fcd7491758342b087ebb9ae23c20
+    m_Address: Bullet/PiercingBullet1/Usual.anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
