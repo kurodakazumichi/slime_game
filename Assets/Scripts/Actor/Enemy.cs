@@ -10,15 +10,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   // Variables
   //============================================================================
 
-  /// <summary>
-  /// ステートマシン
-  /// </summary>
-  protected StateMachine<T> state { get; private set; } = new();
-
-  /// <summary>
-  /// 敵に設定されているコライダー
-  /// </summary>
-  new protected SphereCollider collider { get; private set; }
 
   /// <summary>
   /// 敵のメインビジュアルを表示しているSpriteRenderer
@@ -31,16 +22,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   protected EnemyStatus status = new();
 
   /// <summary>
-  /// 所属するWave
-  /// </summary>
-  protected EnemyWave ownerWave { get; private set; } = null;
-
-  /// <summary>
-  /// 攻撃ステータス
-  /// </summary>
-  protected AttackInfo attackInfo { get; private set; } = null;
-
-  /// <summary>
   /// 速度
   /// </summary>
   protected Vector3 velocity;
@@ -50,9 +31,24 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   //============================================================================
 
   /// <summary>
+  /// ステートマシン
+  /// </summary>
+  protected StateMachine<T> StateMachine { get; private set; } = new();
+
+  /// <summary>
+  /// 所属するWave
+  /// </summary>
+  protected EnemyWave OwnerWave { get; private set; } = null;
+
+  /// <summary>
+  /// 攻撃ステータス
+  /// </summary>
+  protected AttackInfo AttackInfo { get; private set; } = null;
+
+  /// <summary>
   /// 識別子
   /// </summary>
-  public EnemyId Id { 
+  public EnemyId Id {
     get { return status.Id; } 
   }
 
@@ -64,9 +60,14 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   }
 
   /// <summary>
+  /// 敵に設定されているコライダー
+  /// </summary>
+  protected SphereCollider Collider { get; private set; }
+
+  /// <summary>
   /// 表示制御
   /// </summary>
-  protected bool isVisible 
+  protected bool IsVisible 
   {
     get {
       return spriteRenderer.enabled;
@@ -80,27 +81,48 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// 衝突制御
   /// </summary>
-  protected bool isCollidable 
+  protected bool IsCollidable 
   {
     get {
-      return collider.enabled;
+      return Collider.enabled;
     }
     set {
-      collider.enabled = value;
+      Collider.enabled = value;
     }
   }
 
   /// <summary>
   /// 終了要求がきているならばtrue
   /// </summary>
-  protected bool isTerminationRequested 
+  protected bool IsTerminationRequested 
   {
     get {
-      if (ownerWave == null) {
+      if (OwnerWave == null) {
         return false;
       }
 
-      return ownerWave.IsTerminating;
+      return OwnerWave.IsTerminating;
+    }
+  }
+
+  /// <summary>
+  /// Playerと接触しているならばtrue
+  /// </summary>
+  protected bool IsIntersectedWithPlayer 
+  {
+    get 
+    {
+      var pm = PlayerManager.Instance;
+
+      if (pm is null) {
+        return false;
+      }
+
+      return CollisionUtil.IsCollideAxB(
+        PlayerManager.Instance.Position,
+        Position,
+        Collider.radius
+      );
     }
   }
 
@@ -125,7 +147,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   {
     Logger.Log($"[Enemy] Called Init({id.ToString()})");
     status.Init(id, lv);
-    attackInfo = status.MakeAttackInfo();
+    AttackInfo = status.MakeAttackInfo();
   }
 
   /// <summary>
@@ -137,7 +159,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// 所属Waveをセットする
   /// </summary>
   public void SetOwnerWave(EnemyWave wave) { 
-    ownerWave = wave; 
+    OwnerWave = wave; 
   }
 
   /// <summary>
@@ -168,8 +190,8 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   protected void Release()
   {
-    if (ownerWave != null) {
-      ownerWave.Release(this);
+    if (OwnerWave != null) {
+      OwnerWave.Release(this);
     }
     else {
       EnemyManager.Instance.Release(this);
@@ -191,7 +213,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   protected override void MyAwake()
   {
     // コンポーネント収集
-    collider       = GetComponent<SphereCollider>();
+    Collider       = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
     spriteRenderer.transform.rotation = Quaternion.Euler(45f, 0, 0);
@@ -200,6 +222,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   // Update is called once per frame
   void Update()
   {
-    state.Update();
+    StateMachine.Update();
   }
 }
