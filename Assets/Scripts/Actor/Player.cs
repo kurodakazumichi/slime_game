@@ -163,23 +163,29 @@ public class Player : MyMonoBehaviour, IActor
 
   private void RestrictMovement()
   {
-    // ロックされてなければ移動制限はしない
-    if (!FieldManager.Instance.IsLockArea) {
+    var fm = FieldManager.Instance;
+
+    // FieldManagerがなければ移動制限が行われないだけ
+    if (fm == null) {
       return;
     }
 
-    // BattleLocationからPlayerに向かうベクトル
-    var v = Position - FieldManager.Instance.BattlePosition;
+    // ロックされてなければ移動制限はしない
+    if (!fm.HasBattleCircle) {
+      return;
+    }
 
-    var radius = App.BATTLE_CIRCLE_RADIUS;
+    // BattleCircleの中心からPlayerに向かうベクトル
+    var v = Position - fm.BattleCircleCenter;
 
     // BattleCircleの中心から離れすぎていたら、Circle内に戻す
+    var radius = App.BATTLE_CIRCLE_RADIUS;
+
     if (radius * radius <= v.sqrMagnitude) 
     {
       CachedTransform.position 
-        = FieldManager.Instance.BattlePosition + v.normalized * radius;
-    }
-    
+        = fm.BattleCircleCenter + v.normalized * radius;
+    } 
   }
 
   private void SyncCameraPosition()

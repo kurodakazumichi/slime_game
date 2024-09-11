@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class FieldManager : SingletonMonoBehaviour<FieldManager>
 {
-  public ParticleSystem Area;
+  [SerializeField]
+  private GameObject battleCirclePrefab;
+
+
 
   //============================================================================
   // Variables
@@ -20,7 +23,7 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   /// </summary>
   private BattleLocation battleLocationCandidate = null;
 
-  
+  private  GameObject battleCircle;
 
   //============================================================================
   // Properities
@@ -33,10 +36,20 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     get { return battleLocationCandidate != null; }
   }
 
-  public Vector3 BattlePosition { get; private set; } = Vector3.zero;
+  /// <summary>
+  /// バトルサークルが広がっている？
+  /// </summary>
+  public bool HasBattleCircle {
+    get { return battleCircle.gameObject.activeSelf; }
+  }
 
-  public bool IsLockArea {
-    get { return BattlePosition != Vector3.zero; }
+  /// <summary>
+  /// バトルサークルの中心
+  /// </summary>
+  public Vector3 BattleCircleCenter {
+    get {
+      return battleCircle.transform.position;
+    }
   }
 
   //============================================================================
@@ -45,11 +58,8 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
 
   protected override void MyAwake()
   {
-    Area.gameObject.SetActive(false);
-
-#if _DEBUG
-    Application.targetFrameRate = 60;
-#endif
+    battleCircle = Instantiate(battleCirclePrefab);
+    battleCircle.gameObject.SetActive(false);
   }
 
   //----------------------------------------------------------------------------
@@ -72,19 +82,25 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     battleLocationCandidate = location;
   }
 
-  public void LockArea()
+  /// <summary>
+  /// BattleCircleを発動する
+  /// </summary>
+  public void ActivateBattleCircle()
   {
-    if (battleLocationCandidate is not null) {
-      BattlePosition = battleLocationCandidate.Position;
-      Area.transform.position = BattlePosition;
-      Area.gameObject.SetActive(true);
+    if (battleLocationCandidate is null) {
+      return;
     }
+
+    battleCircle.transform.position = battleLocationCandidate.Position;
+    battleCircle.gameObject.SetActive(true);
   }
 
-  public void UnlockArea()
+  /// <summary>
+  /// BattleCircleを停止する
+  /// </summary>
+  public void InactivateBattleCircle()
   {
-    BattlePosition = Vector3.zero;
-    Area.gameObject.SetActive(false);
+    battleCircle.gameObject.SetActive(false);
   }
 
   /// <summary>
