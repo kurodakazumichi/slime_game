@@ -99,6 +99,7 @@ public class FieldScene : MyMonoBehaviour
     // 暫定
     EnemyManager.Instance.Load();
     BulletManager.Instance.Load();
+    IconManager.Instance.Load();
   }
 
   private void UpdateResourceLoading()

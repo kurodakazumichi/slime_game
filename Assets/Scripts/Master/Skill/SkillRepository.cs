@@ -15,6 +15,7 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Non),
       Prefab          = "Bullet/NormalBullet1.prefab",
       GrowthType      = Growth.Fast,
+      IconNo          = 0,
     },
     
     new SkillEntity() {
@@ -28,6 +29,7 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Non),
       Prefab          = "Bullet/NormalBullet2.prefab",
       GrowthType      = Growth.Normal,
+      IconNo          = 0,
     },
     
     new SkillEntity() {
@@ -41,6 +43,7 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Non),
       Prefab          = "Bullet/NormalBullet3.prefab",
       GrowthType      = Growth.Normal,
+      IconNo          = 0,
     },
     
     new SkillEntity() {
@@ -54,6 +57,7 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Non),
       Prefab          = "Bullet/PiercingBullet1.prefab",
       GrowthType      = Growth.Fast,
+      IconNo          = 5,
     },
     
     new SkillEntity() {
@@ -67,6 +71,7 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Non),
       Prefab          = "Bullet/RapidShot1.prefab",
       GrowthType      = Growth.Normal,
+      IconNo          = 0,
     },
     
     new SkillEntity() {
@@ -80,6 +85,7 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Non),
       Prefab          = "Bullet/HeavyShot1.prefab",
       GrowthType      = Growth.Normal,
+      IconNo          = 0,
     },
     
     new SkillEntity() {
@@ -93,6 +99,7 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Fir),
       Prefab          = "Bullet/FireBullet1.prefab",
       GrowthType      = Growth.Normal,
+      IconNo          = 0,
     },
     
   };

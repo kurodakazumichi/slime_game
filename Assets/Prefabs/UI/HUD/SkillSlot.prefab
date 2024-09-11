@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e21e0181ab88241a26e5fe02181b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _overlayImage: {fileID: 2087353539482404891}
+  uiOverlayImage: {fileID: 2087353539482404891}
+  uiIcon: {fileID: 6123312764890060190}
 --- !u!1 &6063520674608077737
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
+  m_Color: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

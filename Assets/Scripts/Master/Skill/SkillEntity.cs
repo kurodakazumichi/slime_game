@@ -14,6 +14,7 @@ public interface ISkillEntityRO
   string Name { get; }
   string Prefab { get; }
   Growth GrowthType { get; }
+  int IconNo { get; }
 }
 
 /// <summary>
@@ -70,5 +71,10 @@ public class SkillEntity : ISkillEntityRO
   /// スキルの成長タイプ
   /// </summary>
   public Growth GrowthType { get; set; }
+
+  /// <summary>
+  /// アイコン番号
+  /// </summary>
+  public int IconNo { get; set; }
 }
 

@@ -3,8 +3,19 @@ using UnityEngine.UI;
 
 public class SkillSlot : MyMonoBehaviour
 {
+  //============================================================================
+  // Inspector
+  //============================================================================
+
   [SerializeField]
-  private Image _overlayImage;
+  private Image uiOverlayImage;
+
+  [SerializeField]
+  private Image uiIcon;
+
+  //============================================================================
+  // Enum
+  //============================================================================
 
   private enum State
   {
@@ -13,84 +24,118 @@ public class SkillSlot : MyMonoBehaviour
     Fire,
   }
 
-  private float _recastTime = 0;
-  private float _timer = 0;
+  //============================================================================
+  // Variables
+  //============================================================================
+  
+  private StateMachine<State> state = new();
+  private float recastTime = 0;
+  private float timer = 0;
+  private ISkill skill;
 
-  private StateMachine<State> _state;
+  //============================================================================
+  // Properties
+  //============================================================================
 
-  private ISkill _skill;
+  private SpriteRenderer SpriteRenderer { get; set; }
+
+  //============================================================================
+  // Methods
+  //============================================================================
+
+  //----------------------------------------------------------------------------
+  // Public
+  //----------------------------------------------------------------------------
 
   public void SetSkill(ISkill skill)
   {
-    _skill = skill;
+    this.skill = skill;
+
+    if (skill is null) {
+      return;
+    }
+
+    uiIcon.sprite = IconManager.Instance.Skill(skill.Id);
   }
-  
+
   public void Charge()
   {
-    if (_skill == null) { 
+    if (skill == null) {
       SetActive(false);
       return;
     }
     SetActive(true);
-    _state.SetState(State.Charge);
+    state.SetState(State.Charge);
   }
 
   public void Idle()
   {
-    _state.SetState(State.Idle);
+    state.SetState(State.Idle);
   }
+
+  //----------------------------------------------------------------------------
+  // Life Cycle
+  //----------------------------------------------------------------------------
 
   protected override void MyAwake()
   {
-    _state = new StateMachine<State>();
-    
-    _state.Add(State.Idle, EnterIdle);
-    _state.Add(State.Charge, EnterCharge, UpdateCharge);
-    _state.Add(State.Fire, EnterFire, UpdateFire);
-    _state.SetState(State.Idle);
+    state.Add(State.Idle, EnterIdle);
+    state.Add(State.Charge, EnterCharge, UpdateCharge);
+    state.Add(State.Fire, EnterFire, UpdateFire);
+    state.SetState(State.Idle);
 
-    _overlayImage.fillAmount = 0;
+    uiOverlayImage.fillAmount = 0;
   }
 
+  void Update()
+  {
+    state.Update();
+  }
+
+  //----------------------------------------------------------------------------
+  // State
+  //----------------------------------------------------------------------------
+
+  //----------------------------------------------------------------------------
+  // Idle
   private void EnterIdle()
   {
-    _recastTime = 0f;
-    _timer = 0f;
-    _overlayImage.fillAmount = 0;
+    recastTime = 0f;
+    timer = 0f;
+    uiOverlayImage.fillAmount = 0;
   }
 
+  //----------------------------------------------------------------------------
+  // Charge
   private void EnterCharge()
   {
-    _timer      = _skill.RecastTime;
-    _recastTime = _skill.RecastTime;
-    _overlayImage.fillAmount = 1f;
+    timer      = skill.RecastTime;
+    recastTime = skill.RecastTime;
+    uiOverlayImage.fillAmount = 1f;
   }
 
   private void UpdateCharge()
   {
-    _overlayImage.fillAmount = _timer / _recastTime;
+    uiOverlayImage.fillAmount = timer / recastTime;
 
-    if (_timer < 0) {
-      _state.SetState(State.Fire);
+    if (timer < 0) {
+      state.SetState(State.Fire);
     }
 
-    _timer -= TimeSystem.Skill.DeltaTime;
+    timer -= TimeSystem.Skill.DeltaTime;
   }
 
+  //----------------------------------------------------------------------------
+  // Fire
   private void EnterFire()
   {
-    _overlayImage.fillAmount = 0;
+    uiOverlayImage.fillAmount = 0;
   }
 
   private void UpdateFire()
   {
-    _skill.Fire();
-    _state.SetState(State.Charge);
+    skill.Fire();
+    state.SetState(State.Charge);
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-    _state.Update();
-  }
 }
