@@ -1468,7 +1468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   props:
-    EnemyId: BatA
+    EnemyId: Enemy013
     RoleId: Circle
     WaveCount: 5
     WaveInterval: 2

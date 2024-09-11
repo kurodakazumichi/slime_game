@@ -5,21 +5,6 @@ public static class EnemyRepository
   public static List<IEnemyEntityRO> entities = new List<IEnemyEntityRO>() 
   {
     new EnemyEntity() {
-      Id           = EnemyId.BatA,
-      No           = 0,
-      Name         = "コウモリ",
-      HP           = 2,
-      Power        = 1,
-      AttackAttr   = (uint)(Attribute.Non),
-      WeakAttr     = (uint)(Attribute.Nil),
-      ResistAttr   = (uint)(Attribute.Nil),
-      NullfiedAttr = (uint)(Attribute.Nil),
-      SkillId      = SkillId.NormalBullet1,
-      Exp          = 1,
-      PrefabPath   = "Enemy/000.prefab",
-    },
-    
-    new EnemyEntity() {
       Id           = EnemyId.Enemy011,
       No           = 11,
       Name         = "ゾイダー",
