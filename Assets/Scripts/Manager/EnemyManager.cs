@@ -163,7 +163,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   /// <summary>
   /// 群れアルゴリズムにより進むべき方向を求める
   /// </summary>
-  public Vector3 Boids(IEnemy main, float radius)
+  public Vector3 Boids(Vector3 to, IEnemy main, float radius)
   {
     List<IEnemy> list = new();
 
@@ -179,9 +179,9 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
       }
     }
 
-    // 周りに個体がいなければ現状維持とする
+    // 周りに2個体以上がいなければ現状維持とする
     if (list.Count == 0) {
-      return main.Velocity;
+      return to;
     }
 
     Vector3 v1 = Vector3.zero; // 分離、一番近い個体と反対方向のベクトル
@@ -205,8 +205,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     v3 /= list.Count;
     v3 = v3 - main.Position;
 
-    var v = (v1*0.6f)+(v2*0.2f)+(v3*0.2f);
-    
+    var v = (v1*0.3f)+(v2*0.5f)+(v3*0.2f);
+
     return v.normalized;
   }
 

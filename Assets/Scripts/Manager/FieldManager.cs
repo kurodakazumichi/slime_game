@@ -103,6 +103,17 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     battleCircle.gameObject.SetActive(false);
   }
 
+  public bool IsInBattleCircle(Vector3 position)
+  {
+    if (!HasBattleCircle) {
+      return false;
+    }
+
+    var v = BattleCircleCenter - position;
+    var r = App.BATTLE_CIRCLE_RADIUS;
+    return (v.sqrMagnitude <= r * r);
+  }
+
   /// <summary>
   /// 戦地をキャンセルする
   /// </summary>

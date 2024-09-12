@@ -38,6 +38,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   public override void Run()
   {
     base.StateMachine.SetState(State.Usual);
+    velocity = (PlayerManager.Instance.Position - Position).normalized * status.Speed;
   }
 
   //----------------------------------------------------------------------------
@@ -137,11 +138,17 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
       return;
     }
 
-    // まずPlayerに向かう速度ベクトルをセットする
-    velocity = (PM.Position - Position).normalized * status.Speed;
+    // Playerに向かう速度ベクトルを生成
+    var toPlayer = (PM.Position - Position).normalized * status.Speed;
 
+    // バトルサークル外だったらとりあえずプレイヤーに向かう
+    if (!FieldManager.Instance.IsInBattleCircle(Position)) {
+      velocity = toPlayer;
+      return;
+    }
+    
     // Boidsアルゴリズムによって補正をする
-    velocity = EnemyManager.Instance.Boids(this, Collider.radius) * status.Speed;
+    velocity = EnemyManager.Instance.Boids(toPlayer, this, Collider.radius) * status.Speed;
   }
 
 }

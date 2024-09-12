@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class MyVector3
 {
@@ -9,5 +9,13 @@ public static class MyVector3
       UnityEngine.Random.Range(-area.y, area.y),
       UnityEngine.Random.Range(-area.z, area.z)
     );
+  }
+
+  /// <summary>
+  /// 指定したベクトルaがdistanceより大きいならばtrue
+  /// </summary>
+  public static bool IsOverDistance(Vector3 a, float distance)
+  {
+    return (distance*distance) < a.sqrMagnitude;
   }
 }

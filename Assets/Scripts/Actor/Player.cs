@@ -181,7 +181,7 @@ public class Player : MyMonoBehaviour, IActor
     // BattleCircleの中心から離れすぎていたら、Circle内に戻す
     var radius = App.BATTLE_CIRCLE_RADIUS;
 
-    if (radius * radius <= v.sqrMagnitude) 
+    if (!fm.IsInBattleCircle(Position)) 
     {
       CachedTransform.position 
         = fm.BattleCircleCenter + v.normalized * radius;
