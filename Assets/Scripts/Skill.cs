@@ -51,23 +51,17 @@ public class Skill : ISkill
   /// <summary>
   /// スキルID
   /// </summary>
-  public SkillId Id {
-    get { return entity.Id; }
-  }
+  public SkillId Id => entity.Id;
 
   /// <summary>
   /// 名称
   /// </summary>
-  public string Name {
-    get { return entity.Name; }
-  }
+  public string Name => entity.Name;
 
   /// <summary>
   /// 属性
   /// </summary>
-  public uint Attributes {
-    get { return entity.Attr; }
-  }
+  public uint Attributes => entity.Attr;
 
   //============================================================================
   // Methods
