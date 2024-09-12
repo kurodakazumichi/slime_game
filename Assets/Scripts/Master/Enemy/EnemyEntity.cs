@@ -9,6 +9,7 @@ public interface IEnemyEntityRO
   float HP { get; }
   float Power { get; }
   float Speed { get; }
+  float Mass { get; }
   uint AttackAttr { get; }
   uint WeakAttr { get; }
   uint ResistAttr { get; }
@@ -50,6 +51,11 @@ public class EnemyEntity : IEnemyEntityRO
   /// 敵の動きの速さに使う
   /// </summary>
   public float Speed { get; set; }
+
+  /// <summary>
+  /// 質量
+  /// </summary>
+  public float Mass { get; set; }
 
   /// <summary>
   /// 攻撃属性

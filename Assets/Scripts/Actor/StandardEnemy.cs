@@ -77,6 +77,8 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   {
     IsCollidable = false;
     IsVisible = false;
+    KnockbackVelocity = Vector3.zero;
+    knockbackTimer.Stop();
   }
 
   //----------------------------------------------------------------------------
@@ -103,6 +105,14 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
       moveStopTimer -= TimeSystem.Enemy.DeltaTime;
     }
 
+    knockbackTimer.Update(TimeSystem.Enemy.DeltaTime);
+
+    // ノックバック速度を更新
+    if (knockbackTimer.IsRunning) {
+      var rate = knockbackTimer.Rate;
+      KnockbackVelocity = Vector3.Lerp(KnockbackVelocity, Vector3.zero, rate);
+    }
+
     CachedTransform.position += velocity * TimeSystem.Enemy.DeltaTime;
   }
 
@@ -118,6 +128,12 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     // 動かないタイム
     if (0f < moveStopTimer) {
       velocity = Vector3.zero;
+      return;
+    }
+
+    // ノックバックがある場合はそちらに従う
+    if (knockbackTimer.IsRunning) {
+      velocity = KnockbackVelocity;
       return;
     }
 

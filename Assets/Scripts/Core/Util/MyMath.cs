@@ -43,4 +43,16 @@ public static class MyMath
   {
     return Mathf.PI * 2f * rate;
   }
+
+  /// <summary>
+  /// 60FPSの環境である数(a)をr倍し続けた時に1以下になるのにかかる時間を求める.
+  /// </summary>
+  public static float CalcDecayTime(float a, float r)
+  {
+    if (a <= 0) return 0;
+    if (r <= 0) return 0;
+    var frame = 1 + (Mathf.Log10(1/a)/Mathf.Log10(r));
+
+    return frame * (1f / 60f);
+  }
 }

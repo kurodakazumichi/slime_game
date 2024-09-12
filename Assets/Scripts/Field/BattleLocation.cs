@@ -165,7 +165,7 @@ public class BattleLocation : MyMonoBehaviour
 
   private void UpdateContact()
   {
-    Logger.Log("[BattleLocation] OnHitPlayerStay");
+    //Logger.Log("[BattleLocation] OnHitPlayerStay");
     if (isPlayerHit == false) {
       state.SetState(State.Usual);
       return;

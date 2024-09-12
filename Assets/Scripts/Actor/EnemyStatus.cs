@@ -32,6 +32,11 @@ public class EnemyStatus
   private float speed = 0;
 
   /// <summary>
+  /// 質量
+  /// </summary>
+  private float mass = 0f;
+
+  /// <summary>
   /// 攻撃属性
   /// </summary>
   private Flag32 attrA = new();
@@ -86,6 +91,11 @@ public class EnemyStatus
   public float Speed => speed;
 
   /// <summary>
+  /// 質量
+  /// </summary>
+  public float Mass => mass;
+
+  /// <summary>
   /// 倒した時に得られるスキル
   /// </summary>
   public SkillId SkillId => skillId;
@@ -117,6 +127,7 @@ public class EnemyStatus
     hp.Init(master.HP);
     power = master.Power;
     speed = master.Speed;
+    mass  = master.Mass;
 
     // 属性
     attrA.Value = master.AttackAttr;
@@ -143,7 +154,7 @@ public class EnemyStatus
   public AttackInfo MakeAttackInfo()
   {
     var status = new AttackInfo();
-    status.Init(Power, attrA.Value);
+    status.Init(Power, attrA.Value, mass * speed);
     return status;
   }
 

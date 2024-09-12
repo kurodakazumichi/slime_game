@@ -6,10 +6,14 @@ using UnityEngine;
 /// </summary>
 public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
 {
+  /// <summary>
+  /// ノックバック減衰率
+  /// </summary>
+  private const float KNOCKBACK_ATTENUATION = 0.95f;
+
   //============================================================================
   // Variables
   //============================================================================
-
 
   /// <summary>
   /// 敵のメインビジュアルを表示しているSpriteRenderer
@@ -25,6 +29,16 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// 速度
   /// </summary>
   protected Vector3 velocity;
+
+  /// <summary>
+  /// ノックバック速度
+  /// </summary>
+  protected Vector3 KnockbackVelocity = Vector3.zero;
+
+  /// <summary>
+  /// ノックバックタイマー
+  /// </summary>
+  protected Timer knockbackTimer = new();
 
   //============================================================================
   // Properities
@@ -161,7 +175,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   public void SetOwnerWave(EnemyWave wave) { 
     OwnerWave = wave; 
   }
-
+  
   /// <summary>
   /// ダメージを受ける
   /// </summary>
@@ -169,8 +183,9 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   {
     var damage = status.TakeDamage(info);
 
-    var position = CachedTransform.position + Vector3.up;
-    HitTextManager.Instance.Get().SetDisplay(position, (int)damage);
+    SetupKnockbackVelocity(info);
+
+    PopOutHitText((int)damage);
   }
 
   /// <summary>
@@ -213,7 +228,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   protected override void MyAwake()
   {
     // コンポーネント収集
-    Collider       = GetComponent<SphereCollider>();
+    Collider = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
     spriteRenderer.transform.rotation = Quaternion.Euler(45f, 0, 0);
@@ -223,5 +238,39 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   void Update()
   {
     StateMachine.Update();
+  }
+
+  //----------------------------------------------------------------------------
+  // Other
+  //----------------------------------------------------------------------------
+
+  private void SetupKnockbackVelocity(AttackInfo info)
+  {
+    // ノックバックの強さ
+    var norm = info.Impact / status.Mass;
+
+    // ノックバックの強さが1以下の場合、ノックバックは発生しない。
+    if (norm <= 1f) {
+      return;
+    }
+
+    // ノックバック速度とノックバックタイマーを設定
+    KnockbackVelocity
+      = (Position - PlayerManager.Instance.Position)
+        .normalized * norm;
+
+    var time = MyMath.CalcDecayTime(norm, KNOCKBACK_ATTENUATION);
+    knockbackTimer.Start(time);
+
+    Logger.Log($"[Enemy.SetupKnockbackVelocity] norm {norm} time={time}");
+  }
+
+  /// <summary>
+  /// HitTextを出す
+  /// </summary>
+  private void PopOutHitText(int damage)
+  {
+    var position = Position + Vector3.up;
+    HitTextManager.Instance.Get().SetDisplay(position, damage);
   }
 }

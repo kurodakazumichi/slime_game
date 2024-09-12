@@ -247,7 +247,7 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   protected void SetStatusBy(ISkill skill)
   {
     Id = skill.Id;
-    AttackInfo.Init(skill.Power, skill.Attributes);
+    AttackInfo.Init(skill.Power, skill.Attributes, skill.Impact);
   }
 
   /// <summary>

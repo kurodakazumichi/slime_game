@@ -7,6 +7,7 @@ public interface ISkill
   float RecastTime { get; }
   string Name { get; }
   int Power { get; }
+  float Impact { get; }
   uint Attributes { get; }
   void Fire();
   void SetExp(int exp);
@@ -62,6 +63,11 @@ public class Skill : ISkill
   /// 属性
   /// </summary>
   public uint Attributes => entity.Attr;
+
+  /// <summary>
+  /// 衝撃力[N]
+  /// </summary>
+  public float Impact => entity.Impact;
 
   //============================================================================
   // Methods
