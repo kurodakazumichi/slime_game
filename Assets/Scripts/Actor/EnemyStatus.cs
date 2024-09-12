@@ -7,9 +7,9 @@ public class EnemyStatus
   //============================================================================
 
   /// <summary>
-  /// 識別子
+  /// Enemy Master
   /// </summary>
-  private EnemyId id;
+  private IEnemyEntityRO master;
 
   /// <summary>
   /// Lv
@@ -19,22 +19,7 @@ public class EnemyStatus
   /// <summary>
   /// 体力、0になったら死亡する
   /// </summary>
-  private RangedFloat hp { get; set; } = new(0);
-
-  /// <summary>
-  /// 攻撃力、プレイヤーへの攻撃に使用する
-  /// </summary>
-  private float power = 0;
-
-  /// <summary>
-  /// 敵の速さ
-  /// </summary>
-  private float speed = 0;
-
-  /// <summary>
-  /// 質量
-  /// </summary>
-  private float mass = 0f;
+  private readonly RangedFloat hp = new(0);
 
   /// <summary>
   /// 攻撃属性
@@ -55,16 +40,7 @@ public class EnemyStatus
   /// 無効属性、攻撃を受ける時に参照
   /// </summary>
   private Flag32 attrN = new();
-
-  /// <summary>
-  /// 倒されたときに付与するスキルのID
-  /// </summary>
-  private SkillId skillId = SkillId.Undefined;
-
-  /// <summary>
-  /// 倒されたときに付与される経験値
-  /// </summary>
-  private int exp = 0;
+  
 
   //============================================================================
   // Properties
@@ -73,7 +49,7 @@ public class EnemyStatus
   /// <summary>
   /// EnemyID
   /// </summary>
-  public EnemyId Id => id;
+  public EnemyId Id => master.Id;
 
   /// <summary>
   /// HP
@@ -83,27 +59,27 @@ public class EnemyStatus
   /// <summary>
   /// PowerにはLvがかかる
   /// </summary>
-  private float Power => power * lv;
+  private float Power => master.Power * lv;
 
   /// <summary>
   /// 速さ
   /// </summary>
-  public float Speed => speed;
+  public float Speed => master.Speed;
 
   /// <summary>
   /// 質量
   /// </summary>
-  public float Mass => mass;
+  public float Mass => master.Mass;
 
   /// <summary>
   /// 倒した時に得られるスキル
   /// </summary>
-  public SkillId SkillId => skillId;
+  public SkillId SkillId => master.SkillId;
 
   /// <summary>
   /// 経験値にはレベルがかかる
   /// </summary>
-  public int Exp => exp * lv;
+  public int Exp => master.Exp * lv;
 
   /// <summary>
   /// 死亡フラグ
@@ -118,26 +94,16 @@ public class EnemyStatus
   /// </summary>
   public void Init(EnemyId _id, int lv)
   {
-    id = _id;
+    master = EnemyMaster.FindById(_id);
+
     SetLv(lv);
-
-    var master = EnemyMaster.FindById(id);
-
-    // 強さ系
     hp.Init(master.HP);
-    power = master.Power;
-    speed = master.Speed;
-    mass  = master.Mass;
 
     // 属性
     attrA.Value = master.AttackAttr;
     attrW.Value = master.WeakAttr;
     attrR.Value = master.ResistAttr;
     attrN.Value = master.NullfiedAttr;
-
-    // スキル
-    skillId = master.SkillId;
-    exp     = master.Exp;
   }
 
   /// <summary>
@@ -154,7 +120,7 @@ public class EnemyStatus
   public AttackInfo MakeAttackInfo()
   {
     var status = new AttackInfo();
-    status.Init(Power, attrA.Value, mass * speed);
+    status.Init(Power, attrA.Value, Mass * Speed);
     return status;
   }
 
