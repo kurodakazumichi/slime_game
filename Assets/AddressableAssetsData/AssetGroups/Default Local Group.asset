@@ -47,8 +47,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52f17f35f73c83146ad8b6b864ba4cd6
+    m_Address: Bullet/ThunderBullet1/ThunderBullet1_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5688effb8000f1f45a4d96b854dcd819
     m_Address: Bullet/PiercingBullet1/PiercingBullet.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56962eaab9755544c8c2da48bfce96fd
+    m_Address: Bullet/ThunderBullet1/Object.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -64,6 +74,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 782888dd8fb6e9648946ca61ac98d9e9
     m_Address: Bullet/LeafBullet1/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81ecb5531c269844ca6ae8504f16a4a5
+    m_Address: Bullet/ThunderBullet1/ThunderBullet1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -84,6 +99,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a6b50ebb89fef048b14da5fa6f2802b
     m_Address: Icon/Bullets.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ae1fc35c99096e468e4d52114eac94c
+    m_Address: Bullet/ThunderBullet1/Usual.anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
