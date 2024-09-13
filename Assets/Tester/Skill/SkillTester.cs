@@ -4,7 +4,7 @@ using UnityEngine;
 
 #if _DEBUG
 
-namespace Editor.Tester
+namespace Tester
 {
   public class SkillTester : MonoBehaviour
   {

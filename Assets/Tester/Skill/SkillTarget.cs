@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Editor.Tester
+namespace Tester
 {
   public class SkillTarget : MyMonoBehaviour, IActor
   {
