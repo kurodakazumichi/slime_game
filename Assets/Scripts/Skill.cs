@@ -245,7 +245,7 @@ public class Skill : ISkill
         GUILayout.Toggle(attributes.Has((int)Attribute.Wat), "水");
         GUILayout.Toggle(attributes.Has((int)Attribute.Thu), "雷");
         GUILayout.Toggle(attributes.Has((int)Attribute.Ice), "氷");
-        GUILayout.Toggle(attributes.Has((int)Attribute.Tre), "木");
+        GUILayout.Toggle(attributes.Has((int)Attribute.Lef), "草");
         GUILayout.Toggle(attributes.Has((int)Attribute.Hol), "聖");
         GUILayout.Toggle(attributes.Has((int)Attribute.Dar), "闇");
       }
