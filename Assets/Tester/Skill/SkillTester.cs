@@ -12,6 +12,9 @@ namespace Tester
     public GameObject TargetObject;
     private IActor target;
 
+    private List<global::SkillId> skillIds = new List<global::SkillId>();
+    private int currentIndex = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +24,18 @@ namespace Tester
       
       BulletManager.Instance.Load();
 
-      target = TargetObject.GetComponent<IActor>();     
+      target = TargetObject.GetComponent<IActor>();
+
+      MyEnum.ForEach<global::SkillId>((id) => {
+        skillIds.Add(id);
+      });
+
+      for (int i = 0; i < skillIds.Count; i++) {
+        if (MyEnum.Parse<global::SkillId>(SkillId) == skillIds[i]) {
+          currentIndex = i;
+          break;
+        }
+      }
     }
 
     // Update is called once per frame
@@ -39,16 +53,24 @@ namespace Tester
         BulletManager.Instance.Clear();
       }
 
+      if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+        currentIndex = (skillIds.Count + currentIndex - 1) % skillIds.Count;
+      }
+      if (Input.GetKeyDown(KeyCode.RightArrow)) {
+        currentIndex = (currentIndex + 1) % skillIds.Count;
+      }
+
       if (!Input.GetKeyDown(KeyCode.Space)) {
         return;
       }
 
-      if (MyEnum.TryParse<global::SkillId>(SkillId, out var id)) {
-        SkillManager.Instance.SetActiveSkill(0, id);
+      var id = skillIds[currentIndex];
+
+      if (id == global::SkillId.Undefined) {
+        return;
       }
-      else {
-        Logger.Error($"{SkillId} is not defined.");
-      }
+
+      SkillManager.Instance.SetActiveSkill(0, id);
 
       Skill skill = SkillManager.Instance.GetActiveSkill(0) as Skill;
       skill.ManualFire(Vector3.zero, target);
@@ -70,7 +92,7 @@ namespace Tester
 
     private void OnGUI()
     {
-      GUILayout.Label("Space: Fire Bullet");
+      GUILayout.Label($"Space: Fire Bullet ({skillIds[currentIndex].ToString()})");
       GUILayout.Label("T    : Bullet Terminate");
       GUILayout.Label("C    : Object Pool Clear");
     }

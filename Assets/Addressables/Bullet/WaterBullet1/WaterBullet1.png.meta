@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 81ecb5531c269844ca6ae8504f16a4a5
+guid: 6df102c40d2bab446a0e37b7cf0e8c86
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ThunderBullet1_0
+      name: WaterBullet1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,20 +118,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1cd3487d583ea0b44aa0910f47d4782a
-      internalID: -1014590104
+      spriteID: 2629cb41b012fe542938c6386dceea31
+      internalID: 622135861
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ThunderBullet1_1
+      name: WaterBullet1_1
       rect:
         serializedVersion: 2
         x: 32
@@ -139,20 +139,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1af59c16e076f744bc69ac348faacb1
-      internalID: 764988287
+      spriteID: 186fd9b12c026e04bba324392fc48c3a
+      internalID: 1659019946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ThunderBullet1_2
+      name: WaterBullet1_2
       rect:
         serializedVersion: 2
         x: 64
@@ -160,20 +160,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1aeb1d8b2fec92418e1a03b75408b68
-      internalID: 1808012675
+      spriteID: a32481e4fb98b9f48adf0167a9804a84
+      internalID: 1263642583
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ThunderBullet1_3
+      name: WaterBullet1_3
       rect:
         serializedVersion: 2
         x: 96
@@ -181,14 +181,14 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08bdc0ab41bd8464ba90cb4d57a72515
-      internalID: -1654482794
+      spriteID: d2a4c9f7271d8dc4ab61d1f6efd931a1
+      internalID: 331898367
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ThunderBullet1_0: -1014590104
-      ThunderBullet1_1: 764988287
-      ThunderBullet1_2: 1808012675
-      ThunderBullet1_3: -1654482794
+      WaterBullet1_0: 622135861
+      WaterBullet1_1: 1659019946
+      WaterBullet1_2: 1263642583
+      WaterBullet1_3: 331898367
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

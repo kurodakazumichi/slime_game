@@ -20,36 +20,6 @@ public static class SkillRepository
     },
     
     new SkillEntity() {
-      Id              = SkillId.NormalBullet2,
-      Name            = "通常弾+",
-      MaxExp          = 999,
-      FirstRecastTime = 1f,
-      LastRecastTime  = 0.2f,
-      FirstPower      = 20,
-      LastPower       = 100,
-      Attr            = (uint)(Attribute.Non),
-      Prefab          = "Bullet/NormalBullet2/Object.prefab",
-      GrowthType      = Growth.Normal,
-      Impact          = 2f,
-      IconNo          = 0,
-    },
-    
-    new SkillEntity() {
-      Id              = SkillId.NormalBullet3,
-      Name            = "通常弾++",
-      MaxExp          = 9999,
-      FirstRecastTime = 1f,
-      LastRecastTime  = 0.2f,
-      FirstPower      = 200,
-      LastPower       = 500,
-      Attr            = (uint)(Attribute.Non),
-      Prefab          = "Bullet/NormalBullet3/Object.prefab",
-      GrowthType      = Growth.Normal,
-      Impact          = 3f,
-      IconNo          = 0,
-    },
-    
-    new SkillEntity() {
       Id              = SkillId.PiercingBullet1,
       Name            = "貫通弾",
       MaxExp          = 200,
@@ -62,36 +32,6 @@ public static class SkillRepository
       GrowthType      = Growth.Fast,
       Impact          = 0.5f,
       IconNo          = 6,
-    },
-    
-    new SkillEntity() {
-      Id              = SkillId.RapidBullet1,
-      Name            = "高速弾",
-      MaxExp          = 999,
-      FirstRecastTime = 1f,
-      LastRecastTime  = 0.2f,
-      FirstPower      = 1,
-      LastPower       = 10,
-      Attr            = (uint)(Attribute.Non),
-      Prefab          = "Bullet/RapidBullet1/Object.prefab",
-      GrowthType      = Growth.Normal,
-      Impact          = 1f,
-      IconNo          = 0,
-    },
-    
-    new SkillEntity() {
-      Id              = SkillId.HeavyBullet1,
-      Name            = "重鉄弾",
-      MaxExp          = 999,
-      FirstRecastTime = 5f,
-      LastRecastTime  = 1f,
-      FirstPower      = 10,
-      LastPower       = 100,
-      Attr            = (uint)(Attribute.Non),
-      Prefab          = "Bullet/HeavyBullet1/Object.prefab",
-      GrowthType      = Growth.Normal,
-      Impact          = 10f,
-      IconNo          = 0,
     },
     
     new SkillEntity() {

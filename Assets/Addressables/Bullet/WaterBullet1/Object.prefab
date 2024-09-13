@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PenetrableCount: 0
-  MinSpeed: 1
-  MaxSpeed: 1
+  MinSpeed: 2
+  MaxSpeed: 2
   SpeedChangeTime: 1
   SpeedChangeCurve:
     serializedVersion: 2
@@ -58,8 +58,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   HomingPerformance: 0
   HomingTime: 0
-  LifeTime: 0
-  SyncDirectionAndRotation: 0
+  LifeTime: 5
+  SyncDirectionAndRotation: 1
 --- !u!135 &4509712403797351535
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -107,13 +107,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4677498978307169697}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8107087951067571979}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &7336070634233790738
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -155,12 +155,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2023167546, guid: 6c559c8d15289fd4c8a55228ee0ed0e2, type: 3}
+  m_Sprite: {fileID: 622135861, guid: 6df102c40d2bab446a0e37b7cf0e8c86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
