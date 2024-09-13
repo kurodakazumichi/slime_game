@@ -38,6 +38,7 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
     ResourceManager.Instance.Load<GameObject>("Bullet/NormalBullet1/Object.prefab");
     ResourceManager.Instance.Load<GameObject>("Bullet/PiercingBullet1/Object.prefab");
     ResourceManager.Instance.Load<GameObject>("Bullet/FireBullet1/Object.prefab");
+    ResourceManager.Instance.Load<GameObject>("Bullet/LeafBullet1/Object.prefab");
   }
 
   private GameObject GetPrefab(SkillId id)
@@ -100,6 +101,13 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
     }
   }
 
+  public void Clear()
+  {
+    foreach(var pool in bulletPools.Values) {
+      pool.Clear();
+    }
+  }
+
 #if _DEBUG
   //----------------------------------------------------------------------------
   // For Debug
@@ -116,6 +124,10 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
 
     if (GUILayout.Button("Terminate")) {
       Terminate();
+    }
+
+    if (GUILayout.Button("Clear")) {
+      Clear();
     }
   }
 

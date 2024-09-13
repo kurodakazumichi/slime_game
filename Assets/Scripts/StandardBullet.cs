@@ -180,15 +180,15 @@ public class StandardBullet : Bullet<StandardBullet.State>
   /// </summary>
   private void IntersectEnemies()
   {
-    var enemies = Physics.OverlapSphere(
+    var actors = Physics.OverlapSphere(
         CachedTransform.position,
         collider.radius,
         LayerMask.GetMask(LayerName.Enemy)
       );
 
-    foreach (var enemy in enemies) {
-      var e = enemy.GetComponent<IEnemy>();
-      Attack(e);
+    foreach (var actor in actors) {
+      var a = actor.GetComponent<IActor>();
+      Attack(a);
     }
   }
 

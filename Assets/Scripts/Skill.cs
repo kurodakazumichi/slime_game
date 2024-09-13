@@ -256,5 +256,19 @@ public class Skill : ISkill
     }
   }
 
+  /// <summary>
+  /// デバッグ用のマニュアル発射
+  /// </summary>
+  public void ManualFire(Vector3 position, IActor target)
+  {
+    var bullet = BulletManager.Instance.Get(Id);
+
+    bullet.Fire(new BulletFireInfo() {
+      Position = position,
+      Skill = this,
+      Target = target,
+    });
+  }
+
 #endif
 }
