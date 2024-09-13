@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1afa196ba4b5f0a4691e799e44b4157a
+    m_Address: Bullet/LeafBullet1/Object.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 208a9a5f83ee25d4681d4c5e1202397c
     m_Address: Bullet/PiercingBullet1/Object.prefab
     m_ReadOnly: 0
@@ -47,8 +52,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6042f4641d5e2e642b0fd6730277555f
+    m_Address: Bullet/WaterBullet1/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63dc01e5b756a0f46a8c4834efded5bf
     m_Address: Enemy/011.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 782888dd8fb6e9648946ca61ac98d9e9
+    m_Address: Bullet/LeafBullet1/Animator.controller
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -62,6 +77,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 907c90251b8eeb34cb9c3adffa5fa256
+    m_Address: Bullet/WaterBullet1/Object.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a6b50ebb89fef048b14da5fa6f2802b
     m_Address: Icon/Bullets.png
     m_ReadOnly: 0
@@ -69,6 +89,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a2ea4c2ff81c40f48961ee75d68ed687
     m_Address: Bullet/NormalBullet1/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a55b922e7a1c6924fbc80da3e2ea0534
+    m_Address: Bullet/WaterBullet1/Usual.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b04be7cf9d1e31444ba3ca29206670b1
+    m_Address: Bullet/LeafBullet1/Usual.anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

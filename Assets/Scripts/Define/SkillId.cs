@@ -5,8 +5,8 @@ public enum SkillId
   NormalBullet2, // 通常弾+
   NormalBullet3, // 通常弾++
   PiercingBullet1, // 貫通弾
-  RapidShot1, // 高速弾
-  HeavyShot1, // 重鉄弾
+  RapidBullet1, // 高速弾
+  HeavyBullet1, // 重鉄弾
   FireBullet1, // ファイアバレット
   WaterBullet1, // ウォーターボール
   ThunderBullet1, // サンダーウェイブ

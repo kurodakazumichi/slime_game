@@ -65,7 +65,7 @@ public static class SkillRepository
     },
     
     new SkillEntity() {
-      Id              = SkillId.RapidShot1,
+      Id              = SkillId.RapidBullet1,
       Name            = "高速弾",
       MaxExp          = 999,
       FirstRecastTime = 1f,
@@ -73,14 +73,14 @@ public static class SkillRepository
       FirstPower      = 1,
       LastPower       = 10,
       Attr            = (uint)(Attribute.Non),
-      Prefab          = "Bullet/RapidShot1/Object.prefab",
+      Prefab          = "Bullet/RapidBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
       Impact          = 1f,
       IconNo          = 0,
     },
     
     new SkillEntity() {
-      Id              = SkillId.HeavyShot1,
+      Id              = SkillId.HeavyBullet1,
       Name            = "重鉄弾",
       MaxExp          = 999,
       FirstRecastTime = 5f,
@@ -88,7 +88,7 @@ public static class SkillRepository
       FirstPower      = 10,
       LastPower       = 100,
       Attr            = (uint)(Attribute.Non),
-      Prefab          = "Bullet/HeavyShot1/Object.prefab",
+      Prefab          = "Bullet/HeavyBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
       Impact          = 10f,
       IconNo          = 0,
