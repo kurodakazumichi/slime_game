@@ -34,8 +34,10 @@ public class BulletManager : SingletonMonoBehaviour<BulletManager>
 
   public void Load()
   {
+
     ResourceManager.Instance.Load<GameObject>("Bullet/NormalBullet1/Object.prefab");
     ResourceManager.Instance.Load<GameObject>("Bullet/PiercingBullet1/Object.prefab");
+    ResourceManager.Instance.Load<GameObject>("Bullet/FireBullet1/Object.prefab");
   }
 
   private GameObject GetPrefab(SkillId id)
