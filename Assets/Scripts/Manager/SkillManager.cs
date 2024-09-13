@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -251,22 +252,26 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
       for (int i = 0, count = dic.Count; i < count; i++) {
         // 要素取得
         var item = dic.ElementAt(i);
-        var name = ((SkillId)item.Key).ToString();
+        var id   = (SkillId)item.Key;
 
-        using (new GUILayout.HorizontalScope(GUILayout.Width(300))) 
+        using (new GUILayout.HorizontalScope()) 
         {
           // Label
-          GUILayout.Label(name);
+          GUILayout.Label(id.ToString(), GUILayout.Width(150));
+          GUILayout.Label(SkillMaster.FindById(id).Name, GUILayout.Width(150));
 
           // TextField
-          var value = GUILayout.TextField(item.Value.ToString(), GUILayout.Width(100));
+          var prev = item.Value;
+          var value = GUILayout.TextField(item.Value.ToString(), GUILayout.Width(50));
 
-          if (int.TryParse(value, out var result)) {
-            dic[item.Key] = result;
+          if (int.TryParse(value, out var result) && prev != result) 
+          {
+            Instance.SetExp(id, result);
+            Instance.skills[item.Key].SetExp(result);
           }
 
           if (GUILayout.Button("Simulate")) {
-            simulationSkillId = name;
+            simulationSkillId = id.ToString();
             tabIndex = 2;
           }
 
@@ -292,7 +297,7 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
 
         using (new GUILayout.HorizontalScope()) {
           GUILayout.Box(i.ToString(), GUILayout.Width(60));
-          GUILayout.Box((skill.Lv + 1).ToString(), GUILayout.Width(30));
+          GUILayout.Box((skill.Lv).ToString(), GUILayout.Width(30));
           GUILayout.Box(skill.Id.ToString());
           if(GUILayout.Button("Remove")) {
             Instance.RemoveActiveSkill(i);
