@@ -90,7 +90,7 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager>
     // GUI用の解像度を更新
     GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / screenSize.x, Screen.height / screenSize.y), Vector2.zero);
 
-    using (var sv = new GUILayout.ScrollViewScope(scrollPosition)) {
+    using (var sv = new GUILayout.ScrollViewScope(scrollPosition, GUILayout.Width(screenSize.x), GUILayout.Height(screenSize.y))) {
 
       using (new GUILayout.HorizontalScope(GUI.skin.box)) {
         scrollPosition = sv.scrollPosition;
