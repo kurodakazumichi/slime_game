@@ -5,7 +5,7 @@ public interface IActor
   /// <summary>
   /// ダメージを受ける
   /// </summary>
-  void TakeDamage(AttackInfo info);
+  DamageInfo TakeDamage(AttackInfo info);
 
   /// <summary>
   /// GameObjectを持つ

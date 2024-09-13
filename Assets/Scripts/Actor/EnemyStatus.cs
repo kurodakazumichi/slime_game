@@ -127,7 +127,7 @@ public class EnemyStatus
   /// <summary>
   /// ダメージを受ける
   /// </summary>
-  public float TakeDamage(AttackInfo info)
+  public DamageInfo TakeDamage(AttackInfo info)
   {
     float damage = info.Power;
 
@@ -147,6 +147,9 @@ public class EnemyStatus
     }
 
     hp.Now -= damage;
-    return damage;
+
+    var di = new DamageInfo();
+    di.Init(damage);
+    return di;
   }
 }

@@ -54,10 +54,10 @@ public class Player : MyMonoBehaviour, IActor
   //----------------------------------------------------------------------------
   // Public
   //----------------------------------------------------------------------------
-  public void TakeDamage(AttackInfo info)
+  public DamageInfo TakeDamage(AttackInfo info)
   {
     if (state.StateKey != State.Usual) {
-      return;
+      return null;
     }
 
     hp.Now -= info.Power;
@@ -70,6 +70,10 @@ public class Player : MyMonoBehaviour, IActor
     else {
       state.SetState(State.Invincible);
     }
+
+    var di = new DamageInfo();
+    di.Init(info.Power);
+    return di;
   }
 
   public void Respawn()

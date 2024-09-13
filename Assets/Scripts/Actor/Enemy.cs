@@ -179,13 +179,15 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// ダメージを受ける
   /// </summary>
-  public void TakeDamage(AttackInfo info)
+  public DamageInfo TakeDamage(AttackInfo info)
   {
-    var damage = status.TakeDamage(info);
+    var result = status.TakeDamage(info);
 
     SetupKnockbackVelocity(info);
 
-    PopOutHitText((int)damage);
+    PopOutHitText((int)result.Damage);
+
+    return result;
   }
 
   /// <summary>
