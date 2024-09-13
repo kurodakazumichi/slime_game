@@ -7,5 +7,10 @@ public enum SkillId
   PiercingBullet1, // 貫通弾
   RapidShot1, // 高速弾
   HeavyShot1, // 重鉄弾
-  FireBullet1, // 火炎弾
+  FireBullet1, // ファイアバレット
+  WaterBullet1, // ウォーターボール
+  ThunderBullet1, // サンダーウェイブ
+  LeafBullet1, // リーフカッター
+  IceBullet1, // アイスランス
+  WindBullet1, // つむじ風
 }
