@@ -107,6 +107,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     }
 
     knockbackTimer.Update(TimeSystem.Enemy.DeltaTime);
+    InvincibilityTimer.Update(TimeSystem.Enemy.DeltaTime);
 
     // ノックバック速度を更新
     if (knockbackTimer.IsRunning) {

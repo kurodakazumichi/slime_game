@@ -22,17 +22,17 @@ public class Timer
   /// <summary>
   /// Timer開始時のコールバック
   /// </summary>
-  private Action OnStart = null;
+  public Action OnStart { private get; set; } = null;
 
   /// <summary>
   /// タイマー停止時のコールバック
   /// </summary>
-  private Action OnStop = null;
+  public Action OnStop { private get; set; } = null;
 
   /// <summary>
   /// タイマー更新時のコールバック
   /// </summary>
-  private Action<float> OnUpdate = null;
+  public Action<float> OnUpdate { private get; set; } = null;
 
   //============================================================================
   // Properties
@@ -65,19 +65,6 @@ public class Timer
   //----------------------------------------------------------------------------
   // Public
   //----------------------------------------------------------------------------
-
-  /// <summary>
-  /// コールバックをセット
-  /// </summary>
-  /// <param name="onStart"></param>
-  /// <param name="onUpdate"></param>
-  /// <param name="onStop"></param>
-  public void Setup(Action onStart, Action<float> onUpdate = null, Action onStop = null)
-  {
-    OnStart  = onStart;
-    OnUpdate = onUpdate;
-    OnStop   = onStop;
-  }
 
   /// <summary>
   /// タイマーを開始する

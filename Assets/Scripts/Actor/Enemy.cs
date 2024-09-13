@@ -11,6 +11,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   private const float KNOCKBACK_ATTENUATION = 0.95f;
 
+  /// <summary>
+  /// ダメージ後の無敵時間
+  /// </summary>
+  private const float INVINCIBILITY_TIME_AFTER_DAMAGE = 0.2f;
+
   //============================================================================
   // Variables
   //============================================================================
@@ -39,6 +44,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// ノックバックタイマー
   /// </summary>
   protected Timer knockbackTimer = new();
+
+  /// <summary>
+  /// 無敵タイマー
+  /// </summary>
+  protected Timer InvincibilityTimer = new();
 
   //============================================================================
   // Properities
@@ -162,6 +172,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     Logger.Log($"[Enemy] Called Init({id.ToString()})");
     status.Init(id, lv);
     AttackInfo = status.MakeAttackInfo();
+    spriteRenderer.color = Color.white;
   }
 
   /// <summary>
@@ -181,11 +192,19 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   public DamageInfo TakeDamage(AttackInfo info)
   {
-    var result = status.TakeDamage(info);
+    DamageInfo result = null;
+
+    if (InvincibilityTimer.IsRunning) {
+      
+    } else {
+      result = status.TakeDamage(info);
+      PopOutHitText((int)result.Damage);
+
+      InvincibilityTimer.OnStart = () => spriteRenderer.color = Color.red;
+      InvincibilityTimer.Start(INVINCIBILITY_TIME_AFTER_DAMAGE);
+    }
 
     SetupKnockbackVelocity(info);
-
-    PopOutHitText((int)result.Damage);
 
     return result;
   }
@@ -233,7 +252,9 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     Collider = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-    spriteRenderer.transform.rotation = Quaternion.Euler(45f, 0, 0);
+    spriteRenderer.transform.rotation = Quaternion.Euler(App.CAMERA_ANGLE_X, 0, 0);
+
+    InvincibilityTimer.OnStop = () => spriteRenderer.color = Color.white;
   }
 
   // Update is called once per frame
