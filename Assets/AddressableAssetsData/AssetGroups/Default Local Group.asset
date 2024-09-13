@@ -32,6 +32,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a2e031d72e5dc242b3171b3dc0ac6ee
+    m_Address: Bullet/FireBullet1/Object.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 46e4ecb1a134ae14e8a269ab82ed4abb
     m_Address: Enemy/000.prefab
     m_ReadOnly: 0
@@ -52,6 +57,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a956f46a490dcd41846b9fe62803368
+    m_Address: Bullet/FireBullet1/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a6b50ebb89fef048b14da5fa6f2802b
     m_Address: Icon/Bullets.png
     m_ReadOnly: 0
@@ -64,6 +74,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb6044dc3dac17a4eb214d31fe9e54fc
     m_Address: Icon/Enemies.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d31ef22c49263c841af4b1055aa5cef8
+    m_Address: Bullet/FireBullet1/Usual.anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
