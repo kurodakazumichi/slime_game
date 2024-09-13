@@ -129,27 +129,30 @@ public class EnemyStatus
   /// </summary>
   public DamageInfo TakeDamage(AttackInfo info)
   {
-    float damage = info.Power;
+    float        damage = info.Power;
+    DamageDetail detail = DamageDetail.NormalDamage;
+
 
     // 無効属性かどうか
     if (attrN.HasEither(info.Attributes)) {
       damage = 0;
+      detail = DamageDetail.NullfiedDamage;
     }
 
     // 耐性属性かどうか
     if (attrR.HasEither(info.Attributes)) {
       damage *= 0.5f;
+      detail  = DamageDetail.ResistanceDamage;
     }
 
     // 弱点属性かどうか
     if (attrW.HasEither(info.Attributes)) {
       damage *= 3.0f;
+      detail  = DamageDetail.WeaknessDamage;
     }
 
     hp.Now -= damage;
 
-    var di = new DamageInfo();
-    di.Init(damage);
-    return di;
+    return new DamageInfo(damage, detail);
   }
 }

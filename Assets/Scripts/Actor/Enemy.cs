@@ -192,18 +192,20 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   public DamageInfo TakeDamage(AttackInfo info)
   {
-    DamageInfo result = null;
+    var result = CalcDamage(info);
 
-    if (InvincibilityTimer.IsRunning) {
-      
-    } else {
-      result = status.TakeDamage(info);
-      PopOutHitText((int)result.Damage);
+    if (!result.IsHit) {
+      return result;
+    }
 
+    // ダメージがある場合は無敵時間を設定
+    if (result.HasDamage) {
       InvincibilityTimer.OnStart = () => spriteRenderer.color = Color.red;
       InvincibilityTimer.Start(INVINCIBILITY_TIME_AFTER_DAMAGE);
     }
 
+    // 当たっていたらヒットテキストとノックバック
+    PopOutHitText(result);
     SetupKnockbackVelocity(info);
 
     return result;
@@ -291,9 +293,21 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// HitTextを出す
   /// </summary>
-  private void PopOutHitText(int damage)
+  private void PopOutHitText(DamageInfo info)
   {
     var position = Position + Vector3.up;
-    HitTextManager.Instance.Get().SetDisplay(position, damage);
+    HitTextManager.Instance.Get().SetDisplay(position, (int)info.Damage);
+  }
+
+  /// <summary>
+  /// ダメージ計算
+  /// </summary>
+  private DamageInfo CalcDamage(AttackInfo info)
+  {
+    if (InvincibilityTimer.IsRunning) {
+      return new DamageInfo(0f, DamageDetail.NullfiedByInvincibility);
+    }
+
+    return status.TakeDamage(info);
   }
 }

@@ -154,8 +154,12 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
       return;
     }
 
-    actor.TakeDamage(AttackInfo);
-    penetrableCount--;
+    var result = actor.TakeDamage(AttackInfo);
+
+    if (result.IsHit) {
+      penetrableCount--;
+    }
+    
 
     // 貫通しないなら攻撃した時点で終了フラグを立てる
     isTerminating = !IsPenetrable;
