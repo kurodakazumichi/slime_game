@@ -186,7 +186,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     Logger.Log($"[Enemy] Called Init({id.ToString()})");
     status.Init(id, lv);
     AttackInfo = status.MakeAttackInfo();
-    spriteRenderer.color = Color.white;
   }
 
   /// <summary>
