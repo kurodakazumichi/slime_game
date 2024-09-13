@@ -20,19 +20,14 @@ public class Timer
   private float timer = 0f;
 
   /// <summary>
-  /// Timer開始時のコールバック
+  /// タイマー更新時のコールバック
   /// </summary>
-  public Action OnStart { private get; set; } = null;
+  public Action<float> OnUpdate { private get; set; } = null;
 
   /// <summary>
   /// タイマー停止時のコールバック
   /// </summary>
   public Action OnStop { private get; set; } = null;
-
-  /// <summary>
-  /// タイマー更新時のコールバック
-  /// </summary>
-  public Action<float> OnUpdate { private get; set; } = null;
 
   //============================================================================
   // Properties
@@ -73,8 +68,6 @@ public class Timer
   {
     this.timeLimit = time;
     timer = 0f;
-
-    OnStart?.Invoke();
   }
 
   /// <summary>

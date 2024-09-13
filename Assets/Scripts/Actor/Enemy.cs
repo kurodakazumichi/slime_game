@@ -6,6 +6,10 @@ using UnityEngine;
 /// </summary>
 public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
 {
+  //============================================================================
+  // Const
+  //============================================================================
+
   /// <summary>
   /// ノックバック減衰率
   /// </summary>
@@ -15,6 +19,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// ダメージ後の無敵時間
   /// </summary>
   private const float INVINCIBILITY_TIME_AFTER_DAMAGE = 0.2f;
+
+  /// <summary>
+  /// 攻撃後の休憩時間
+  /// </summary>
+  protected const float POST_ATTACK_REST_TIME = 0.4f;
 
   //============================================================================
   // Variables
@@ -38,7 +47,12 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// ノックバック速度
   /// </summary>
-  protected Vector3 KnockbackVelocity = Vector3.zero;
+  protected Vector3 knockbackVelocity = Vector3.zero;
+
+  /// <summary>
+  /// 休憩タイマー、稼働中は動かない
+  /// </summary>
+  protected Timer restTimer = new();
 
   /// <summary>
   /// ノックバックタイマー
@@ -48,7 +62,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// 無敵タイマー
   /// </summary>
-  protected Timer InvincibilityTimer = new();
+  protected Timer invincibilityTimer = new();
 
   //============================================================================
   // Properities
@@ -198,10 +212,9 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
       return result;
     }
 
-    // ダメージがある場合は無敵時間を設定
+    // ダメージがある場合は無敵化
     if (result.HasDamage) {
-      InvincibilityTimer.OnStart = () => spriteRenderer.color = Color.red;
-      InvincibilityTimer.Start(INVINCIBILITY_TIME_AFTER_DAMAGE);
+      BeInvincible();
     }
 
     // 当たっていたらヒットテキストとノックバック
@@ -245,18 +258,40 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     Release();
   }
 
+  /// <summary>
+  /// 全てのタイマーを更新
+  /// </summary>
+  protected void UpdateTimer()
+  {
+    var dt = TimeSystem.Enemy.DeltaTime;
+
+    knockbackTimer.Update(dt);
+    invincibilityTimer.Update(dt);
+    restTimer.Update(dt);
+  }
+
+  /// <summary>
+  /// 全てのタイマーを停止
+  /// </summary>
+  protected void StopTimer()
+  {
+    knockbackTimer.Stop();
+    invincibilityTimer.Stop();
+    restTimer.Stop();
+  }
+
   //----------------------------------------------------------------------------
   // Life Cycle
   //----------------------------------------------------------------------------
   protected override void MyAwake()
   {
     // コンポーネント収集
-    Collider = GetComponent<SphereCollider>();
+    Collider       = GetComponent<SphereCollider>();
     spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
     spriteRenderer.transform.rotation = Quaternion.Euler(App.CAMERA_ANGLE_X, 0, 0);
 
-    InvincibilityTimer.OnStop = () => spriteRenderer.color = Color.white;
+    SetupKnockbackTimer();
   }
 
   // Update is called once per frame
@@ -280,12 +315,15 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     }
 
     // ノックバック速度とノックバックタイマーを設定
-    KnockbackVelocity
+    knockbackVelocity
       = (Position - PlayerManager.Instance.Position)
         .normalized * norm;
 
     var time = MyMath.CalcDecayTime(norm, KNOCKBACK_ATTENUATION);
     knockbackTimer.Start(time);
+
+    // ノックバック開始時に休憩終了
+    restTimer.Stop();
 
     Logger.Log($"[Enemy.SetupKnockbackVelocity] norm {norm} time={time}");
   }
@@ -304,10 +342,36 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   private DamageInfo CalcDamage(AttackInfo info)
   {
-    if (InvincibilityTimer.IsRunning) {
+    if (invincibilityTimer.IsRunning) {
       return new DamageInfo(0f, DamageDetail.NullfiedByInvincibility);
     }
 
     return status.TakeDamage(info);
+  }
+
+  /// <summary>
+  /// ノックバックタイマーのセットアップ
+  /// </summary>
+  private void SetupKnockbackTimer()
+  {
+    // 更新時はノックバック速度を減衰
+    knockbackTimer.OnUpdate = (rate) => {
+      knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, rate);
+    };
+
+    // 終了時はノックバック速度を0に
+    knockbackTimer.OnStop = () => {
+      knockbackVelocity = Vector3.zero;
+    };
+  }
+
+  /// <summary>
+  /// 無敵になる
+  /// </summary>
+  private void BeInvincible()
+  {
+    spriteRenderer.color = Color.red;
+    invincibilityTimer.Start(INVINCIBILITY_TIME_AFTER_DAMAGE);
+    invincibilityTimer.OnStop = () => spriteRenderer.color = Color.white;
   }
 }

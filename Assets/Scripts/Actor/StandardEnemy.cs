@@ -6,11 +6,6 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   // Const
   //============================================================================
 
-  /// <summary>
-  /// 攻撃後の休憩時間
-  /// </summary>
-  private const float BREAKTIME_AFTER_ATTACK = 0.4f;
-
   //============================================================================
   // Enum
   //============================================================================
@@ -23,10 +18,6 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   //============================================================================
   // Variables
   //============================================================================
-  /// <summary>
-  /// このタイマーに時間が設定されていたら動きを止める
-  /// </summary>
-  private float moveStopTimer = 0f;
 
   //============================================================================
   // Methods
@@ -64,7 +55,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     // Playerと接触した
     if (IsIntersectedWithPlayer) {
       PlayerManager.Instance.AttackPlayer(AttackInfo);
-      moveStopTimer = BREAKTIME_AFTER_ATTACK;
+      restTimer.Start(POST_ATTACK_REST_TIME);
     }
   }
 
@@ -78,8 +69,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   {
     IsCollidable = false;
     IsVisible = false;
-    KnockbackVelocity = Vector3.zero;
-    knockbackTimer.Stop();
+    StopTimer();
   }
 
   //----------------------------------------------------------------------------
@@ -102,24 +92,13 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
       return;
     }
 
-    if (0f < moveStopTimer) {
-      moveStopTimer -= TimeSystem.Enemy.DeltaTime;
-    }
-
-    knockbackTimer.Update(TimeSystem.Enemy.DeltaTime);
-    InvincibilityTimer.Update(TimeSystem.Enemy.DeltaTime);
-
-    // ノックバック速度を更新
-    if (knockbackTimer.IsRunning) {
-      var rate = knockbackTimer.Rate;
-      KnockbackVelocity = Vector3.Lerp(KnockbackVelocity, Vector3.zero, rate);
-    }
+    UpdateTimer();
 
     CachedTransform.position += velocity * TimeSystem.Enemy.DeltaTime;
   }
 
   //----------------------------------------------------------------------------
-  // 動きにかんするもの
+  // 動きに関するもの
   //----------------------------------------------------------------------------
 
   /// <summary>
@@ -127,15 +106,15 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   /// </summary>
   private void ReCalcVelocity()
   {
-    // 動かないタイム
-    if (0f < moveStopTimer) {
-      velocity = Vector3.zero;
+    // ノックバックがある場合はそちらに従う
+    if (knockbackTimer.IsRunning) {
+      velocity = knockbackVelocity;
       return;
     }
 
-    // ノックバックがある場合はそちらに従う
-    if (knockbackTimer.IsRunning) {
-      velocity = KnockbackVelocity;
+    // 休憩中は動かない
+    if (restTimer.IsRunning) {
+      velocity = Vector3.zero;
       return;
     }
 
