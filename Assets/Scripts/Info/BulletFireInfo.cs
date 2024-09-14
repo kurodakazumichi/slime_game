@@ -3,11 +3,11 @@
 /// <summary>
 /// 弾丸発射時の情報
 /// </summary>
-public class BulletFireInfo
+public struct BulletFireInfo
 {
-  public Vector3 Position  = Vector3.zero;       // 位置
-  public Vector3 Direction = Vector3.zero;       // 方向
-  public IActor Target     = null;               // ターゲット
-  public ISkill Skill      = null;               // 弾丸を生成したスキル
-  public BulletOwner Owner = BulletOwner.Player; // 弾の所有者
+  public Vector3     Position;  // 位置
+  public Vector3     Direction; // 方向
+  public IActor      Target;    // ターゲット
+  public ISkill      Skill;     // 弾丸を生成したスキル
+  public BulletOwner Owner;     // 弾の所有者
 }

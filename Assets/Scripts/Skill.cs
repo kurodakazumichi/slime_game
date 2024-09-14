@@ -277,15 +277,16 @@ public class Skill : ISkill
   /// <summary>
   /// デバッグ用のマニュアル発射
   /// </summary>
-  public void ManualFire(Vector3 position, IActor target)
+  public void ManualFire(Vector3 position, IActor target, BulletOwner owner = BulletOwner.Player)
   {
     var bullet = BulletManager.Instance.Get(Id);
 
     bullet.Fire(new BulletFireInfo() {
       Position  = position,
+      Direction = MyVector3.Random(Vector3.forward, Vector3.up),
       Skill     = this,
       Target    = target,
-      Direction = MyVector3.Random(Vector3.forward, Vector3.up),
+      Owner     = owner,
     });
   }
 
