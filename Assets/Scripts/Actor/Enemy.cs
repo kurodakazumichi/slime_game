@@ -81,7 +81,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// <summary>
   /// 攻撃ステータス
   /// </summary>
-  protected AttackInfo AttackInfo { get; private set; } = null;
+  protected AttackInfo AttackInfo { get; private set; }
 
   /// <summary>
   /// 識別子
@@ -321,11 +321,14 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
       return;
     }
 
-    // ノックバック速度とノックバックタイマーを設定
-    knockbackVelocity
-      = (Position - PlayerManager.Instance.Position)
-        .normalized * norm;
+    // ノックバック速度を決定(PlayerとBulletの位置関係から決まる)
+    var fromPlayer = (Position - PlayerManager.Instance.Position);
+    var fromBullet = (Position - info.Position);
 
+    knockbackVelocity = (fromPlayer.normalized * 0.6f) + (fromBullet.normalized * 0.4f);
+    knockbackVelocity = knockbackVelocity * norm;
+
+    // ノックバックタイマーを設定
     var time = MyMath.CalcDecayTime(norm, KNOCKBACK_ATTENUATION);
     knockbackTimer.Start(time);
 

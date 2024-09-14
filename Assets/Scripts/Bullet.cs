@@ -120,8 +120,7 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// <summary>
   /// 攻撃情報
   /// </summary>
-  protected AttackInfo AttackInfo { get; private set; } = new AttackInfo();
-
+  protected AttackInfo AttackInfo;
 
   //============================================================================
   // Methods
@@ -154,6 +153,7 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
       return;
     }
 
+    AttackInfo.Position = CachedTransform.position;
     var result = actor.TakeDamage(AttackInfo);
 
     if (result.IsHit) {
@@ -251,7 +251,12 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   protected void SetStatusBy(ISkill skill)
   {
     Id = skill.Id;
-    AttackInfo.Init(skill.Power, skill.Attributes, skill.Impact);
+
+    AttackInfo = new AttackInfo() {
+      Power      = skill.Power,
+      Attributes = skill.Attributes,
+      Impact     = skill.Impact,
+    };
   }
 
   /// <summary>

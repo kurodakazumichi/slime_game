@@ -119,8 +119,12 @@ public class EnemyStatus
   /// </summary>
   public AttackInfo MakeAttackInfo()
   {
-    var status = new AttackInfo();
-    status.Init(Power, attrA.Value, Mass * Speed);
+    var status = new AttackInfo(){
+      Power      = Power,
+      Attributes = attrA.Value,
+      Impact     = Mass * Speed,
+    };
+    
     return status;
   }
 
