@@ -282,9 +282,10 @@ public class Skill : ISkill
     var bullet = BulletManager.Instance.Get(Id);
 
     bullet.Fire(new BulletFireInfo() {
-      Position = position,
-      Skill = this,
-      Target = target,
+      Position  = position,
+      Skill     = this,
+      Target    = target,
+      Direction = MyVector3.Random(Vector3.forward, Vector3.up),
     });
   }
 

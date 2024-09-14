@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tester
+namespace SkillTester
 {
-  public class SkillTarget : MyMonoBehaviour, IActor
+  public class Enemy : MyMonoBehaviour, IActor
   {
     public DamageInfo TakeDamage(AttackInfo info)
     {

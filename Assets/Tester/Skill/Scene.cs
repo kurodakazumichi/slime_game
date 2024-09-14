@@ -4,15 +4,17 @@ using UnityEngine;
 
 #if _DEBUG
 
-namespace Tester
+namespace SkillTester
 {
-  public class SkillTester : MonoBehaviour
+  public class Scene : MonoBehaviour
   {
-    public string SkillId;
-    public GameObject TargetObject;
-    private IActor target;
+    public string StartSkillId;
+    public GameObject EnemyObject;
+    public GameObject PlayerObject;
+    private IActor enemy;
+    private IActor player;
 
-    private List<global::SkillId> skillIds = new List<global::SkillId>();
+    private List<SkillId> skillIds = new List<SkillId>();
     private int currentIndex = 0;
 
     // Start is called before the first frame update
@@ -24,14 +26,15 @@ namespace Tester
       
       BulletManager.Instance.Load();
 
-      target = TargetObject.GetComponent<IActor>();
+      enemy = EnemyObject.GetComponent<IActor>();
+      player = PlayerObject.GetComponent<IActor>();
 
-      MyEnum.ForEach<global::SkillId>((id) => {
+      MyEnum.ForEach<SkillId>((id) => {
         skillIds.Add(id);
       });
 
       for (int i = 0; i < skillIds.Count; i++) {
-        if (MyEnum.Parse<global::SkillId>(SkillId) == skillIds[i]) {
+        if (MyEnum.Parse<SkillId>(StartSkillId) == skillIds[i]) {
           currentIndex = i;
           break;
         }
@@ -45,7 +48,7 @@ namespace Tester
         return;
       }
 
-      if (Input.GetKeyDown(KeyCode.T)) {
+      if (Input.GetKeyDown(KeyCode.V)) {
         BulletManager.Instance.Terminate();
       }
 
@@ -53,10 +56,10 @@ namespace Tester
         BulletManager.Instance.Clear();
       }
 
-      if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+      if (Input.GetKeyDown(KeyCode.Z)) {
         currentIndex = (skillIds.Count + currentIndex - 1) % skillIds.Count;
       }
-      if (Input.GetKeyDown(KeyCode.RightArrow)) {
+      if (Input.GetKeyDown(KeyCode.X)) {
         currentIndex = (currentIndex + 1) % skillIds.Count;
       }
 
@@ -66,14 +69,19 @@ namespace Tester
 
       var id = skillIds[currentIndex];
 
-      if (id == global::SkillId.Undefined) {
+      if (id == SkillId.Undefined) {
         return;
       }
 
       SkillManager.Instance.SetActiveSkill(0, id);
 
       Skill skill = SkillManager.Instance.GetActiveSkill(0) as Skill;
-      skill.ManualFire(Vector3.zero, target);
+
+      switch (skill.Aiming) {
+        case SkillAimingType.None  : skill.ManualFire(player.Position, null); break;
+        case SkillAimingType.Player: skill.ManualFire(player.Position, player); break;
+        default: skill.ManualFire(player.Position, enemy); break;
+      }
     }
 
     private void LateUpdate()
@@ -93,7 +101,8 @@ namespace Tester
     private void OnGUI()
     {
       GUILayout.Label($"Space: Fire Bullet ({skillIds[currentIndex].ToString()})");
-      GUILayout.Label("T    : Bullet Terminate");
+      GUILayout.Label("ZX   : Change Bullet");
+      GUILayout.Label("V    : Bullet Terminate");
       GUILayout.Label("C    : Object Pool Clear");
     }
   }

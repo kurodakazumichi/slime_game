@@ -153,9 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PenetrableCount: 5
-  MinSpeed: 0
-  MaxSpeed: 3
-  SpeedChangeTime: 2
+  MinSpeed: 10
+  MaxSpeed: 10
+  SpeedChangeTime: 1
   SpeedChangeCurve:
     serializedVersion: 2
     m_Curve:
