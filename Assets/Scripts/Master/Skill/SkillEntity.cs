@@ -16,6 +16,7 @@ public interface ISkillEntityRO
   Growth GrowthType { get; }
   float Impact { get; }
   int IconNo { get; }
+  SkillAimingType Aiming { get; }
 }
 
 /// <summary>
@@ -82,5 +83,10 @@ public class SkillEntity : ISkillEntityRO
   /// アイコン番号
   /// </summary>
   public int IconNo { get; set; }
+
+  /// <summary>
+  /// 狙う相手のタイプ
+  /// </summary>
+  public SkillAimingType Aiming { get; set; }
 }
 

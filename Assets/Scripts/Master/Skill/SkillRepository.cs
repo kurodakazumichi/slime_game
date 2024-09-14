@@ -17,6 +17,7 @@ public static class SkillRepository
       GrowthType      = Growth.Fast,
       Impact          = 1f,
       IconNo          = 0,
+      Aiming          = SkillAimingType.Random,
     },
     
     new SkillEntity() {
@@ -32,6 +33,7 @@ public static class SkillRepository
       GrowthType      = Growth.Fast,
       Impact          = 0.5f,
       IconNo          = 6,
+      Aiming          = SkillAimingType.Nearest,
     },
     
     new SkillEntity() {
@@ -47,6 +49,7 @@ public static class SkillRepository
       GrowthType      = Growth.Normal,
       Impact          = 1f,
       IconNo          = 2,
+      Aiming          = SkillAimingType.Weakest,
     },
     
     new SkillEntity() {
@@ -62,6 +65,7 @@ public static class SkillRepository
       GrowthType      = Growth.Normal,
       Impact          = 1f,
       IconNo          = 3,
+      Aiming          = SkillAimingType.Weakest,
     },
     
     new SkillEntity() {
@@ -77,6 +81,7 @@ public static class SkillRepository
       GrowthType      = Growth.Normal,
       Impact          = 1f,
       IconNo          = 4,
+      Aiming          = SkillAimingType.Weakest,
     },
     
     new SkillEntity() {
@@ -90,8 +95,9 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Lef),
       Prefab          = "Bullet/LeafBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
-      Impact          = 1f,
+      Impact          = 10f,
       IconNo          = 1,
+      Aiming          = SkillAimingType.Player,
     },
     
     new SkillEntity() {
@@ -107,6 +113,7 @@ public static class SkillRepository
       GrowthType      = Growth.Normal,
       Impact          = 1f,
       IconNo          = 5,
+      Aiming          = SkillAimingType.Weakest,
     },
     
     new SkillEntity() {
@@ -120,8 +127,9 @@ public static class SkillRepository
       Attr            = (uint)(Attribute.Win),
       Prefab          = "Bullet/WindBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
-      Impact          = 1f,
+      Impact          = 10f,
       IconNo          = 7,
+      Aiming          = SkillAimingType.Weakest,
     },
     
   };

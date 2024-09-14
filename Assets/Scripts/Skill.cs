@@ -12,6 +12,7 @@ public interface ISkill
   void Fire();
   void SetExp(int exp);
   void SetLv(int lv);
+  SkillAimingType Aiming { get; }
 }
 
 /// <summary>
@@ -44,7 +45,6 @@ public class Skill : ISkill
   /// </summary>
   public float RecastTime { get; private set; } = 0f;
 
-
   //============================================================================
   // Properties
   //============================================================================
@@ -68,6 +68,11 @@ public class Skill : ISkill
   /// 衝撃力[N]
   /// </summary>
   public float Impact => entity.Impact;
+
+  /// <summary>
+  /// 狙い
+  /// </summary>
+  public SkillAimingType Aiming => entity.Aiming;
 
   //============================================================================
   // Methods
@@ -94,13 +99,26 @@ public class Skill : ISkill
     var bullet = BulletManager.Instance.Get(Id);
 
     var pm    = PlayerManager.Instance;
+
+    IActor target = null;
+    Vector3 direction = MyVector3.Random(Vector3.forward, Vector3.up);
+
+    switch (Aiming) {
+      case SkillAimingType.Nearest: target = EnemyManager.Instance.FindNearestEnemy(pm.Position); break;
+      case SkillAimingType.Weakest: target = EnemyManager.Instance.FindWeaknessEnemy(entity.Attr); break;
+      case SkillAimingType.Random : target = EnemyManager.Instance.FindRandomEnemy(); break;
+      case SkillAimingType.Player: target = PlayerManager.Instance.Player; break;
+      default: break;
+    }
+
     var enemy = EnemyManager.Instance.FindNearestEnemy(pm.Position);
 
     bullet.Fire(new BulletFireInfo() {
-      Position = pm.Position,
-      Skill    = this,
-      Target   = enemy,
-      Owner    = BulletOwner.Player
+      Position  = pm.Position,
+      Direction = direction,
+      Skill     = this,
+      Target    = target,
+      Owner     = BulletOwner.Player,
     });
   }
 

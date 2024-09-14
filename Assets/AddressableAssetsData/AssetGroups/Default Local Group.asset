@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f3e80e085d4b5384487623b1e30ede70
   m_SerializeEntries:
+  - m_GUID: 05c46a218dad915418817679998fb74a
+    m_Address: Enemy/024/024.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 08ef10147136fc24daeba3a71e457ad2
     m_Address: Bullet/WindBullet1/Object.prefab
     m_ReadOnly: 0
@@ -48,7 +53,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 24ed55fcdb89b3e4192731554e3d35d9
-    m_Address: Enemy/013.prefab
+    m_Address: Enemy/013/013.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -67,8 +72,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4146f5002dda1134db94e022e1541402
+    m_Address: Enemy/014/014.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 441c7a1a20d4cae4e8658247310f0883
+    m_Address: Enemy/006/006.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 46e4ecb1a134ae14e8a269ab82ed4abb
-    m_Address: Enemy/000.prefab
+    m_Address: Enemy/000/000.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -98,7 +113,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63dc01e5b756a0f46a8c4834efded5bf
-    m_Address: Enemy/011.prefab
+    m_Address: Enemy/011/011.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -128,7 +143,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 85459da3d4fa5b54ca588ab09bea1cc6
-    m_Address: Enemy/016.prefab
+    m_Address: Enemy/016/016.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8942196da36e32140a5e1256fe868e1f
+    m_Address: Enemy/022/022.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -172,6 +192,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab7bc4fea3d3c6940afc5f573a66af6b
+    m_Address: Enemy/003/003.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b04be7cf9d1e31444ba3ca29206670b1
     m_Address: Bullet/LeafBullet1/Usual.anim
     m_ReadOnly: 0
@@ -182,8 +207,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdfac0910f7ea3c46b74f67f82a11145
+    m_Address: Enemy/020/020.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c4955e1ca60dda64fa8b001d47582eca
     m_Address: Bullet/WindBullet1/Usual.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1a44f047784be644b05714cc16c2e59
+    m_Address: Enemy/027/027.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

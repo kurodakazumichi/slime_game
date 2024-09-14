@@ -231,6 +231,14 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     status.Hp.Empty();
   }
 
+  /// <summary>
+  /// {attributes}が弱点属性に含まれるならばtrue
+  /// </summary>
+  public bool IsWeakness(uint attributes)
+  {
+    return status.IsWeakness(attributes);
+  }
+
   //----------------------------------------------------------------------------
   // Protected
   //----------------------------------------------------------------------------

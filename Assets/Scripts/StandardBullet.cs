@@ -83,7 +83,7 @@ public class StandardBullet : Bullet<StandardBullet.State>
   {
     base.Fire(info);
 
-    direction = Vector3.forward;
+    direction = info.Direction;
     
     if (Target != null) 
     {
@@ -182,7 +182,7 @@ public class StandardBullet : Bullet<StandardBullet.State>
   {
     var actors = Physics.OverlapSphere(
         CachedTransform.position,
-        collider.radius,
+        collider.radius * MyVector3.LargestCompnent(CachedTransform.localScale),
         LayerMask.GetMask(LayerName.Enemy)
       );
 

@@ -155,4 +155,12 @@ public class EnemyStatus
 
     return new DamageInfo(damage, detail);
   }
+
+  /// <summary>
+  /// {attributes}が弱点属性に含まれるならばtrue
+  /// </summary>
+  public bool IsWeakness(uint attributes)
+  {
+    return attrW.HasEither(attributes);
+  }
 }

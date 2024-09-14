@@ -37,6 +37,18 @@ public enum EnemyWaveRole
   Right,
 }
 
+/// <summary>
+/// スキルのAim種別
+/// </summary>
+public enum SkillAimingType
+{
+  None,    // なし(ランダム方向)
+  Nearest, // もっとも近い
+  Weakest, // 弱点
+  Random,  // ランダムな相手
+  Player,  // プレイヤー
+}
+
 public enum BulletOwner
 {
   Player,

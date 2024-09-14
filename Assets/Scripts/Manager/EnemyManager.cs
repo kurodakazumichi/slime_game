@@ -37,6 +37,11 @@ public interface IEnemy : IActor
   /// 敵を殺す
   /// </summary>
   void Kill();
+
+  /// <summary>
+  /// {attributes}に弱点属性が含まれるならばtrue
+  /// </summary>
+  bool IsWeakness(uint attributes);
 }
 
 public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
@@ -53,7 +58,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   /// <summary>
   /// 現在アクティブな敵のリスト
   /// </summary>
-  List<IEnemy> enemies = new List<IEnemy>();
+  LinkedList<IEnemy> enemies = new LinkedList<IEnemy>();
 
   //============================================================================
   // Methods
@@ -88,7 +93,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     var e = enemyPool.Get().GetComponent<IEnemy>();
     e.Init(enemyId, lv);
-    enemies.Add(e);
+    enemies.AddLast(e);
+    
     return e;
   }
 
@@ -111,7 +117,9 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   /// </summary>
   public void Clear()
   {
-    enemies.ForEach(e => enemyPools[(int)e.Id].Release(e.gameObject));
+    foreach (var e in enemies) {
+      enemyPools[(int)e.Id].Release(e.gameObject);
+    }
     enemies.Clear();
   }
 
@@ -121,9 +129,9 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   /// <param name="func"></param>
   public void Scan(Func<IEnemy, bool> func)
   {
-    for (int i = 0, count = enemies.Count; i < count; i++) {
+    foreach(var e in enemies) {
       // funcの戻り値がfalseだったらそこでscan終了 
-      if (func(enemies[i]) == false) {
+      if (func(e) == false) {
         break;
       }
     }
@@ -158,6 +166,40 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     // 最後に残ったのが一番近い敵
     return nearestEnemy;
+  }
+
+  public IEnemy FindRandomEnemy()
+  {
+    // 敵がいなければ当然ながらnullを返す
+    if (enemies.Count == 0) {
+      return null;
+    }
+
+    int count = UnityEngine.Random.Range(0, enemies.Count);
+
+    foreach (var enemy in enemies) 
+    {
+      if (count == 0) {
+        return enemy;
+      }
+
+      --count;
+    }
+
+    return null;
+  }
+
+  public IEnemy FindWeaknessEnemy(uint attr)
+  {
+    foreach (var enemy in enemies) 
+    {
+      if (enemy.IsWeakness(attr)) {
+        return enemy;
+      }
+    }
+
+    // 見つからなかったらランダムにFallback
+    return FindRandomEnemy();
   }
 
   /// <summary>
