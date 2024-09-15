@@ -72,6 +72,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3dc3331956e3f344c98656880317cce2
+    m_Address: Shadow/CircleShadow.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4146f5002dda1134db94e022e1541402
     m_Address: Enemy/014/014.prefab
     m_ReadOnly: 0
@@ -124,6 +129,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 782888dd8fb6e9648946ca61ac98d9e9
     m_Address: Bullet/LeafBullet1/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7cd01d34ed07af9448273ab9286e4d82
+    m_Address: Shadow/Shadow.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -100,6 +100,7 @@ public class FieldScene : MyMonoBehaviour
     EnemyManager.Instance.Load();
     BulletManager.Instance.Load();
     IconManager.Instance.Load();
+    ShadowManager.Instance.Load();
   }
 
   private void UpdateResourceLoading()

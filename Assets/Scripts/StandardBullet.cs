@@ -82,7 +82,12 @@ public class StandardBullet : Bullet<StandardBullet.State>
   public override void Fire(BulletFireInfo info)
   {
     base.Fire(info);
-    
+
+    if (ShadowManager.Instance != null) {
+      shadow = ShadowManager.Instance.Get();
+      shadow.SetOwner(this, collider.radius);
+    }
+
     if (Target != null) 
     {
       direction      = (Target.Position - info.Position).normalized;
@@ -153,6 +158,11 @@ public class StandardBullet : Bullet<StandardBullet.State>
   private void ExitUrual()
   {
     BulletManager.Instance.Release(this);
+
+    if (ShadowManager.Instance != null) {
+      ShadowManager.Instance.Release(shadow);
+      shadow = null;
+    }
   }
 
   //----------------------------------------------------------------------------

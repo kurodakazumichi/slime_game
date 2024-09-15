@@ -64,6 +64,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   protected Timer invincibilityTimer = new();
 
+  /// <summary>
+  /// 丸影
+  /// </summary>
+  private Shadow shadow = null;
+
   //============================================================================
   // Properities
   //============================================================================
@@ -186,6 +191,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     Logger.Log($"[Enemy] Called Init({id.ToString()})");
     status.Init(id, lv);
     AttackInfo = status.MakeAttackInfo();
+
+    if (ShadowManager.Instance != null) {
+      shadow = ShadowManager.Instance.Get();
+      shadow.SetOwner(this, Collider.radius*2f);
+    }
   }
 
   /// <summary>
@@ -253,6 +263,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     }
     else {
       EnemyManager.Instance.Release(this);
+    }
+
+    if (ShadowManager.Instance != null) {
+      ShadowManager.Instance.Release(shadow);
+      shadow = null;
     }
   }
 

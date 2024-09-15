@@ -72,6 +72,11 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// </summary>
   private int penetrableCount = 0;
 
+  /// <summary>
+  /// 丸影
+  /// </summary>
+  protected Shadow shadow = null;
+
   //============================================================================
   // Properities
   //============================================================================
