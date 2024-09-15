@@ -8,7 +8,7 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   //============================================================================
   // Variables for Inspector
   //============================================================================
-  [SerializeField, Tooltip("貫通フラグ")]
+  [SerializeField, Tooltip("貫通回数")]
   private int PenetrableCount = 0;
 
   [SerializeField, Tooltip("最低速度")]
