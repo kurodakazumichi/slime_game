@@ -181,8 +181,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   HomingPerformance: 1
+  HomingSpeed: 2
   HomingTime: 2
-  LifeTime: 2
+  LifeTime: 5
   SyncDirectionAndRotation: 1
 --- !u!135 &2214286238866220981
 SphereCollider:

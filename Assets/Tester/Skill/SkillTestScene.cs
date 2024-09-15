@@ -6,8 +6,9 @@ using UnityEngine;
 
 namespace SkillTester
 {
-  public class Scene : MonoBehaviour
+  public class SkillTestScene : MonoBehaviour
   {
+    public int TargetFrameRate = 60;
     public string StartSkillId;
     public GameObject EnemyObject;
     public GameObject PlayerObject;
@@ -44,6 +45,7 @@ namespace SkillTester
     // Update is called once per frame
     void Update()
     {
+      Application.targetFrameRate = TargetFrameRate;
       if (ResourceManager.Instance.IsLoading) {
         return;
       }
@@ -100,10 +102,11 @@ namespace SkillTester
 
     private void OnGUI()
     {
+      GUILayout.Label($"FPS  : {TargetFrameRate}");
       GUILayout.Label($"Space: Fire Bullet ({skillIds[currentIndex].ToString()})");
-      GUILayout.Label("ZX   : Change Bullet");
-      GUILayout.Label("V    : Bullet Terminate");
-      GUILayout.Label("C    : Object Pool Clear");
+      GUILayout.Label("ZX    : Change Bullet");
+      GUILayout.Label("V     : Bullet Terminate");
+      GUILayout.Label("C     : Object Pool Clear");
     }
   }
 }

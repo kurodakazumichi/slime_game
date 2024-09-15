@@ -26,6 +26,9 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   [SerializeField, Tooltip("追尾性能"), Range(0f, 1f)]
   protected float HomingPerformance = 0f;
 
+  [SerializeField, Tooltip("追尾速度、何秒かけて追尾するか")]
+  protected float HomingSpeed = 1f;
+
   [SerializeField, Tooltip("追尾時間")]
   protected float HomingTime = 0f;
 
@@ -48,6 +51,11 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// 汎用タイマー
   /// </summary>
   protected float timer = 0f;
+
+  /// <summary>
+  /// 最初の方向
+  /// </summary>
+  protected Vector3 startDirection = Vector3.zero;
 
   /// <summary>
   /// 方向
@@ -133,6 +141,7 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
     Target                   = info.Target;
     CachedTransform.position = info.Position;
     direction                = info.Direction;
+    startDirection           = info.Direction;
     penetrableCount          = PenetrableCount;
   }
 
@@ -211,11 +220,6 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// </summary>
   protected Vector3 CalcDirection(float timer)
   {
-    // ホーミング時間が過ぎたら方向維持
-    if (HomingTime < timer) {
-      return direction;
-    }
-
     // ターゲットが存在しなければ方向維持
     if (Target is null || !Target.gameObject.activeSelf) {
       return direction;
@@ -226,19 +230,20 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
       return direction;
     }
 
-    // 方向転換にかかる時間を求める
-    var time = 1.0f - HomingPerformance;
-
-    // ターゲットに向かうベクトルを求める
-    var toTarget = Target.CachedTransform.position - CachedTransform.position;
-    toTarget.Normalize();
-
-    // 時間が0以下なら即座にターゲットに向かう
-    if (time <= 0) {
-      return toTarget;
+    // ホーミング時間が過ぎたら方向維持
+    if (HomingTime < timer) {
+      return direction;
     }
 
-    return Vector3.Slerp(direction, toTarget, timer / time);
+    // ターゲットに向かうベクトルを求める
+    var toTarget = (Target.Position - Position).normalized;
+
+    // ホーミング速度が0だったら即座に最大補正
+    if (HomingSpeed <= 0) {
+      return Vector3.Slerp(startDirection, toTarget, HomingPerformance);
+    }
+
+    return Vector3.Slerp(startDirection, toTarget, HomingPerformance * (timer/ HomingSpeed));
   }
 
   //----------------------------------------------------------------------------

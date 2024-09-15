@@ -82,12 +82,11 @@ public class StandardBullet : Bullet<StandardBullet.State>
   public override void Fire(BulletFireInfo info)
   {
     base.Fire(info);
-
-    direction = info.Direction;
     
     if (Target != null) 
     {
-      direction = (Target.CachedTransform.position - info.Position).normalized;
+      direction      = (Target.Position - info.Position).normalized;
+      startDirection = direction;
     }
 
     StateMachine.SetState(State.Usual);
