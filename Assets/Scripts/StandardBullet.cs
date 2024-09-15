@@ -145,7 +145,7 @@ public class StandardBullet : Bullet<StandardBullet.State>
     direction = CalcDirection(timer);
 
     // スピードを更新
-    velocity = direction * CalcSpeed(timer) * Time.deltaTime;
+    velocity = direction * CalcSpeed(timer) * TimeSystem.Bullet.DeltaTime;
     CachedTransform.position  += velocity;
 
     if (SyncDirectionAndRotation) {
