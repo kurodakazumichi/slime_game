@@ -65,14 +65,14 @@ public class SampleScene : MonoBehaviour
 
   private void EnterGameOver()
   {
-    TimeSystem.Pause = true;
+    TimeSystem.MenuPause = true;
     UIManager.Instance.HUD.SetPhaseTextGameOver();
   }
 
   private void UpdateGameOver()
   {
     if (Input.GetKeyDown(KeyCode.Return)) {
-      TimeSystem.Pause = false;
+      TimeSystem.MenuPause = false;
       _state.SetState(State.Start);
     }
   }

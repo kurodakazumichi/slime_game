@@ -152,7 +152,7 @@ public class StandardBullet : Bullet<StandardBullet.State>
       CachedTransform.rotation = Quaternion.LookRotation(direction, Vector3.up);
     }
     
-    timer += TimeSystem.DeltaTime;
+    timer += TimeSystem.Bullet.DeltaTime;
   }
 
   private void ExitUrual()

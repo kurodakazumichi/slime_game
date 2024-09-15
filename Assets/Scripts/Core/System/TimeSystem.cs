@@ -22,50 +22,52 @@ static public class TimeSystem
   }
 
   /// <summary>
-  /// デフォルトで利用するデルタタイム
+  /// シーンとUI意外をポーズ
   /// </summary>
-  static private MyDeltaTime deltaTime = new MyDeltaTime();
-
-  static public float DeltaTime {
-    get { return deltaTime.DeltaTime; }
-  }
-
-  static public bool Pause {
-    set { deltaTime.Scale = value ? 0f : 1f; }
-  }
-
-  static private MyDeltaTime player = new MyDeltaTime();
-  static public MyDeltaTime Player { get { return player; } }
-
-  static private MyDeltaTime enemy = new MyDeltaTime();
-  static public MyDeltaTime Enemy {  get { return enemy; } }
-
-  static private MyDeltaTime _wave = new MyDeltaTime();
-  static public MyDeltaTime Wave { get { return _wave; } }
-
-  /// <summary>
-  /// シーンフロー制御用の時間
-  /// </summary>
-  static private MyDeltaTime _scene = new MyDeltaTime();
-  static public MyDeltaTime Scene {
-    get { return _scene; }
+  static public bool MenuPause {
+    set {
+      Player.Pause(value);
+      Enemy.Pause(value);
+      Wave.Pause(value);
+      Skill.Pause(value);
+      Bullet.Pause(value);
+    }
   }
 
   /// <summary>
-  /// UI制御用の時間
+  /// シーンフロー制御用
   /// </summary>
-  static private MyDeltaTime _ui = new MyDeltaTime();
-  static public MyDeltaTime UI {
-    get { return _ui; }
-  }
+  static public MyDeltaTime Scene { get; private set; } = new();
 
   /// <summary>
-  /// スキル発動を制御する時間
+  /// UI制御用
   /// </summary>
-  static private MyDeltaTime _skill = new MyDeltaTime();
-  static public MyDeltaTime Skill {
-    get { return _skill; }
-  }
+  static public MyDeltaTime UI { get; private set; } = new();
+
+  /// <summary>
+  /// プレイヤー制御用
+  /// </summary>
+  static public MyDeltaTime Player { get; private set; } = new();
+
+  /// <summary>
+  /// 敵制御用
+  /// </summary>
+  static public MyDeltaTime Enemy { get; private set; } = new();
+
+  /// <summary>
+  /// Wave制御用
+  /// </summary>
+  static public MyDeltaTime Wave { get; private set; } = new();
+
+  /// <summary>
+  /// Bullet制御用
+  /// </summary>
+  static public MyDeltaTime Bullet { get; private set; } = new();
+
+  /// <summary>
+  /// スキル発動の制御用
+  /// </summary>
+  static public MyDeltaTime Skill { get; private set; } = new();
 
 #if _DEBUG
   //----------------------------------------------------------------------------
@@ -90,9 +92,10 @@ static public class TimeSystem
       }
       globalTimeScale = GUILayout.HorizontalSlider(globalTimeScale, 0f, 10f);
 
-      OnDebugDeltaTime("DefaultTimeScale", deltaTime);
-      OnDebugDeltaTime("PlayerTimeScale", player);
-      OnDebugDeltaTime("EnemyTimeScale", enemy);
+      OnDebugDeltaTime("SceneTimeScale", Scene);
+      OnDebugDeltaTime("UITimeScale", UI);
+      OnDebugDeltaTime("PlayerTimeScale", Player);
+      OnDebugDeltaTime("EnemyTimeScale", Enemy);
     }
   }
 

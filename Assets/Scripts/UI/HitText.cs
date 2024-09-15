@@ -46,13 +46,13 @@ public class HitText : MonoBehaviour
 
   private void UpdateDisplay()
   {
-    _timer -= TimeSystem.DeltaTime;
+    _timer -= TimeSystem.UI.DeltaTime;
 
     if (_timer < 0) {
       _state.SetState(State.Hidden);
     }
 
-    transform.position += Vector3.up * TimeSystem.DeltaTime;
+    transform.position += Vector3.up * TimeSystem.UI.DeltaTime;
   }
 
   private void UpdateHidden()

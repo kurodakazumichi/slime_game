@@ -193,8 +193,8 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterBattleEnded()
   {
+    TimeSystem.MenuPause = true;
     UIManager.Instance.Toaster.Bake("戦闘終了!!");
-    TimeSystem.Player.Pause(true);
     UIManager.Instance.HUD.SkillSlots.Stop();
     BulletManager.Instance.Terminate();
     WaveManager.Instance.Terminate();
@@ -231,7 +231,7 @@ public class FieldScene : MyMonoBehaviour
 
   private void ExitResult()
   {
-    TimeSystem.Player.Pause(false);
+    TimeSystem.MenuPause = false;
   }
 
   //----------------------------------------------------------------------------
