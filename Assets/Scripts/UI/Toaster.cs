@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -15,14 +15,31 @@ public class Toaster : MyMonoBehaviour
   //============================================================================
 
   /// <summary>
-  /// ƒg[ƒXƒg
+  /// ãƒˆãƒ¼ã‚¹ãƒˆ
   /// </summary>
   private Toast toast = null;
 
   /// <summary>
-  /// ƒƒbƒZ[ƒWƒŠƒXƒg
+  /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒªã‚¹ãƒˆ
   /// </summary>
   private LinkedList<string> messages = new();
+
+  //============================================================================
+  // Properties
+  //============================================================================
+
+  /// <summary>
+  /// ã‚¢ã‚¤ãƒ‰ãƒ«çŠ¶æ…‹ã§ã™
+  /// </summary>
+  public bool IsIdle {
+    get {
+      if (toast is null) {
+        return true;
+      }
+
+      return (toast.IsIdle && messages.Count <= 0);
+    }
+  }
 
   //============================================================================
   // Methods
