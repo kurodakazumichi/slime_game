@@ -295,6 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2c0a75d3a53ee4aa25b5832af2a8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TargetFrameRate: 60
   StartSkillId: NormalBullet1
   EnemyObject: {fileID: 659945995}
   PlayerObject: {fileID: 2203082}
