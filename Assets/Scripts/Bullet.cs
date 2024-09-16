@@ -243,12 +243,15 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
     // ターゲットに向かうベクトルを求める
     var toTarget = (Target.Position - Position).normalized;
 
-    // ホーミング速度が0だったら即座に最大補正
-    if (HomingSpeed <= 0) {
-      return Vector3.Slerp(startDirection, toTarget, HomingPerformance);
+    // 最大パフォーマンスだったら即座に速度を向ける
+    if (1f <= HomingPerformance) {
+      return toTarget;
     }
 
-    return Vector3.Slerp(startDirection, toTarget, HomingPerformance * (timer/ HomingSpeed));
+    // なんかよくわからん式、↓を参考に色々やったらなんかいい感じだからいいかなって諦めた
+    // https://logmi.jp/tech/articles/326878
+    var beta = 1f - Mathf.Pow(1-(HomingPerformance*0.1f), 60f*TimeSystem.Bullet.DeltaTime);
+    return Vector3.Slerp(direction, toTarget, beta);
   }
 
   //----------------------------------------------------------------------------
