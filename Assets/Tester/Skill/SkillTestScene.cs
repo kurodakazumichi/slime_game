@@ -9,17 +9,25 @@ namespace SkillTester
 {
   public class SkillTestScene : MonoBehaviour
   {
+    private enum State
+    {
+      Boot,
+      Playable,
+    }
+
     public int TargetFrameRate = 60;
     public string StartSkillId;
     public GameObject EnemyObject;
     public GameObject PlayerObject;
     public Image uiIcon;
+
     private IActor enemy;
     private IActor player;
-    
 
     private List<SkillId> skillIds = new List<SkillId>();
     private int currentIndex = 0;
+
+    private StateMachine<State> stateMachine = new();
 
 
     private void Awake()
@@ -34,15 +42,57 @@ namespace SkillTester
           break;
         }
       }
+
+      stateMachine.Add(State.Boot, EnterBoot, UpdateBoot, ExitBoot);
+      stateMachine.Add(State.Playable, null, UpdatePlayable);
+
+      stateMachine.SetState(State.Boot);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    // Update is called once per frame
+    void Update()
+    {
+      stateMachine.Update();
+    }
+
+    private void LateUpdate()
+    {
+      if (stateMachine.StateKey is not State.Playable) {
+        return;
+      }
+
+      var colliders = Physics.OverlapSphere(
+        Vector3.zero, 
+        10f, 
+        LayerMask.GetMask(LayerName.PlayerBullet)
+      );
+
+      foreach (var collider in colliders)
+      {
+        collider.GetComponent<IBullet>().Intersect();
+      }
+    }
+
+    private void OnGUI()
+    {
+      if (stateMachine.StateKey is not State.Playable) {
+        return;
+      }
+
+      GUILayout.Label($"FPS  : {TargetFrameRate}");
+      GUILayout.Label($"Space: Fire Bullet ({skillIds[currentIndex].ToString()})");
+      GUILayout.Label("ZX    : Change Bullet");
+      GUILayout.Label("V     : Bullet Terminate");
+      GUILayout.Label("C     : Object Pool Clear");
+    }
+
+
+    private void EnterBoot()
     {
       DebugManager.Instance.Regist(SkillManager.Instance);
       DebugManager.Instance.Regist(BulletManager.Instance);
       DebugManager.Instance.Regist(ResourceManager.Instance);
-      
+
       BulletManager.Instance.Load();
       IconManager.Instance.Load();
 
@@ -50,14 +100,25 @@ namespace SkillTester
       player = PlayerObject.GetComponent<IActor>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateBoot()
     {
-      Application.targetFrameRate = TargetFrameRate;
-
       if (ResourceManager.Instance.IsLoading) {
         return;
       }
+
+      stateMachine.SetState(State.Playable);
+    }
+
+    private void ExitBoot()
+    {
+      UpdateSkillIcon();
+    }
+
+    private void UpdatePlayable()
+    {
+      Application.targetFrameRate = TargetFrameRate;
+
+
 
       if (Input.GetKeyDown(KeyCode.V)) {
         BulletManager.Instance.Terminate();
@@ -91,33 +152,10 @@ namespace SkillTester
       Skill skill = SkillManager.Instance.GetActiveSkill(0) as Skill;
 
       switch (skill.Aiming) {
-        case SkillAimingType.None  : skill.ManualFire(player.Position, null); break;
+        case SkillAimingType.None: skill.ManualFire(player.Position, null); break;
         case SkillAimingType.Player: skill.ManualFire(player.Position, player); break;
         default: skill.ManualFire(player.Position, enemy); break;
       }
-    }
-
-    private void LateUpdate()
-    {
-      var colliders = Physics.OverlapSphere(
-        Vector3.zero, 
-        10f, 
-        LayerMask.GetMask(LayerName.PlayerBullet)
-      );
-
-      foreach (var collider in colliders)
-      {
-        collider.GetComponent<IBullet>().Intersect();
-      }
-    }
-
-    private void OnGUI()
-    {
-      GUILayout.Label($"FPS  : {TargetFrameRate}");
-      GUILayout.Label($"Space: Fire Bullet ({skillIds[currentIndex].ToString()})");
-      GUILayout.Label("ZX    : Change Bullet");
-      GUILayout.Label("V     : Bullet Terminate");
-      GUILayout.Label("C     : Object Pool Clear");
     }
 
     private void UpdateSkillIcon()
