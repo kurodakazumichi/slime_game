@@ -50,11 +50,6 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   protected float timer = 0f;
 
   /// <summary>
-  /// 最初の方向
-  /// </summary>
-  protected Vector3 startDirection = Vector3.zero;
-
-  /// <summary>
   /// 方向
   /// </summary>
   protected Vector3 direction = Vector3.zero;
@@ -143,7 +138,6 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
     Target                   = info.Target;
     CachedTransform.position = info.Position;
     direction                = info.Direction;
-    startDirection           = info.Direction;
     penetrableCount          = PenetrableCount;
   }
 

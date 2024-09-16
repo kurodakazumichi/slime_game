@@ -91,7 +91,6 @@ public class StandardBullet : Bullet<StandardBullet.State>
     if (Target != null) 
     {
       direction      = (Target.Position - info.Position).normalized;
-      startDirection = direction;
     }
 
     StateMachine.SetState(State.Usual);
