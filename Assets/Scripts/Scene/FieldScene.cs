@@ -11,7 +11,6 @@ public class FieldScene : MyMonoBehaviour
     Serach,
     Battle,
     BattleEnded,
-    BattleTidyingUp, // 戦闘の片付け
     Result,
     Menu,
   }
@@ -37,7 +36,6 @@ public class FieldScene : MyMonoBehaviour
     state.Add(State.Serach, EnterSearch, UpdateSearch);
     state.Add(State.Battle, EnterBattle, UpdateBattle);
     state.Add(State.BattleEnded, EnterBattleEnded, UpdateBattleEnded);
-    state.Add(State.BattleTidyingUp, EnterBattleTidyingUp, UpdateBattleTidyingUp);
     state.Add(State.Result, EnterResult, UpdateResult, ExitResult);
     state.Add(State.Menu);
     state.SetState(State.Idle);
@@ -197,7 +195,13 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterBattleEnded()
   {
-    TimeSystem.MenuPause = true;
+    TimeSystem.Player.Pause(true);
+
+    UIManager.Instance.HUD.SkillSlots.Stop();
+    BulletManager.Instance.Terminate();
+    WaveManager.Instance.Terminate();
+    FieldManager.Instance.InactivateBattleCircle();
+
     UIManager.Instance.Toaster.Bake("戦闘終了!!");
   }
 
@@ -207,20 +211,6 @@ public class FieldScene : MyMonoBehaviour
       return;
     }
 
-    // 戦闘の片付けへ
-    state.SetState(State.BattleTidyingUp);
-  }
-
-  private void EnterBattleTidyingUp() 
-  {
-    UIManager.Instance.HUD.SkillSlots.Stop();
-    BulletManager.Instance.Terminate();
-    WaveManager.Instance.Terminate();
-    FieldManager.Instance.InactivateBattleCircle();
-  }
-
-  private void UpdateBattleTidyingUp()
-  {
     if (0 < BulletManager.Instance.ActiveBulletCount) {
       return;
     }

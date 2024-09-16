@@ -12,7 +12,8 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   public enum State
   {
     Idle,
-    Usual
+    Usual,
+    Dead,
   }
 
   //============================================================================
@@ -41,6 +42,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
 
     base.StateMachine.Add(State.Idle, EnterIdle);
     base.StateMachine.Add(State.Usual, EnterUsual, UpdateUsual);
+    base.StateMachine.Add(State.Dead, EnterDead, UpdateDead, ExitDead);
     base.StateMachine.SetState(State.Idle);
   }
 
@@ -78,6 +80,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   {
     IsCollidable = true;
     IsVisible = true;
+    Alpha = 1f;
   }
 
   private void UpdateUsual()
@@ -87,14 +90,35 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     }
 
     if (status.IsDead) {
-      base.StateMachine.SetState(State.Idle);
-      Die();
+      base.StateMachine.SetState(State.Dead);
       return;
     }
 
     UpdateTimer();
 
     CachedTransform.position += velocity * TimeSystem.Enemy.DeltaTime;
+  }
+
+  private void EnterDead()
+  {
+    timer = 0.5f; 
+    Alpha = 1f;
+  }
+
+  private void UpdateDead()
+  {
+    if (timer <= 0f) {
+      StateMachine.SetState(State.Idle);
+      return;
+    }
+
+    Alpha = timer;
+    timer -= TimeSystem.Enemy.DeltaTime;
+  }
+
+  private void ExitDead()
+  {
+    Die();
   }
 
   //----------------------------------------------------------------------------

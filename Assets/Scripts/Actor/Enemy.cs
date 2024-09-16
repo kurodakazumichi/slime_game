@@ -69,6 +69,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   private Shadow shadow = null;
 
+  /// <summary>
+  /// State用タイマー
+  /// </summary>
+  protected float timer = 0f;
+
   //============================================================================
   // Properities
   //============================================================================
@@ -166,6 +171,17 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
         Position,
         Collider.radius
       );
+    }
+  }
+
+  /// <summary>
+  /// 透明度
+  /// </summary>
+  public float Alpha {
+    set {
+      var c = spriteRenderer.color;
+      c.a = value;
+      spriteRenderer.color = c;
     }
   }
 

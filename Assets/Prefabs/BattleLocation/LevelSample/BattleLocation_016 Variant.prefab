@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props:
     EnemyId: Enemy016
-    RoleId: Forward
+    RoleId: Random
     WaveCount: 10
-    WaveInterval: 3
+    WaveInterval: 4
     EnemyAmountPerWave: 3
     WaitTime: 1
     EnemyLv: 1
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props:
     EnemyId: Enemy016
-    RoleId: Backword
-    WaveCount: 3
+    RoleId: Circle
+    WaveCount: 2
     WaveInterval: 10
     EnemyAmountPerWave: 10
     WaitTime: 10
