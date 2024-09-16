@@ -155,6 +155,9 @@ public class EnemyStatus
       detail  = DamageDetail.WeaknessDamage;
     }
 
+    // 揺らぎ
+    damage *= Random.Range(0.8f, 1.2f);
+
     hp.Now -= damage;
 
     return new DamageInfo(damage, detail);

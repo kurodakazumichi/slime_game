@@ -1,7 +1,7 @@
 public enum EnemyId 
 {
   Undefined = 0,
-  Enemy000, // リフォン
+  Enemy000, // リーフィ
   Enemy003, // フォルク
   Enemy006, // クミュル
   Enemy011, // ゾイダー

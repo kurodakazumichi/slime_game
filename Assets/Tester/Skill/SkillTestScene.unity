@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetFrameRate: 60
-  StartSkillId: NormalBullet1
+  StartSkillId: FireBullet1
   EnemyObject: {fileID: 659945995}
   PlayerObject: {fileID: 2203082}
   uiIcon: {fileID: 1475928102}

@@ -7,17 +7,17 @@ public static class SkillRepository
     new SkillEntity() {
       Id              = SkillId.NormalBullet1,
       Name            = "通常弾",
-      MaxExp          = 100,
-      FirstRecastTime = 1f,
-      LastRecastTime  = 0.2f,
-      FirstPower      = 1,
-      LastPower       = 10,
+      MaxExp          = 999,
+      FirstRecastTime = 2f,
+      LastRecastTime  = 1f,
+      FirstPower      = 5,
+      LastPower       = 20,
       Attr            = (uint)(Attribute.Non),
       Prefab          = "Bullet/NormalBullet1/Object.prefab",
       GrowthType      = Growth.Fast,
       Impact          = 1f,
       IconNo          = 0,
-      Aiming          = SkillAimingType.Random,
+      Aiming          = SkillAimingType.Nearest,
     },
     
     new SkillEntity() {
