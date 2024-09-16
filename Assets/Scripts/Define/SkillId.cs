@@ -2,6 +2,7 @@ public enum SkillId
 {
   Undefined = 0,
   NormalBullet1, // 通常弾
+  NormalBullet2, // 通常弾+
   PiercingBullet1, // 貫通弾
   FireBullet1, // ファイアバレット
   WaterBullet1, // ウォーターボール

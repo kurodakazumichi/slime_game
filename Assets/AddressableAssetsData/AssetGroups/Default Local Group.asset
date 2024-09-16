@@ -112,6 +112,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c7445163bc538641ab44dd18a650020
+    m_Address: Bullet/NormalBullet2/Object.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6042f4641d5e2e642b0fd6730277555f
     m_Address: Bullet/WaterBullet1/Animator.controller
     m_ReadOnly: 0
@@ -182,6 +187,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92181e87bdc7e7d4187bddb54bd5bc4a
+    m_Address: Bullet/NormalBullet2/Usual.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a6b50ebb89fef048b14da5fa6f2802b
     m_Address: Icon/Bullets.png
     m_ReadOnly: 0
@@ -227,6 +237,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb7d54865c5b19d4c824669286149c60
+    m_Address: Bullet/NormalBullet2/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d1a44f047784be644b05714cc16c2e59
     m_Address: Enemy/027/027.prefab
     m_ReadOnly: 0
@@ -244,6 +259,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eef6a7332a65cd443a7ccff094038796
     m_Address: Bullet/LeafBullet1/LeafBullet1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f76d6f7f1ea3d4344a7bffc17e1281df
+    m_Address: Bullet/NormalBullet2/normalbullet2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

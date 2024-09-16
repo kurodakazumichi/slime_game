@@ -21,6 +21,22 @@ public static class SkillRepository
     },
     
     new SkillEntity() {
+      Id              = SkillId.NormalBullet2,
+      Name            = "通常弾+",
+      MaxExp          = 9999,
+      FirstRecastTime = 2f,
+      LastRecastTime  = 1f,
+      FirstPower      = 20,
+      LastPower       = 50,
+      Attr            = (uint)(Attribute.Non),
+      Prefab          = "Bullet/NormalBullet2/Object.prefab",
+      GrowthType      = Growth.Normal,
+      Impact          = 5f,
+      IconNo          = 0,
+      Aiming          = SkillAimingType.Nearest,
+    },
+    
+    new SkillEntity() {
       Id              = SkillId.PiercingBullet1,
       Name            = "貫通弾",
       MaxExp          = 200,
