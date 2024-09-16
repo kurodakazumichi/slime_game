@@ -32,13 +32,13 @@ public static class SkillRepository
       Prefab          = "Bullet/NormalBullet2/Object.prefab",
       GrowthType      = Growth.Normal,
       Impact          = 5f,
-      IconNo          = 0,
+      IconNo          = 1,
       Aiming          = SkillAimingType.Nearest,
     },
     
     new SkillEntity() {
       Id              = SkillId.PiercingBullet1,
-      Name            = "貫通弾",
+      Name            = "フェザーショット",
       MaxExp          = 200,
       FirstRecastTime = 1f,
       LastRecastTime  = 0.2f,
@@ -64,7 +64,7 @@ public static class SkillRepository
       Prefab          = "Bullet/FireBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
       Impact          = 1f,
-      IconNo          = 2,
+      IconNo          = 3,
       Aiming          = SkillAimingType.Weakest,
     },
     
@@ -80,7 +80,7 @@ public static class SkillRepository
       Prefab          = "Bullet/WaterBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
       Impact          = 1f,
-      IconNo          = 3,
+      IconNo          = 4,
       Aiming          = SkillAimingType.Weakest,
     },
     
@@ -96,7 +96,7 @@ public static class SkillRepository
       Prefab          = "Bullet/ThunderBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
       Impact          = 1f,
-      IconNo          = 4,
+      IconNo          = 5,
       Aiming          = SkillAimingType.Weakest,
     },
     
@@ -112,7 +112,7 @@ public static class SkillRepository
       Prefab          = "Bullet/LeafBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
       Impact          = 10f,
-      IconNo          = 1,
+      IconNo          = 2,
       Aiming          = SkillAimingType.Player,
     },
     
@@ -128,7 +128,7 @@ public static class SkillRepository
       Prefab          = "Bullet/IceBullet1/Object.prefab",
       GrowthType      = Growth.Normal,
       Impact          = 1f,
-      IconNo          = 5,
+      IconNo          = 8,
       Aiming          = SkillAimingType.Weakest,
     },
     

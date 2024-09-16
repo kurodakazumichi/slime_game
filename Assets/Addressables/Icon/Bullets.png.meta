@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -114,9 +114,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 304
-        width: 16
-        height: 16
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: Bullets_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 304
-        width: 16
-        height: 16
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,10 +155,10 @@ TextureImporter:
       name: Bullets_2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 304
-        width: 16
-        height: 16
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,10 +176,10 @@ TextureImporter:
       name: Bullets_3
       rect:
         serializedVersion: 2
-        x: 48
-        y: 304
-        width: 16
-        height: 16
+        x: 96
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +197,10 @@ TextureImporter:
       name: Bullets_4
       rect:
         serializedVersion: 2
-        x: 64
-        y: 304
-        width: 16
-        height: 16
+        x: 128
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,10 +218,10 @@ TextureImporter:
       name: Bullets_5
       rect:
         serializedVersion: 2
-        x: 80
-        y: 304
-        width: 16
-        height: 16
+        x: 160
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,10 +239,10 @@ TextureImporter:
       name: Bullets_6
       rect:
         serializedVersion: 2
-        x: 96
-        y: 304
-        width: 16
-        height: 16
+        x: 192
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,10 +260,10 @@ TextureImporter:
       name: Bullets_7
       rect:
         serializedVersion: 2
-        x: 112
-        y: 304
-        width: 16
-        height: 16
+        x: 224
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,10 +281,10 @@ TextureImporter:
       name: Bullets_8
       rect:
         serializedVersion: 2
-        x: 128
-        y: 304
-        width: 16
-        height: 16
+        x: 256
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,10 +302,10 @@ TextureImporter:
       name: Bullets_9
       rect:
         serializedVersion: 2
-        x: 144
-        y: 304
-        width: 16
-        height: 16
+        x: 288
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -315,6 +315,27 @@ TextureImporter:
       bones: []
       spriteID: 41a77850a379c4345b0bc09a8639352c
       internalID: -263472481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bullets_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2535a6187bd056b418de9a8b496ea91f
+      internalID: 1334179084
       vertices: []
       indices: 
       edges: []
@@ -332,6 +353,7 @@ TextureImporter:
     nameFileIdTable:
       Bullets_0: -748103954
       Bullets_1: 1320038684
+      Bullets_10: 1334179084
       Bullets_2: -683778329
       Bullets_3: -1334095993
       Bullets_4: -1526488925
