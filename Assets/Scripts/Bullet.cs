@@ -26,9 +26,6 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   [SerializeField, Tooltip("追尾性能"), Range(0f, 1f)]
   protected float HomingPerformance = 0f;
 
-  [SerializeField, Tooltip("追尾速度、何秒かけて追尾するか")]
-  protected float HomingSpeed = 1f;
-
   [SerializeField, Tooltip("追尾時間")]
   protected float HomingTime = 0f;
 

@@ -180,8 +180,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  HomingPerformance: 0.1
-  HomingSpeed: 10
+  HomingPerformance: 0.2
   HomingTime: 2
   LifeTime: 5
   SyncDirectionAndRotation: 1
