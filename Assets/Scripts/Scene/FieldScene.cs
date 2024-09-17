@@ -83,6 +83,7 @@ public class FieldScene : MyMonoBehaviour
     EnemyManager.Instance.OnDeadEnemy = (e) => 
     {
       requiredKillCount--;
+      UIManager.Instance.KillCount.CountUp();
       SkillManager.Instance.AddExp(e.SkillId, e.Exp);
     };
 
@@ -165,7 +166,7 @@ public class FieldScene : MyMonoBehaviour
       return;
     }
 
-    
+    UIManager.Instance.KillCount.Reset();
 
 
     // スキルを起動
@@ -248,6 +249,7 @@ public class FieldScene : MyMonoBehaviour
 
   private void ExitResult()
   {
+    UIManager.Instance.KillCount.Reset();
     TimeSystem.MenuPause = false;
   }
 

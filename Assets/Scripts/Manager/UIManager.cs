@@ -11,9 +11,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
   [SerializeField]
   private Toaster toaster;
 
+  [SerializeField]
+  private KillCount killCount;
+
   public HUD HUD { get { return hud; } }
 
   public BattleInfo BattleInfo { get { return battleInfo; } }
 
   public Toaster Toaster { get { return toaster; } }
+
+  public KillCount KillCount { get { return killCount; } }
 }
