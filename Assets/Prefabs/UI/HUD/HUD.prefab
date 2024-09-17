@@ -33,7 +33,7 @@ RectTransform:
   - {fileID: 5714728359729853603}
   - {fileID: 1996709451760701189}
   - {fileID: 1730780337559505931}
-  - {fileID: 8484484098577143864}
+  - {fileID: 7943612783943980826}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8d9dee3cd50ac4db24307e0a85b6fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearGauge: {fileID: 0}
+  clearGauge: {fileID: 5889962555324967745}
   hpGauge: {fileID: 8128701747683707128}
   _PhaseText: {fileID: 2280108888767566498}
   skillSlots: {fileID: 979858327134270782}
@@ -277,7 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4701378277931739846, guid: ef94d9457303b244cbf871a7bac2e1eb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -38
+      value: -583.2
       objectReference: {fileID: 0}
     - target: {fileID: 4701378277931739846, guid: ef94d9457303b244cbf871a7bac2e1eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -425,7 +425,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 797594051337826476, guid: d3cea57b758c9c44c9b85b0de36e6982, type: 3}
   m_PrefabInstance: {fileID: 1375119732252064935}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3783120406383162110
+--- !u!1001 &3387770284678348252
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -499,11 +499,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4701378277931739846, guid: c39d8935690c62446ae330b143bb1427, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -106
+      value: -101
       objectReference: {fileID: 0}
     - target: {fileID: 4701378277931739846, guid: c39d8935690c62446ae330b143bb1427, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.75
+      value: -32
       objectReference: {fileID: 0}
     - target: {fileID: 4701378277931739846, guid: c39d8935690c62446ae330b143bb1427, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -522,8 +522,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c39d8935690c62446ae330b143bb1427, type: 3}
---- !u!224 &8484484098577143864 stripped
+--- !u!114 &5889962555324967745 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9132911518153660061, guid: c39d8935690c62446ae330b143bb1427, type: 3}
+  m_PrefabInstance: {fileID: 3387770284678348252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd41ad52d8ccd3468c0b0796c25bbde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &7943612783943980826 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4701378277931739846, guid: c39d8935690c62446ae330b143bb1427, type: 3}
-  m_PrefabInstance: {fileID: 3783120406383162110}
+  m_PrefabInstance: {fileID: 3387770284678348252}
   m_PrefabAsset: {fileID: 0}
