@@ -4,6 +4,9 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
   [SerializeField]
+  private HpGauge clearGauge;
+
+  [SerializeField]
   private HpGauge hpGauge;
 
   [SerializeField]
@@ -12,6 +15,7 @@ public class HUD : MonoBehaviour
   [SerializeField]
   private SkillSlots skillSlots;
 
+  public HpGauge ClearGauge => clearGauge;
 
   public HpGauge HpGauge { 
     get { return hpGauge; } 

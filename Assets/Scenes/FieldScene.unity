@@ -506,18 +506,6 @@ PrefabInstance:
       value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 5936166397262530551, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5936166397262530551, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5936166397262530551, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5936166397262530551, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -565,6 +553,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7338918063453833537, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
+      propertyPath: clearGauge
+      value: 
+      objectReference: {fileID: 356448667}
+    - target: {fileID: 7391919257233264366, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8301887
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391919257233264366, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
+      propertyPath: m_Color.g
+      value: 0.36418653
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391919257233264366, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
+      propertyPath: m_Color.r
+      value: 0.3947091
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -584,6 +588,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce8d9dee3cd50ac4db24307e0a85b6fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &356448667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5349934770117715043, guid: 907c909c8dcb4624db6dda348857ac43, type: 3}
+  m_PrefabInstance: {fileID: 356448664}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd41ad52d8ccd3468c0b0796c25bbde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &417701249
@@ -1680,7 +1695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3086094989264893719, guid: 4ff070a97e64bc146b825c64eb73a21c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -30
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 3086094989264893719, guid: 4ff070a97e64bc146b825c64eb73a21c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

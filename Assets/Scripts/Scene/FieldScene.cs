@@ -84,12 +84,21 @@ public class FieldScene : MyMonoBehaviour
     {
       requiredKillCount--;
       UIManager.Instance.KillCount.CountUp();
+
+      float count = UIManager.Instance.KillCount.Count;
+      float max = count + requiredKillCount;
+
+      UIManager.Instance.HUD.ClearGauge.Set(count, count / max);
+
       SkillManager.Instance.AddExp(e.SkillId, e.Exp);
     };
 
     PlayerManager.Instance.OnChangePlayerHP = (int hp, float rate) => {
       UIManager.Instance.HUD.HpGauge.Set(hp, rate);
     };
+
+    UIManager.Instance.HUD.ClearGauge.SetActive(false);
+    UIManager.Instance.KillCount.SetActive(false);
   }
 
   private void UpdateSystemSetup()
@@ -159,6 +168,10 @@ public class FieldScene : MyMonoBehaviour
   {
     TimeSystem.Player.Scale = 0.5f;
     UIManager.Instance.Toaster.Bake("戦闘開始!!");
+
+    UIManager.Instance.HUD.ClearGauge.SetActive(true);
+    UIManager.Instance.HUD.ClearGauge.Set(0, 0);
+    UIManager.Instance.KillCount.SetActive(true);
 
     // このフェーズはバトルが予約されている時にしか遷移してこないのでチェックしておく
     if (!FieldManager.Instance.IsBattleReserved) 

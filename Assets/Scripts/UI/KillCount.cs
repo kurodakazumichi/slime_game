@@ -23,6 +23,7 @@ public class KillCount : MyMonoBehaviour
   }
 
   public int Count {
+    get { return count; }
     set {
       uiCountText.text = $"Å~ {value}";
     }
