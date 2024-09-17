@@ -157,6 +157,7 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterBattle()
   {
+    TimeSystem.Player.Scale = 0.5f;
     UIManager.Instance.Toaster.Bake("戦闘開始!!");
 
     // このフェーズはバトルが予約されている時にしか遷移してこないのでチェックしておく

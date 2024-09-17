@@ -7,7 +7,7 @@ public class Player : MyMonoBehaviour, IActor
   // Const
   //============================================================================
 
-  const float SPEED = 5f;
+  const float SPEED = 6f;
 
   //============================================================================
   // Enum
