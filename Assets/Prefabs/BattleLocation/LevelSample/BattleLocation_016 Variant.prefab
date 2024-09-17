@@ -46,11 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   props:
     EnemyId: Enemy016
-    RoleId: Random
+    RoleId: Circle
     WaveCount: 25
-    WaveInterval: 1
-    EnemyAmountPerWave: 5
-    WaitTime: 1
+    WaveInterval: 5
+    EnemyAmountPerWave: 3
+    WaitTime: 0
+    OriginAngle: -1
     EnemyLv: 1
 --- !u!1 &8366270818594246810
 GameObject:
@@ -99,10 +100,11 @@ MonoBehaviour:
   props:
     EnemyId: Enemy016
     RoleId: Circle
-    WaveCount: 3
-    WaveInterval: 1
-    EnemyAmountPerWave: 10
-    WaitTime: 10
+    WaveCount: 25
+    WaveInterval: 5
+    EnemyAmountPerWave: 3
+    WaitTime: 2.5
+    OriginAngle: 60
     EnemyLv: 1
 --- !u!1 &8740607854619262185
 GameObject:
@@ -146,12 +148,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1233194861112042554, guid: 55a61b058b8b5074f97756eba4766321, type: 3}
+      propertyPath: lv
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233194861112042554, guid: 55a61b058b8b5074f97756eba4766321, type: 3}
       propertyPath: RequiredKillCount
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1233194861112042554, guid: 55a61b058b8b5074f97756eba4766321, type: 3}
       propertyPath: requiredKillCount
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1487356263075315522, guid: 55a61b058b8b5074f97756eba4766321, type: 3}
       propertyPath: m_Text

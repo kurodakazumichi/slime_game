@@ -297,6 +297,7 @@ public class EnemyWave
     for (int i = 0; i < max; ++i) {
 
       var radian  = MyMath.Rate2Rad((float)i /  max);
+      radian += MyMath.Deg2Rad(90f + waveParam.OriginAngle);
 
       var x = MakeEnemyDistance * Mathf.Cos(radian);
       var z = MakeEnemyDistance * Mathf.Sin(radian);
@@ -358,7 +359,7 @@ public class EnemyWave
 
     for (int i = 0; i < max; ++i) 
     {
-      var offset = Vector3.forward * Random.Range(MakeEnemyDistance-5f, MakeEnemyDistance);
+      var offset = Vector3.forward * Random.Range(MakeEnemyDistance-2f, MakeEnemyDistance);
       offset = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up) * offset;
 
 

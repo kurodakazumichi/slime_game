@@ -41,6 +41,12 @@ public class EnemyWaveProperty
   /// </summary>
   public float WaitTime = 0f;
 
+  /// <summary>
+  /// 基準角度
+  /// </summary>
+  [Range(-360f, 360f)]
+  public float OriginAngle = 0f;
+
   //============================================================================
   // Variables
   //============================================================================
@@ -95,7 +101,7 @@ public class EnemyWaveProperty
     prop.WaveInterval       = this.WaveInterval;
     prop.EnemyAmountPerWave = this.EnemyAmountPerWave;
     prop.WaitTime           = this.WaitTime;
-    
+    prop.OriginAngle        = this.OriginAngle;
 
     return prop;
   }
@@ -130,7 +136,7 @@ public class EnemyWavePropertyDrawer : PropertyDrawer
   private SerializedProperty waveInterval;
   private SerializedProperty enemyAmountPerWave;
   private SerializedProperty waitTime;
-  
+  private SerializedProperty originAngle;
 
   private void Initialize(Rect position, SerializedProperty property, GUIContent label)
   {
@@ -140,6 +146,7 @@ public class EnemyWavePropertyDrawer : PropertyDrawer
     waveInterval       = property.FindPropertyRelative("WaveInterval");
     enemyAmountPerWave = property.FindPropertyRelative("EnemyAmountPerWave");
     waitTime           = property.FindPropertyRelative("WaitTime");
+    originAngle        = property.FindPropertyRelative("OriginAngle");
 
     for (int i = 0; i < enemyWaveRoleOptions.Length; i++) {
       if (roleId.stringValue == enemyWaveRoleOptions[i]) {
@@ -175,7 +182,8 @@ public class EnemyWavePropertyDrawer : PropertyDrawer
       EditorGUI.PropertyField(rect(p, 4), waveCount);
       EditorGUI.PropertyField(rect(p, 5), waveInterval);
       EditorGUI.PropertyField(rect(p, 6), enemyAmountPerWave);
-
+      EditorGUI.PropertyField(rect(p, 7), originAngle);
+      
       displayedPropertyCount = 8;
     }
 
