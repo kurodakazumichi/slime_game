@@ -10,6 +10,7 @@ public class Shadow : MyMonoBehaviour
   {
     this.owner = owner;
     CachedTransform.localScale = Vector3.one * size;
+    SyncPosition();
   }
 
   private void Update()
@@ -18,6 +19,11 @@ public class Shadow : MyMonoBehaviour
       return;
     }
 
+    SyncPosition();
+  }
+
+  private void SyncPosition()
+  {
     var p = owner.Position;
     p.y = 0;
     CachedTransform.position = p;

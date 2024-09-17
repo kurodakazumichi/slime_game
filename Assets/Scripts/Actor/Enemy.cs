@@ -227,11 +227,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
     Logger.Log($"[Enemy] Called Init({id.ToString()})");
     status.Init(id, lv);
     AttackInfo = status.MakeAttackInfo();
-
-    if (ShadowManager.Instance != null) {
-      shadow = ShadowManager.Instance.Get();
-      shadow.SetOwner(this, Collider.radius*2f);
-    }
   }
 
   /// <summary>
@@ -290,6 +285,34 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   //----------------------------------------------------------------------------
 
   /// <summary>
+  /// 影を落とす
+  /// </summary>
+  protected void CastShadow()
+  {
+    if (ShadowManager.Instance == null) {
+      return;
+    }
+
+    ReleaseShadow();
+
+    shadow = ShadowManager.Instance.Get();
+    shadow.SetOwner(this, Collider.radius * 2f);
+  }
+
+  /// <summary>
+  /// 影を解放する
+  /// </summary>
+  protected void ReleaseShadow()
+  {
+    if (ShadowManager.Instance == null) {
+      return;
+    }
+
+    ShadowManager.Instance.Release(shadow);
+    shadow = null;
+  }
+
+  /// <summary>
   /// 解放
   /// </summary>
   protected void Release()
@@ -301,10 +324,7 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
       EnemyManager.Instance.Release(this);
     }
 
-    if (ShadowManager.Instance != null) {
-      ShadowManager.Instance.Release(shadow);
-      shadow = null;
-    }
+    ReleaseShadow();
   }
 
   /// <summary>

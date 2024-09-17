@@ -29,6 +29,8 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
   //----------------------------------------------------------------------------
   public override void Run()
   {
+    CastShadow();
+
     base.StateMachine.SetState(State.Usual);
     velocity = (PlayerManager.Instance.Position - Position).normalized * status.Speed;
   }

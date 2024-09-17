@@ -31,6 +31,10 @@ public class ShadowManager : SingletonMonoBehaviour<ShadowManager>
 
   public void Release(Shadow shadow)
   {
+    if(shadow == null) {
+      return;
+    }
+
     pool.Release(shadow);
   }
 }
