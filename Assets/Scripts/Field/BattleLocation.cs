@@ -6,6 +6,22 @@ using UnityEngine;
 public class BattleLocation : MyMonoBehaviour
 {
   //============================================================================
+  // Inspector Variables
+  //============================================================================
+
+  /// <summary>
+  /// レベル
+  /// </summary>
+  [SerializeField]
+  private int lv = 1;
+
+  /// <summary>
+  /// クリアに必要な撃破数
+  /// </summary>
+  [SerializeField]
+  private int requiredKillCount = 0;
+
+  //============================================================================
   // Enum
   //============================================================================
   private enum State 
@@ -18,9 +34,6 @@ public class BattleLocation : MyMonoBehaviour
   //============================================================================
   // Variables
   //============================================================================
-
-  [SerializeField]
-  private int lv = 1;
 
   /// <summary>
   /// ステートマシン
@@ -76,11 +89,29 @@ public class BattleLocation : MyMonoBehaviour
   }
 
   /// <summary>
+  /// 出現する敵の総数
+  /// </summary>
+  public int TotalEnemyCount {
+    get {
+      int total = 0;
+      ForeachWaveData((config) => {
+        total += config.props.TotalEnemyCount;
+      });
+      return total;
+    }
+  }
+
+  /// <summary>
   /// 戦地の名称
   /// </summary>
   public string LocationName {
     get { return GetComponentInChildren<TextMesh>().text; }
   }
+
+  /// <summary>
+  /// 戦闘クリアに必要な撃破数
+  /// </summary>
+  public int RequiredKillCount => requiredKillCount;
 
   //============================================================================
   // Methods
@@ -161,6 +192,7 @@ public class BattleLocation : MyMonoBehaviour
 
     FieldManager.Instance.ReserveBattleLocation(this);
     UIManager.Instance.BattleInfo.Show(LocationName, lv, AppearingEnemyIds);
+    UIManager.Instance.BattleInfo.TargetCount = RequiredKillCount;
   }
 
   private void UpdateContact()
@@ -263,6 +295,10 @@ public class BattleLocation : MyMonoBehaviour
   {
     Logger.Log($"[BattleLocation.Validate] {LocationName}");
 
+    if (TotalEnemyCount < RequiredKillCount) {
+      ErrorLog($"出現する敵の総数がクリアに必要な撃破数未満になっています。敵総数={TotalEnemyCount} 必要撃破数={RequiredKillCount}");
+    }
+
     ForeachWaveData((config) => 
     {
       if (!MyEnum.TryParse<EnemyId>(config.props.EnemyId, out var id)) {
@@ -271,12 +307,16 @@ public class BattleLocation : MyMonoBehaviour
     });
   }
 
-  [Conditional("_DEBUG")]
   private void ErrorLog(EnemyWaveConfig config, string msg)
   {
     var parentName = config.CachedTransform.parent.name;
     var name       = config.CachedTransform.name;
     Logger.Error($"[BattleLocation] {LocationName}.{parentName}.{name} {msg}");
+  }
+
+  private void ErrorLog(string msg)
+  {
+    Logger.Error($"[BattleLocation] {LocationName} {msg}");
   }
 
 #if _DEBUG

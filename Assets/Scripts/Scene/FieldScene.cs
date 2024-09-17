@@ -17,7 +17,9 @@ public class FieldScene : MyMonoBehaviour
 
   private StateMachine<State> state;
 
-  AsyncOperation loadScene;
+  private AsyncOperation loadScene;
+
+  private int requiredKillCount = 0;
 
   //============================================================================
   // Methods
@@ -77,6 +79,12 @@ public class FieldScene : MyMonoBehaviour
 
     SkillManager.Instance.OnGetNewSkill  = OnGetNewSkill;
     SkillManager.Instance.OnLevelUpSkill = OnLevelUpSkill;
+
+    EnemyManager.Instance.OnDeadEnemy = (e) => 
+    {
+      requiredKillCount--;
+      SkillManager.Instance.AddExp(e.SkillId, e.Exp);
+    };
 
     PlayerManager.Instance.OnChangePlayerHP = (int hp, float rate) => {
       UIManager.Instance.HUD.HpGauge.Set(hp, rate);
@@ -157,6 +165,8 @@ public class FieldScene : MyMonoBehaviour
       return;
     }
 
+    
+
 
     // スキルを起動
     RunSkill();
@@ -167,6 +177,7 @@ public class FieldScene : MyMonoBehaviour
     var wm = WaveManager.Instance;
 
     wm.SetEnemyWavePropertySet(fm.MakeCurrentEnemyWavePropertySet());
+    requiredKillCount = fm.RequiredKillCountCandidate;
     fm.ActivateBattleCircle();
     fm.CancelBattleLocation();          // もうWaveの情報は生成したので予約は解除
     fm.SetActiveBattleLocations(false); // BattleLocationは非表示
@@ -182,8 +193,8 @@ public class FieldScene : MyMonoBehaviour
       return;
     }
 
-    // WaveManagerがIdleになったらリザルトへ
-    if (WaveManager.Instance.IsIdle) {
+    // 目標撃破数に到達したらリザルトへ
+    if (requiredKillCount <= 0) {
       UIManager.Instance.Toaster.Bake("勝利!!");
       state.SetState(State.BattleEnded);
       return;

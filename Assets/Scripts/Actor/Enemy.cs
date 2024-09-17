@@ -1,4 +1,5 @@
-﻿using UnityEditor.Rendering;
+﻿using System;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 /// <summary>
@@ -79,6 +80,39 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   //============================================================================
 
   /// <summary>
+  /// 識別子
+  /// </summary>
+  public EnemyId Id {
+    get { return status.Id; }
+  }
+
+  /// <summary>
+  /// 敵の持つスキルID
+  /// </summary>
+  public SkillId SkillId {
+    get { return status.SkillId; }
+  }
+
+  /// <summary>
+  /// 敵の持つ経験値
+  /// </summary>
+  public int Exp {
+    get { return status.Exp; }
+  }
+
+  /// <summary>
+  /// 速度
+  /// </summary>
+  public Vector3 Velocity {
+    get { return velocity; }
+  }
+
+  /// <summary>
+  /// 死亡時のコールバック
+  /// </summary>
+  public Action<IEnemy> OnDead { protected get; set; } = null;
+
+  /// <summary>
   /// ステートマシン
   /// </summary>
   protected StateMachine<T> StateMachine { get; private set; } = new();
@@ -92,20 +126,6 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// 攻撃ステータス
   /// </summary>
   protected AttackInfo AttackInfo { get; private set; }
-
-  /// <summary>
-  /// 識別子
-  /// </summary>
-  public EnemyId Id {
-    get { return status.Id; } 
-  }
-
-  /// <summary>
-  /// 速度
-  /// </summary>
-  public Vector3 Velocity 
-    { get { return velocity; } 
-  }
 
   /// <summary>
   /// 敵に設定されているコライダー
@@ -292,7 +312,11 @@ public abstract class Enemy<T> : MyMonoBehaviour, IEnemy
   /// </summary>
   protected void Die()
   {
-    SkillManager.Instance.AddExp(status.SkillId, status.Exp);
+    // 強制終了でなければ死亡時コールバックを実行
+    if (!IsTerminationRequested) {
+      OnDead?.Invoke(this);
+    }
+    
     Release();
   }
 

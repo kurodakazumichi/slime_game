@@ -37,6 +37,15 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   }
 
   /// <summary>
+  /// 予約されている戦場に設定されている要求撃破数
+  /// </summary>
+  public int RequiredKillCountCandidate {
+    get {
+      return (IsBattleReserved)? battleLocationCandidate.RequiredKillCount : 0;
+    }
+  }
+
+  /// <summary>
   /// バトルサークルが広がっている？
   /// </summary>
   public bool HasBattleCircle {

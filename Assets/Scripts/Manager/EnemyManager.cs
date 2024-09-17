@@ -14,9 +14,24 @@ public interface IEnemy : IActor
   EnemyId Id { get; }
 
   /// <summary>
+  /// 敵の持つスキルID
+  /// </summary>
+  SkillId SkillId { get; }
+
+  /// <summary>
+  /// 敵の持つ経験値
+  /// </summary>
+  int Exp { get; }
+
+  /// <summary>
   /// 速度
   /// </summary>
   Vector3 Velocity { get; }
+
+  /// <summary>
+  /// 死亡時コールバック
+  /// </summary>
+  Action<IEnemy> OnDead { set; }
 
   /// <summary>
   /// 初期化
@@ -61,6 +76,15 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   LinkedList<IEnemy> enemies = new LinkedList<IEnemy>();
 
   //============================================================================
+  // Properties
+  //============================================================================
+
+  /// <summary>
+  /// 敵死亡時のコールバック、敵を取得した際にこの変数に設定されているActionを敵にセットする。
+  /// </summary>
+  public Action<IEnemy> OnDeadEnemy { private get; set; }
+
+  //============================================================================
   // Methods
   //============================================================================
 
@@ -93,6 +117,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     var e = enemyPool.Get().GetComponent<IEnemy>();
     e.Init(enemyId, lv);
+    e.OnDead = OnDeadEnemy;
     enemies.AddLast(e);
     
     return e;
@@ -108,6 +133,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
       return;
     }
 
+    enemy.OnDead = null;
     enemyPool.Release(enemy.gameObject);
     enemies.Remove(enemy);
   }
@@ -247,7 +273,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     v3 /= list.Count;
     v3 = v3 - main.Position;
 
-    var v = (v1*0.3f)+(v2*0.5f)+(v3*0.2f);
+    var v = (v1*0.7f)+(v2*0.1f)+(v3*0.2f);
 
     return v.normalized;
   }

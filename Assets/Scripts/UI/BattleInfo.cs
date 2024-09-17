@@ -15,6 +15,9 @@ public class BattleInfo : MyMonoBehaviour
   private Text lvText;
 
   [SerializeField]
+  private Text GoalText;
+
+  [SerializeField]
   private RectTransform EnemyIconFolder;
 
   [SerializeField]
@@ -32,6 +35,10 @@ public class BattleInfo : MyMonoBehaviour
     set { lvText.text = $"Lv {value}"; }
   }
 
+  public int TargetCount {
+    set { GoalText.text = $"ñ⁄ïWÅFìGÇ {value} ïCì|Ç∑"; }
+  }
+
   public bool IsVisible {
     set { SetActive(value); }
   }
@@ -40,7 +47,7 @@ public class BattleInfo : MyMonoBehaviour
   {
     IsVisible = true;
     nameText.text = name;
-    lvText.text = $"Lv {lv}";
+    Lv = lv;
 
     var x = -55 * (ids.Count - 1);
 
