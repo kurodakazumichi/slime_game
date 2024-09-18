@@ -13,6 +13,9 @@ public class SkillSlot : MyMonoBehaviour
   [SerializeField]
   private Image uiIcon;
 
+  [SerializeField]
+  private Text uiLvText;
+
   //============================================================================
   // Enum
   //============================================================================
@@ -55,6 +58,7 @@ public class SkillSlot : MyMonoBehaviour
       return;
     }
 
+    uiLvText.text = skill.Lv.ToString();
     uiIcon.sprite = IconManager.Instance.Skill(skill.Id);
   }
 
@@ -112,6 +116,7 @@ public class SkillSlot : MyMonoBehaviour
     timer      = skill.RecastTime;
     recastTime = skill.RecastTime;
     uiOverlayImage.fillAmount = 1f;
+    uiLvText.text = skill.Lv.ToString();
   }
 
   private void UpdateCharge()
