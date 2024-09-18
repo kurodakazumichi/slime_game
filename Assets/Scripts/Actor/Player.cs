@@ -61,7 +61,7 @@ public class Player : MyMonoBehaviour, IActor
     }
 
     hp.Now -= info.Power;
-
+    
     SyncHpToHudHpGauge();
 
     if (hp.IsEmpty) {
@@ -238,6 +238,7 @@ public class Player : MyMonoBehaviour, IActor
 
   private void SyncHpToHudHpGauge()
   {
+    spriteRenderer.color = Color.Lerp(Color.white, Color.red, 1f-hp.Rate);
     OnChangeHP?.Invoke((int)hp.Now, hp.Rate);
   }
 }
