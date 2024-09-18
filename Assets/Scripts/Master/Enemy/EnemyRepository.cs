@@ -124,6 +124,23 @@ public static class EnemyRepository
     },
     
     new EnemyEntity() {
+      Id           = EnemyId.Enemy017,
+      No           = 17,
+      Name         = "チューピィ",
+      HP           = 100,
+      Power        = 10,
+      Speed        = 1f,
+      Mass         = 3f,
+      AttackAttr   = (uint)(Attribute.Non),
+      WeakAttr     = (uint)(Attribute.Nil),
+      ResistAttr   = (uint)(Attribute.Nil),
+      NullfiedAttr = (uint)(Attribute.Nil),
+      SkillId      = SkillId.NormalBullet2,
+      Exp          = 10,
+      PrefabPath   = "Enemy/017/017.prefab",
+    },
+    
+    new EnemyEntity() {
       Id           = EnemyId.Enemy020,
       No           = 20,
       Name         = "フラウ",

@@ -55,7 +55,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1233194861112042554
 MonoBehaviour:
@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lv: 1
+  requiredKillCount: 0
 --- !u!1 &3266013827849469007
 GameObject:
   m_ObjectHideFlags: 0
