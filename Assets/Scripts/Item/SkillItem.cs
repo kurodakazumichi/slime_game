@@ -47,7 +47,6 @@ public class SkillItem : MyMonoBehaviour, ISkillItem
       SkillManager.Instance.AddExp(Id, Exp);
       var text = HitTextManager.Instance.Get();
       text.ShowExp(Position, Exp);
-      Reset();
       ItemManager.Instance.ReleaseSkillItem(this);
     }
   }

@@ -207,6 +207,7 @@ public class FieldScene : MyMonoBehaviour
     // プレイヤーが死亡したか敵が全滅したらリザルトへ
     if (PlayerManager.Instance.PlayerIsDead) {
       UIManager.Instance.Toaster.Bake("敗北!!");
+      ItemManager.Instance.Clear();
       state.SetState(State.BattleEnded);
       return;
     }
@@ -230,7 +231,6 @@ public class FieldScene : MyMonoBehaviour
     BulletManager.Instance.Terminate();
     WaveManager.Instance.Terminate();
     FieldManager.Instance.InactivateBattleCircle();
-    ItemManager.Instance.Clear();
 
     UIManager.Instance.Toaster.Bake("戦闘終了!!");
   }
