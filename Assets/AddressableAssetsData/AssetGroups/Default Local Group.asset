@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f3e80e085d4b5384487623b1e30ede70
   m_SerializeEntries:
+  - m_GUID: 058bfa9b86b44b043a5bee99a8beb71a
+    m_Address: Item/SkillItem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 05c46a218dad915418817679998fb74a
     m_Address: Enemy/024/024.prefab
     m_ReadOnly: 0

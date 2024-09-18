@@ -90,7 +90,9 @@ public class FieldScene : MyMonoBehaviour
 
       UIManager.Instance.HUD.ClearGauge.Set(count, count / max);
 
-      SkillManager.Instance.AddExp(e.SkillId, e.Exp);
+      var item = ItemManager.Instance.GetSkillItem();
+      item.Position = e.Position;
+      item.Init(e.SkillId, e.Exp);
     };
 
     PlayerManager.Instance.OnChangePlayerHP = (int hp, float rate) => {
@@ -119,6 +121,7 @@ public class FieldScene : MyMonoBehaviour
     BulletManager.Instance.Load();
     IconManager.Instance.Load();
     ShadowManager.Instance.Load();
+    ItemManager.Instance.Load();
   }
 
   private void UpdateResourceLoading()
@@ -227,6 +230,7 @@ public class FieldScene : MyMonoBehaviour
     BulletManager.Instance.Terminate();
     WaveManager.Instance.Terminate();
     FieldManager.Instance.InactivateBattleCircle();
+    ItemManager.Instance.Clear();
 
     UIManager.Instance.Toaster.Bake("戦闘終了!!");
   }

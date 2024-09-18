@@ -34,7 +34,7 @@ public class ShadowManager : SingletonMonoBehaviour<ShadowManager>
     if(shadow == null) {
       return;
     }
-
+    shadow.SetOwner(null, 0f);
     pool.Release(shadow);
   }
 }

@@ -24,6 +24,10 @@ public class Shadow : MyMonoBehaviour
 
   private void SyncPosition()
   {
+    if (owner is null) {
+      return;
+    }
+
     var p = owner.Position;
     p.y = 0;
     CachedTransform.position = p;

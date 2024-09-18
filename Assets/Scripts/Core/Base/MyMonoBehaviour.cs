@@ -22,7 +22,10 @@ public class MyMonoBehaviour : MonoBehaviour
   /// <summary>
   /// 座標
   /// </summary>
-  public Vector3 Position => CachedTransform.position;
+  public Vector3 Position {
+    get { return CachedTransform.position; }
+    set { CachedTransform.position = value; }
+  }
 
   //============================================================================
   // Properities

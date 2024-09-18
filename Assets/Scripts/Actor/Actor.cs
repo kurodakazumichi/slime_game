@@ -1,12 +1,7 @@
 ﻿using UnityEngine;
 
-public interface IActor
+public interface IMono
 {
-  /// <summary>
-  /// ダメージを受ける
-  /// </summary>
-  DamageInfo TakeDamage(AttackInfo info);
-
   /// <summary>
   /// GameObjectを持つ
   /// </summary>
@@ -20,5 +15,19 @@ public interface IActor
   /// <summary>
   /// 座標
   /// </summary>
-  Vector3 Position { get; }
+  Vector3 Position { get; set; }
+
+  /// <summary>
+  /// 有効化
+  /// </summary>
+  void SetActive(bool isActive);
+}
+
+
+public interface IActor : IMono
+{
+  /// <summary>
+  /// ダメージを受ける
+  /// </summary>
+  DamageInfo TakeDamage(AttackInfo info);
 }

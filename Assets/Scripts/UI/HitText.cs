@@ -31,6 +31,17 @@ public class HitText : MonoBehaviour
   {
     _text.text = value.ToString();
     _text.transform.position = position;
+    _text.color = new Color(1f, 0.38f, 0);
+    _outline.effectColor = new Color(0.73f, 0, 0, 0.5f);
+    _state.SetState(State.Display);
+  }
+
+  public void ShowExp(Vector3 position, int exp)
+  {
+    _text.text = $"+{exp.ToString()}";
+    _text.transform.position = position;
+    _text.color = new Color(0.56f, 0.96f, 1f);
+    _outline.effectColor = new Color(0.17f, 0.26f, 1f, 0.5f);
     _state.SetState(State.Display);
   }
 
