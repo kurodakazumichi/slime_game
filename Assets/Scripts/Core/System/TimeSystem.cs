@@ -31,6 +31,7 @@ static public class TimeSystem
       Wave.Pause(value);
       Skill.Pause(value);
       Bullet.Pause(value);
+      Item.Pause(value);
     }
   }
 
@@ -68,6 +69,11 @@ static public class TimeSystem
   /// スキル発動の制御用
   /// </summary>
   static public MyDeltaTime Skill { get; private set; } = new();
+
+  /// <summary>
+  /// アイテム制御用
+  /// </summary>
+  static public MyDeltaTime Item { get; private set; } = new();
 
 #if _DEBUG
   //----------------------------------------------------------------------------

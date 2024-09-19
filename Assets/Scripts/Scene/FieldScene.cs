@@ -91,8 +91,7 @@ public class FieldScene : MyMonoBehaviour
       UIManager.Instance.HUD.ClearGauge.Set(count, count / max);
 
       var item = ItemManager.Instance.GetSkillItem();
-      item.Position = e.Position;
-      item.Init(e.SkillId, e.Exp);
+      item.Setup(e.SkillId, e.Exp, e.Position);
     };
 
     PlayerManager.Instance.OnChangePlayerHP = (int hp, float rate) => {
@@ -215,6 +214,8 @@ public class FieldScene : MyMonoBehaviour
     // 目標撃破数に到達したらリザルトへ
     if (requiredKillCount <= 0) {
       UIManager.Instance.Toaster.Bake("勝利!!");
+      ItemManager.Instance.Collect(PlayerManager.Instance.Position);
+
       state.SetState(State.BattleEnded);
       return;
     }
@@ -246,6 +247,10 @@ public class FieldScene : MyMonoBehaviour
     }
 
     if (!WaveManager.Instance.IsIdle) {
+      return;
+    }
+
+    if (0 < ItemManager.Instance.SkillItemCount) {
       return;
     }
 

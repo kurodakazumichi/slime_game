@@ -1,13 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public interface ISkillItem: IMono
 {
-  void Init(SkillId id, int exp);
-  SkillId Id { get; }
-  int Exp { get; }
+  void Setup(SkillId id, int exp, Vector3 position);
   void Reset();
+  void Move(Vector3 position, float time);
 }
 
 public class ItemManager : SingletonMonoBehaviour<ItemManager>
@@ -19,6 +18,8 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
 
   private LinkedList<ISkillItem> skillItems = new();
   private IObjectPool<ISkillItem> skillItemPool;
+
+  public int SkillItemCount => skillItems.Count;
 
   protected override void MyAwake()
   {
@@ -39,7 +40,6 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
 
   public void ReleaseSkillItem(ISkillItem item)
   {
-    item.Reset();
     skillItems.Remove(item);
     skillItemPool.Release(item);
   }
@@ -52,6 +52,14 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     }
     skillItems.Clear();
     skillItemPool.Clear();
+  }
+
+  public void Collect(Vector3 position)
+  {
+    foreach (var item in skillItems) {
+      var time = (position - item.Position).magnitude * 0.1f;
+      item.Move(position, time);
+    }
   }
 
   private ISkillItem MakeSkillItem()
