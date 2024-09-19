@@ -2,12 +2,12 @@
 
 public static class MyVector3
 {
-  public static Vector3 Random(Vector3 area)
+  public static Vector3 Random(float x, float y, float z)
   {
     return new Vector3(
-      UnityEngine.Random.Range(-area.x, area.x),
-      UnityEngine.Random.Range(-area.y, area.y),
-      UnityEngine.Random.Range(-area.z, area.z)
+      UnityEngine.Random.Range(-x, x),
+      UnityEngine.Random.Range(-y, y),
+      UnityEngine.Random.Range(-z, z)
     );
   }
 

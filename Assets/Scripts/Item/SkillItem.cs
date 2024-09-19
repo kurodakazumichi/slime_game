@@ -152,6 +152,10 @@ public class SkillItem : MyMonoBehaviour, ISkillItem
       return;
     }
 
+    if (PlayerManager.Instance is null) {
+      return;
+    }
+
     var a = PlayerManager.Instance.Position;
     var b = collider.transform.position;
     var r = PlayerManager.Instance.Collider.radius + collider.radius;
@@ -200,6 +204,12 @@ public class SkillItem : MyMonoBehaviour, ISkillItem
 
   private void UpdateMove()
   {
+    if (time <= 0) {
+      Position = target;
+      stateMachine.SetState(State.Usual);
+      return;
+    }
+
     var rate = timer / time;
     Position = Vector3.Lerp(origin, target, Mathf.Pow(rate, 2f));
     timer += TimeSystem.Item.DeltaTime;

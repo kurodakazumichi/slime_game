@@ -99,7 +99,7 @@ public class ResourceManager : SingletonMonoBehaviour<ResourceManager>
   public T GetCache<T>(string address) where T : UnityEngine.Object
   {
     if (!this.cache.ContainsKey(address)) {
-      Logger.Log($"[ResourceManager.GetCache]: {address} is not found.");
+      Logger.Error($"[ResourceManager.GetCache]: {address} is not found.");
       return null;
     }
     else {
