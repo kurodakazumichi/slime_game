@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// 敵のインターフェース
@@ -166,7 +167,15 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
   /// <summary>
   /// 指定した座標のもっとも近くにいる敵を探す
   /// </summary>
-  public IEnemy FindNearestEnemy(Vector3 position)
+  public IEnemy FindNearest(Vector3 position)
+  {
+    return FindNearest(position, this.enemies);
+  }
+
+  /// <summary>
+  /// 指定した座標のもっとも近くにいる敵を探す
+  /// </summary>
+  private IEnemy FindNearest(Vector3 position, LinkedList<IEnemy> enemies)
   {
     // 敵がいなければ当然ながらnullを返す
     if (enemies.Count == 0) {
@@ -194,7 +203,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     return nearestEnemy;
   }
 
-  public IEnemy FindRandomEnemy()
+  public IEnemy FindRandom()
   {
     // 敵がいなければ当然ながらnullを返す
     if (enemies.Count == 0) {
@@ -215,17 +224,31 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     return null;
   }
 
-  public IEnemy FindWeaknessEnemy(uint attr)
+  /// <summary>
+  /// {attr}が弱点になる一番近い敵を探す。
+  /// 指定した属性を弱点に持つ敵がいない場合は、単純に一番近い敵を探します。
+  /// </summary>
+  public IEnemy FindWeakness(Vector3 position, uint attr)
   {
+    var list = new LinkedList<IEnemy>();
+
+    // {attr}が弱点になる敵を収集する
     foreach (var enemy in enemies) 
     {
       if (enemy.IsWeakness(attr)) {
-        return enemy;
+        list.AddLast(enemy);
       }
     }
 
-    // 見つからなかったらランダムにFallback
-    return FindRandomEnemy();
+    // 弱点属性をもつ敵がいなければ、全体から一番近いやつ
+    if (list.Count == 0) {
+      return FindNearest(position);
+    } 
+    
+    // 弱点属性をもつ敵の中で一番近いやつ
+    else {
+      return FindNearest(position, list);
+    }
   }
 
   /// <summary>

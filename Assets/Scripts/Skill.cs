@@ -26,9 +26,9 @@ public class Skill : ISkill
   //============================================================================
 
   /// <summary>
-  /// Skillの基本情報
+  /// Skillの設定情報
   /// </summary>
-  protected ISkillEntityRO entity;
+  protected ISkillEntityRO config;
 
   /// <summary>
   /// スキルLv(経験値をセットしたタイミングで設定される)
@@ -52,27 +52,27 @@ public class Skill : ISkill
   /// <summary>
   /// スキルID
   /// </summary>
-  public SkillId Id => entity.Id;
+  public SkillId Id => config.Id;
 
   /// <summary>
   /// 名称
   /// </summary>
-  public string Name => entity.Name;
+  public string Name => config.Name;
 
   /// <summary>
   /// 属性
   /// </summary>
-  public uint Attributes => entity.Attr;
+  public uint Attributes => config.Attr;
 
   /// <summary>
   /// 衝撃力[N]
   /// </summary>
-  public float Impact => entity.Impact;
+  public float Impact => config.Impact;
 
   /// <summary>
   /// 狙い
   /// </summary>
-  public SkillAimingType Aiming => entity.Aiming;
+  public SkillAimingType Aiming => config.Aiming;
 
   //============================================================================
   // Methods
@@ -87,7 +87,7 @@ public class Skill : ISkill
   /// </summary>
   public void Init(ISkillEntityRO entity, int exp)
   {
-    this.entity = entity;
+    this.config = entity;
     SetExp(exp);
   }
 
@@ -96,25 +96,27 @@ public class Skill : ISkill
   /// </summary>
   public void Fire()
   {
-    var bullet = BulletManager.Instance.Get(Id);
-
-    var pm    = PlayerManager.Instance;
+    var bullet   = BulletManager.Instance.Get(Id);
+    var position = PlayerManager.Instance.Position;
 
     IActor target = null;
     Vector3 direction = MyVector3.Random(Vector3.forward, Vector3.up);
 
+    // スキルに設定されているAimingType毎にtargetを設定
     switch (Aiming) {
-      case SkillAimingType.Nearest: target = EnemyManager.Instance.FindNearestEnemy(pm.Position); break;
-      case SkillAimingType.Weakest: target = EnemyManager.Instance.FindWeaknessEnemy(entity.Attr); break;
-      case SkillAimingType.Random : target = EnemyManager.Instance.FindRandomEnemy(); break;
-      case SkillAimingType.Player: target = PlayerManager.Instance.Player; break;
-      default: break;
+      case SkillAimingType.Nearest: 
+        target = EnemyManager.Instance.FindNearest(position); break;
+      case SkillAimingType.Weakest: 
+        target = EnemyManager.Instance.FindWeakness(position, config.Attr); break;
+      case SkillAimingType.Player: 
+        target = PlayerManager.Instance.Player; break;
+      default:
+        target = EnemyManager.Instance.FindRandom(); break;
     }
 
-    var enemy = EnemyManager.Instance.FindNearestEnemy(pm.Position);
-
+    // 発射!!
     bullet.Fire(new BulletFireInfo() {
-      Position  = pm.Position,
+      Position  = position,
       Direction = direction,
       Skill     = this,
       Target    = target,
@@ -173,7 +175,7 @@ public class Skill : ISkill
   /// </summary>
   private float CalcRecastTimeBy(int lv)
   {
-    return LerpParam(entity.FirstRecastTime, entity.LastRecastTime, lv);
+    return LerpParam(config.FirstRecastTime, config.LastRecastTime, lv);
   }
 
   /// <summary>
@@ -181,7 +183,7 @@ public class Skill : ISkill
   /// </summary>
   private int CalcPowerBy(int lv)
   {
-    return (int)LerpParam(entity.FirstPower, entity.LastPower, lv);
+    return (int)LerpParam(config.FirstPower, config.LastPower, lv);
   }
 
   /// <summary>
@@ -198,13 +200,13 @@ public class Skill : ISkill
     var rate = (float)(lv) / App.SKILL_MAX_LEVEL;
 
     // 成長タイプ補正
-    switch (entity.GrowthType) {
+    switch (config.GrowthType) {
       case Growth.Fast: rate = Mathf.Pow(rate, GROWTH_FAST_FACTOR); break;
       case Growth.Slow: rate = Mathf.Pow(rate, GROWTH_SLOW_FACTOR); break;
       default: break;
     }
 
-    return (int)Mathf.Lerp(0, entity.MaxExp, rate);
+    return (int)Mathf.Lerp(0, config.MaxExp, rate);
   }
 
   /// <summary>
@@ -243,7 +245,7 @@ public class Skill : ISkill
 
     public static void OnGUI(Skill skill)
     {
-      var entity = skill.entity;
+      var entity = skill.config;
       attributes.Value = skill.Attributes;
 
       DrawProperty("Id"        , skill.Id.ToString());
