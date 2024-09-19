@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class Toaster : MyMonoBehaviour
+public class Toaster : MyUIBehaviour
 {
   //============================================================================
   // Inspector Variables

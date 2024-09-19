@@ -6,18 +6,12 @@
 public class MyMonoBehaviour : MonoBehaviour
 {
   //============================================================================
-  // Variables
+  // Properities
   //============================================================================
-
   /// <summary>
   /// Transformのキャッシュ(処理負荷軽減対策)
   /// </summary>
   public Transform CachedTransform { get; private set; }
-
-  /// <summary>
-  /// RectTransformのキャッシュ(処理負荷軽減対策)
-  /// </summary>
-  public RectTransform CachedRectTransform { get; private set; }
 
   /// <summary>
   /// 座標
@@ -26,10 +20,6 @@ public class MyMonoBehaviour : MonoBehaviour
     get { return CachedTransform.position; }
     set { CachedTransform.position = value; }
   }
-
-  //============================================================================
-  // Properities
-  //============================================================================
 
   /// <summary>
   /// 自信がアクティブかどうか
@@ -55,10 +45,6 @@ public class MyMonoBehaviour : MonoBehaviour
   {
     if (CachedTransform == null) {
       CachedTransform = this.transform;
-    }
-
-    if (CachedRectTransform == null) {
-      CachedRectTransform = GetComponent<RectTransform>();
     }
 
     MyAwake();

@@ -27,11 +27,11 @@ public class SkillSlots : MyMonoBehaviour
 
     for(int i = 0; i < App.ACTIVE_SKILL_MAX; ++i) 
     {
-      var slot = Instantiate(skillSlotPrefab).GetComponent<SkillSlot>();
-      slot.CachedTransform.position = new Vector3(
-        Mathf.Lerp(-800f, 800f, i / 9.0f), 0, 0
+      var slot = Instantiate(skillSlotPrefab, transform).GetComponent<SkillSlot>();
+      slot.AnchoredPosition = new Vector2(
+        Mathf.Lerp(-800f, 800f, i / 9.0f), 0
       );
-      slot.CachedRectTransform.SetParent(transform, false);
+
       slot.SetActive(false);
       slots.Add(slot);
     }

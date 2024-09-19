@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillSlot : MyMonoBehaviour
+public class SkillSlot : MyUIBehaviour
 {
   //============================================================================
   // Inspector
