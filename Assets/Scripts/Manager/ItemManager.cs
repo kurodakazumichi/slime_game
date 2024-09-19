@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public interface ISkillItem: IMono
+public interface ISkillItem: IMyMonoBehaviour
 {
   void Setup(SkillId id, int exp, Vector3 position);
   void Reset();

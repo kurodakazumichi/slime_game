@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class FieldScene : MyMonoBehaviour
@@ -19,7 +20,8 @@ public class FieldScene : MyMonoBehaviour
 
   private AsyncOperation loadScene;
 
-  private int requiredKillCount = 0;
+  private int stageRemainingKillCount = 0;
+  private int stageRequiredKillCount = 0;
 
   //============================================================================
   // Methods
@@ -82,24 +84,27 @@ public class FieldScene : MyMonoBehaviour
 
     EnemyManager.Instance.OnDeadEnemy = (e) => 
     {
-      requiredKillCount--;
-      UIManager.Instance.KillCount.CountUp();
-
-      float count = UIManager.Instance.KillCount.Count;
-      float max = count + requiredKillCount;
-
-      UIManager.Instance.HUD.ClearGauge.Set(count, count / max);
+      stageRemainingKillCount--;
+      UIManager.Instance.HUD.UpdateClearGauge(stageRemainingKillCount, ClearGaugeRate);
 
       var item = ItemManager.Instance.GetSkillItem();
       item.Setup(e.SkillId, e.Exp, e.Position);
     };
 
     PlayerManager.Instance.OnChangePlayerHP = (int hp, float rate) => {
-      UIManager.Instance.HUD.HpGauge.Set(hp, rate);
+      UIManager.Instance.HUD.UpdateHpGauge(rate);
     };
 
-    UIManager.Instance.HUD.ClearGauge.SetActive(false);
-    UIManager.Instance.KillCount.SetActive(false);
+    UIManager.Instance.HUD.IsVisibleClearGauge = false;
+    UIManager.Instance.HUD.IsVisibleHpGauge    = false;
+  }
+
+  private float ClearGaugeRate {
+    get {
+      float a = stageRequiredKillCount - stageRemainingKillCount;
+      float b = Mathf.Max(1.0f, stageRequiredKillCount);
+      return a / b;
+    }
   }
 
   private void UpdateSystemSetup()
@@ -157,6 +162,9 @@ public class FieldScene : MyMonoBehaviour
     FieldManager.Instance.SetActiveBattleLocations(true);
     PlayerManager.Instance.RespawnPlayer();
     PlayerManager.Instance.Playable();
+
+    UIManager.Instance.HUD.IsVisibleHpGauge = false;
+    UIManager.Instance.HUD.IsVisibleClearGauge = false;
   }
 
   private void UpdateSearch()
@@ -171,18 +179,12 @@ public class FieldScene : MyMonoBehaviour
     TimeSystem.Player.Scale = 0.5f;
     UIManager.Instance.Toaster.Bake("戦闘開始!!");
 
-    UIManager.Instance.HUD.ClearGauge.SetActive(true);
-    UIManager.Instance.HUD.ClearGauge.Set(0, 0);
-    UIManager.Instance.KillCount.SetActive(true);
-
     // このフェーズはバトルが予約されている時にしか遷移してこないのでチェックしておく
     if (!FieldManager.Instance.IsBattleReserved) 
     {
       Logger.Error("[FieldScene] Battle status must be reserved for the battle.");
       return;
     }
-
-    UIManager.Instance.KillCount.Reset();
 
 
     // スキルを起動
@@ -194,11 +196,16 @@ public class FieldScene : MyMonoBehaviour
     var wm = WaveManager.Instance;
 
     wm.SetEnemyWavePropertySet(fm.MakeCurrentEnemyWavePropertySet());
-    requiredKillCount = fm.RequiredKillCountCandidate;
+    stageRequiredKillCount  = fm.RequiredKillCountCandidate;
+    stageRemainingKillCount = fm.RequiredKillCountCandidate;
     fm.ActivateBattleCircle();
     fm.CancelBattleLocation();          // もうWaveの情報は生成したので予約は解除
     fm.SetActiveBattleLocations(false); // BattleLocationは非表示
     WaveManager.Instance.Run();
+
+    UIManager.Instance.HUD.IsVisibleClearGauge = true;
+    UIManager.Instance.HUD.UpdateClearGauge(stageRemainingKillCount, 0f);
+    UIManager.Instance.HUD.IsVisibleHpGauge = true;
   }
 
   private void UpdateBattle()
@@ -212,7 +219,7 @@ public class FieldScene : MyMonoBehaviour
     }
 
     // 目標撃破数に到達したらリザルトへ
-    if (requiredKillCount <= 0) {
+    if (stageRemainingKillCount <= 0) {
       UIManager.Instance.Toaster.Bake("勝利!!");
       ItemManager.Instance.Collect(PlayerManager.Instance.Position);
 
@@ -272,7 +279,6 @@ public class FieldScene : MyMonoBehaviour
 
   private void ExitResult()
   {
-    UIManager.Instance.KillCount.Reset();
     TimeSystem.MenuPause = false;
   }
 

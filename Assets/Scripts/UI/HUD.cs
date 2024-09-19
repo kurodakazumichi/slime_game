@@ -4,41 +4,47 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
   [SerializeField]
-  private HpGauge clearGauge;
+  private SimpleGauge clearGauge;
 
   [SerializeField]
-  private HpGauge hpGauge;
-
-  [SerializeField]
-  private Text _PhaseText;
+  private SimpleGauge hpGauge;
 
   [SerializeField]
   private SkillSlots skillSlots;
 
-  public HpGauge ClearGauge => clearGauge;
-
-  public HpGauge HpGauge { 
-    get { return hpGauge; } 
-  }
+  [SerializeField]
+  private RemainingCount count;
 
   public SkillSlots SkillSlots {
     get { return skillSlots; }
   }
 
-  public void SetPhaseTextStart()
-  {
-    SetActivePhaseText(true);
-    _PhaseText.text = "START";
+  public bool IsVisibleClearGauge {
+    get {
+      return clearGauge.gameObject.activeSelf;
+    }
+    set {
+      clearGauge.SetActive(value);
+      count.SetActive(value);
+    }
   }
 
-  public void SetPhaseTextGameOver()
-  {
-    SetActivePhaseText(true);
-    _PhaseText.text = "GAME OVER";
+  public bool IsVisibleHpGauge {
+    get { return hpGauge.gameObject.activeSelf; }
+    set { hpGauge.SetActive(value); }
   }
 
-  public void SetActivePhaseText(bool value)
+  /// <summary>
+  /// クリアゲージを更新
+  /// </summary>
+  public void UpdateClearGauge(int value, float rate)
   {
-    _PhaseText.gameObject.SetActive(value);
+    clearGauge.Rate = rate;
+    count.Value = value;
+  }
+
+  public void UpdateHpGauge(float rate)
+  {
+    hpGauge.Rate = rate;
   }
 }
