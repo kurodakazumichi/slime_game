@@ -154,7 +154,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
     }
     
     // Boidsアルゴリズムによって補正をする
-    velocity = EnemyManager.Instance.Boids(toPlayer, this, Collider.radius) * status.Speed;
+    velocity = EnemyManager.Instance.Boids(toPlayer, this, Collider.radius*2f) * status.Speed;
   }
 
 }
