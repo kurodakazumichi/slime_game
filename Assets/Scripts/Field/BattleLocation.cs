@@ -363,6 +363,7 @@ public class BattleLocation : MyMonoBehaviour
       
       // WaveDataを収集
       var location = (BattleLocation)target;
+      location.data.Clear();
       location.CollectWaveData();
 
       // locationに設定されているconfigのFAT、EIPSを表示する
