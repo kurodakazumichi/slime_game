@@ -48,8 +48,8 @@ MonoBehaviour:
     EnemyId: Enemy016
     RoleId: Random
     WaveCount: 25
-    WaveInterval: 2
-    EnemyAmountPerWave: 6
+    WaveInterval: 3
+    EnemyAmountPerWave: 8
     WaitTime: 0
     OriginAngle: -1
     EnemyLv: 2
