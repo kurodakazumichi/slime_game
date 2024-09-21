@@ -1,19 +1,37 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+  //============================================================================
+  // Variables
+  //============================================================================
+
+  /// <summary>
+  /// クリアゲージ
+  /// </summary>
   [SerializeField]
   private SimpleGauge clearGauge;
 
+  /// <summary>
+  /// 倒さないといけない敵の残りの数
+  /// </summary>
+  [SerializeField]
+  private RemainingCount count;
+
+  /// <summary>
+  /// プレイヤーのHPゲージ
+  /// </summary>
   [SerializeField]
   private SimpleGauge hpGauge;
 
+  /// <summary>
+  /// スキルスロット
+  /// </summary>
   [SerializeField]
   private SkillSlots skillSlots;
 
-  [SerializeField]
-  private RemainingCount count;
+
 
   public SkillSlots SkillSlots {
     get { return skillSlots; }
@@ -35,7 +53,7 @@ public class HUD : MonoBehaviour
   }
 
   /// <summary>
-  /// �N���A�Q�[�W���X�V
+  /// クリアゲージを更新
   /// </summary>
   public void UpdateClearGauge(int value, float rate)
   {

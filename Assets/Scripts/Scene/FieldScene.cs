@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class FieldScene : MyMonoBehaviour
 {
+  //============================================================================
+  // Enum
+  //============================================================================
+
   private enum State { 
     Idle,
     SystemSetup,
@@ -16,12 +20,30 @@ public class FieldScene : MyMonoBehaviour
     Menu,
   }
 
+  //============================================================================
+  // Variables
+  //============================================================================
   private StateMachine<State> state;
 
-  private AsyncOperation loadScene;
+  private AsyncOperation loadLevelSceneHandler;
 
   private int stageRemainingKillCount = 0;
   private int stageRequiredKillCount = 0;
+
+  //============================================================================
+  // Properties
+  //============================================================================
+
+  /// <summary>
+  /// クリアゲージの長さを決定するプロパティ
+  /// </summary>
+  private float ClearGaugeRate {
+    get {
+      float a = stageRequiredKillCount - stageRemainingKillCount;
+      float b = Mathf.Max(1.0f, stageRequiredKillCount);
+      return a / b;
+    }
+  }
 
   //============================================================================
   // Methods
@@ -57,6 +79,7 @@ public class FieldScene : MyMonoBehaviour
 
   private void LateUpdate()
   {
+    // 戦闘フェーズ中は衝突判定を動かす
     if(state.StateKey == State.Battle) {
       CollisionManager.Instance.CollidePlayerBulletWithEnemy();
       CollisionManager.Instance.CollideEnemyBulletWithPlayer();
@@ -72,6 +95,7 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterSystemSetup()
   {
+    // デバッグマネージャーに登録
     DebugManager.Instance.Regist(this);
     DebugManager.Instance.Regist(FieldManager.Instance);
     DebugManager.Instance.Regist(BulletManager.Instance);
@@ -79,32 +103,11 @@ public class FieldScene : MyMonoBehaviour
     DebugManager.Instance.Regist(ResourceManager.Instance);
     DebugManager.Instance.Regist(EnemyManager.Instance);
 
-    SkillManager.Instance.OnGetNewSkill  = OnGetNewSkill;
-    SkillManager.Instance.OnLevelUpSkill = OnLevelUpSkill;
-
-    EnemyManager.Instance.OnDeadEnemy = (e) => 
-    {
-      stageRemainingKillCount--;
-      UIManager.Instance.HUD.UpdateClearGauge(stageRemainingKillCount, ClearGaugeRate);
-
-      var item = ItemManager.Instance.GetSkillItem();
-      item.Setup(e.SkillId, e.Exp, e.Position);
-    };
-
-    PlayerManager.Instance.OnChangePlayerHP = (int hp, float rate) => {
-      UIManager.Instance.HUD.UpdateHpGauge(rate);
-    };
-
-    UIManager.Instance.HUD.IsVisibleClearGauge = false;
-    UIManager.Instance.HUD.IsVisibleHpGauge    = false;
-  }
-
-  private float ClearGaugeRate {
-    get {
-      float a = stageRequiredKillCount - stageRemainingKillCount;
-      float b = Mathf.Max(1.0f, stageRequiredKillCount);
-      return a / b;
-    }
+    // コールバック設定
+    SkillManager.Instance.OnGetNewSkill     = OnGetNewSkill;
+    SkillManager.Instance.OnLevelUpSkill    = OnLevelUpSkill;
+    EnemyManager.Instance.OnDeadEnemy       = OnDeadEnemy;
+    PlayerManager.Instance.OnChangePlayerHP = OnChangePlayerHP;
   }
 
   private void UpdateSystemSetup()
@@ -117,9 +120,6 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterResourceLoading()
   {
-    // MultipleSpriteのロード例
-    // ResourceManager.Instance.LoadSprites("Icon/Enemies.png");
-
     // 暫定
     EnemyManager.Instance.Load();
     BulletManager.Instance.Load();
@@ -135,9 +135,6 @@ public class FieldScene : MyMonoBehaviour
       return;
     }
 
-    // MultipleSpriteの取得例
-    // var sprites = ResourceManager.Instance.GetSpritesCache("Icon/Enemies.png");
-
     state.SetState(State.LevelLoading);
   }
 
@@ -146,16 +143,19 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterLevelLoading()
   {
-    loadScene = SceneManager.LoadSceneAsync("Scenes/Level/level_sample", LoadSceneMode.Additive);
+    loadLevelSceneHandler = SceneManager.LoadSceneAsync("Scenes/Level/level_sample", LoadSceneMode.Additive);
   }
 
   private void UpdateLevelLoading()
   {
-    if (loadScene.isDone) {
+    if (loadLevelSceneHandler.isDone) {
       state.SetState(State.Serach);
       return;
     }
   }
+
+  //----------------------------------------------------------------------------
+  // for Search
 
   private void EnterSearch()
   {
@@ -163,8 +163,7 @@ public class FieldScene : MyMonoBehaviour
     PlayerManager.Instance.RespawnPlayer();
     PlayerManager.Instance.Playable();
 
-    UIManager.Instance.HUD.IsVisibleHpGauge = false;
-    UIManager.Instance.HUD.IsVisibleClearGauge = false;
+    HideHudGauge();
   }
 
   private void UpdateSearch()
@@ -203,9 +202,8 @@ public class FieldScene : MyMonoBehaviour
     fm.SetActiveBattleLocations(false); // BattleLocationは非表示
     WaveManager.Instance.Run();
 
-    UIManager.Instance.HUD.IsVisibleClearGauge = true;
+    ShowHudGauge();
     UIManager.Instance.HUD.UpdateClearGauge(stageRemainingKillCount, 0f);
-    UIManager.Instance.HUD.IsVisibleHpGauge = true;
   }
 
   private void UpdateBattle()
@@ -283,7 +281,7 @@ public class FieldScene : MyMonoBehaviour
   }
 
   //----------------------------------------------------------------------------
-  // For Me
+  // Callback
   //----------------------------------------------------------------------------
 
   private void OnGetNewSkill(int index)
@@ -306,6 +304,45 @@ public class FieldScene : MyMonoBehaviour
       var msg = $"Lv+ {master.Name} Lv {preLv} → {lv}";
       UIManager.Instance.Toaster.Bake(msg);
     }
+  }
+
+  private void OnDeadEnemy(IEnemy enemy)
+  {
+    stageRemainingKillCount--;
+    UIManager.Instance.HUD.UpdateClearGauge(stageRemainingKillCount, ClearGaugeRate);
+
+    var item = ItemManager.Instance.GetSkillItem();
+    item.Setup(enemy.SkillId, enemy.Exp, enemy.Position);
+  }
+
+  private void OnChangePlayerHP(int hp, float rate)
+  {
+    UIManager.Instance.HUD.UpdateHpGauge(rate);
+  }
+
+  //----------------------------------------------------------------------------
+  // HUD
+  //----------------------------------------------------------------------------
+
+  /// <summary>
+  /// ゲージ系のUIを非表示にする
+  /// </summary>
+  private void HideHudGauge()
+  {
+    var hud = UIManager.Instance.HUD;
+
+    hud.IsVisibleClearGauge = false;
+    hud.IsVisibleHpGauge    = false;
+  }
+
+  /// <summary>
+  /// ゲージ系のUIを表示する
+  /// </summary>
+  private void ShowHudGauge()
+  {
+    var hud = UIManager.Instance.HUD;
+    hud.IsVisibleClearGauge = true;
+    hud.IsVisibleHpGauge    = true;
   }
 
   private void RunSkill()
