@@ -29,16 +29,19 @@ public class EnemyWaveProperty
   /// <summary>
   /// 次のWaveが発動するまでの間隔
   /// </summary>
-  public float WaveInterval = 0f;
+  [Range(1f, 60f)]
+  public float WaveInterval = 1f;
 
   /// <summary>
   /// 1つのWaveが生成する敵の数
   /// </summary>
+  [Range(1, 200)]
   public int EnemyAmountPerWave = 1;
 
   /// <summary>
   /// 初回Waveが発動するまでの待機時間
   /// </summary>
+  [Range(1f, 60f)]
   public float WaitTime = 0f;
 
   /// <summary>
@@ -81,6 +84,63 @@ public class EnemyWaveProperty
     get { return WaveCount * EnemyAmountPerWave; }
   }
 
+  //============================================================================
+  // Methods
+  //============================================================================
+
+  /// <summary>
+  /// 1秒あたりに増加する敵の体力(Enemy Increase Per Sec)
+  /// {WaitTime}により前半は敵が出現しないWaveもあるため、このWaitTimeを考慮して
+  /// {最初の3分(180秒)間で出現する敵の数}×{敵のHP} / {180} で算出する。
+  /// </summary>
+  public float CalcEIPS(float lv)
+  {
+    const float TIME = 180f;
+
+    var hp = EnemyMaster.FindById(Id).HP * lv;
+
+    // 1秒あたりの敵の出現数を{a}、初めて敵が出現する時間を{t}とおくと
+    var a = EnemyAmountPerWave / Mathf.Max(1f, WaveInterval);
+    var t = WaitTime;
+
+    // 敵の増加量を表す方程式はf(x) = ax + (-at)と表せるので
+    // 180秒間で出撃する敵の総数を{n}とすると、 n = f(180) = 180a + (-at)
+    var n = a*TIME + (-a*t);
+    n = Mathf.Min(TotalEnemyCount, n);
+
+    // 敵の総数にHPを掛けて180で割れば、1秒あたりの敵のHPの増加量になる
+    var eps = (hp * n) / TIME;
+
+    return eps;
+  }
+
+  /// <summary>
+  /// FAT(Fill the Area Time)
+  /// 何秒間で戦闘エリアが敵で埋め尽くされるかという値を計算する
+  /// </summary>
+  /// <returns></returns>
+  public float CalcFAT()
+  {
+    const float TIME = 180f;
+
+    // 1秒あたりの敵の出現数を{a}、初めて敵が出現する時間を{t}とおくと
+    var a = EnemyAmountPerWave / Mathf.Max(1f, WaveInterval);
+    var t = WaitTime;
+
+    // 敵の増加量を表す方程式はf(x) = ax + (-at)と表せるので
+    // 180秒間で出撃する敵の総数を{n}とすると、 n = f(180) = 180a + (-at)
+    var n = a * TIME + (-a*t);
+
+    // どんなに時間がたっても最大出現数より多くはならないため最低値を決める
+    n = Mathf.Min(TotalEnemyCount, n);
+
+    // nが180秒の間に出現する敵の数なので、180で割ると1秒で出現する敵の数になる。
+    // さらに戦場の面積で割ると1秒あたりの敵が戦場を占有する率が得られる。(rps = rate per sec)
+    var rps = (n/TIME) / App.BATTLE_CIRCLRE_AREA;
+
+    // 1秒をrpsで割ると、何秒で戦場が埋め尽くされるかというFAT(Fill the Area Time)が求まる。
+    return 1f / rps;
+  }
 
 
   //============================================================================
@@ -165,8 +225,6 @@ public class EnemyWavePropertyDrawer : PropertyDrawer
     }
 
     EditorGUI.BeginProperty(p, label, property);
-
-
     EditorGUI.LabelField(rect(p, 0), label);
 
     enemyWaveRoleIndex = EditorGUI.Popup(rect(p, 1), "Waveの役割", enemyWaveRoleIndex, enemyWaveRoleOptions);

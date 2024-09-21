@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UnityEditor;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
+using static UnityEngine.GraphicsBuffer;
 
 public class BattleLocation : MyMonoBehaviour
 {
@@ -241,7 +244,10 @@ public class BattleLocation : MyMonoBehaviour
 
       // WaveXというオブジェクトの配下にあるEnemyWaveSettingsコンポーネントを取得、保持
       var configs = wave.GetComponentsInChildren<EnemyWaveConfig>();
-      this.data.Add(i, new List<EnemyWaveConfig>(configs));
+
+      if (!this.data.ContainsKey(i)) {
+        this.data.Add(i, new List<EnemyWaveConfig>(configs));
+      }
     }
 
     // BattleLocationに設定されているLvをconfigに設定する
@@ -344,4 +350,43 @@ public class BattleLocation : MyMonoBehaviour
 
 #endif
 
+#if UNITY_EDITOR
+  [CustomEditor(typeof(BattleLocation))]
+  public class BattleLocationEditor : Editor
+  {
+    /// <summary>
+    /// Waveデータ
+    /// </summary>
+    public override void OnInspectorGUI()
+    {
+      base.OnInspectorGUI();
+      
+      // WaveDataを収集
+      var location = (BattleLocation)target;
+      location.CollectWaveData();
+
+      // locationに設定されているconfigのFAT、EIPSを表示する
+      for(int i = 0, count = location.data.Count; i < count; i++) {
+        GUILayout.Label($"Wave[{i}]");
+        ShowConfigs(location.lv, location.data[i]);
+      }
+    }
+
+    private void ShowConfigs(int lv, List<EnemyWaveConfig> configs)
+    {
+      for (int i = 0, count = configs.Count; i < count; ++i) {
+        ShowConfig(i, lv, configs[i]);
+      }
+    }
+
+    private void ShowConfig(int index, int lv, EnemyWaveConfig config)
+    {
+      using (new GUILayout.HorizontalScope()) {
+        GUILayout.Label($"{index}", GUILayout.Width(20));
+        GUILayout.Label($"FAT={(int)config.props.CalcFAT()}", GUILayout.Width(100));
+        GUILayout.Label($"EIPS={(int)config.props.CalcEIPS(lv)}", GUILayout.Width(100));
+      }
+    }
+  }
+#endif
 }
