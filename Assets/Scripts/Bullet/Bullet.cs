@@ -8,9 +8,6 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   //============================================================================
   // Variables for Inspector
   //============================================================================
-  [SerializeField, Tooltip("貫通回数")]
-  private int PenetrableCount = 0;
-
   [SerializeField, Tooltip("最低速度")]
   private float MinSpeed = 1.0f;
 
@@ -58,6 +55,11 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// 速度
   /// </summary>
   protected Vector3 velocity = Vector3.zero;
+
+  /// <summary>
+  /// 速度補正値
+  /// </summary>
+  private float speedCorrection = 1f;
 
   /// <summary>
   /// 貫通可能数
@@ -138,7 +140,6 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
     Target                   = info.Target;
     CachedTransform.position = info.Position;
     direction                = info.Direction;
-    penetrableCount          = PenetrableCount;
   }
 
   public void Terminate()
@@ -161,13 +162,11 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
     AttackInfo.Position = CachedTransform.position;
     var result = actor.TakeDamage(AttackInfo);
 
+    // 攻撃があたった場合
     if (result.IsHit) {
+      isTerminating = !IsPenetrable;
       penetrableCount--;
     }
-    
-
-    // 貫通しないなら攻撃した時点で終了フラグを立てる
-    isTerminating = !IsPenetrable;
   }
 
   /// <summary>
@@ -198,6 +197,10 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// </summary>
   protected float CalcSpeed(float timer)
   {
+    // 最低速度、最高速度に補正をかける
+    var MinSpeed = this.MinSpeed * speedCorrection;
+    var MaxSpeed = this.MaxSpeed * speedCorrection;
+
     if (SpeedChangeTime <= 0) {
       return MinSpeed;
     }
@@ -254,7 +257,9 @@ public abstract class Bullet<T> : MyMonoBehaviour, IBullet
   /// </summary>
   protected void SetStatusBy(ISkill skill)
   {
-    Id = skill.Id;
+    Id              = skill.Id;
+    penetrableCount = skill.PenetrableCount;
+    speedCorrection = skill.SpeedCorrectionValue;
 
     AttackInfo = new AttackInfo() {
       Power      = skill.Power,

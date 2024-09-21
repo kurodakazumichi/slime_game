@@ -10,6 +10,9 @@ public interface ISkillEntityRO
   float LastRecastTime { get; }
   int FirstPower { get; }
   int LastPower { get; }
+  int FirstPenetrableCount { get; }
+  int LastPenetrableCount { get; }
+  float SpeedGrowthRate { get; }
   uint Attr { get; }
   string Name { get; }
   string Prefab { get; }
@@ -17,6 +20,7 @@ public interface ISkillEntityRO
   float Impact { get; }
   int IconNo { get; }
   SkillAimingType Aiming { get; }
+
 }
 
 /// <summary>
@@ -53,6 +57,21 @@ public class SkillEntity : ISkillEntityRO
   /// Lv Max時のパワー
   /// </summary>
   public int LastPower { get; set; }
+
+  /// <summary>
+  /// Lv Min時 貫通数
+  /// </summary>
+  public int FirstPenetrableCount { get; set; }
+
+  /// <summary>
+  /// Lv Max時 貫通数
+  /// </summary>
+  public int LastPenetrableCount { get; set; }
+
+  /// <summary>
+  /// 速度成長率
+  /// </summary>
+  public float SpeedGrowthRate { get; set; }
 
   /// <summary>
   /// 属性

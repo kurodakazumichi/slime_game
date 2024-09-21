@@ -7,6 +7,8 @@ public interface ISkill
   float RecastTime { get; }
   string Name { get; }
   int Power { get; }
+  int PenetrableCount { get; }
+  float SpeedCorrectionValue { get; }
   float Impact { get; }
   uint Attributes { get; }
   void Fire();
@@ -30,6 +32,10 @@ public class Skill : ISkill
   /// </summary>
   protected ISkillEntityRO config;
 
+  //============================================================================
+  // Properties
+  //============================================================================
+
   /// <summary>
   /// スキルLv(経験値をセットしたタイミングで設定される)
   /// </summary>
@@ -45,9 +51,15 @@ public class Skill : ISkill
   /// </summary>
   public float RecastTime { get; private set; } = 0f;
 
-  //============================================================================
-  // Properties
-  //============================================================================
+  /// <summary>
+  /// 貫通可能数
+  /// </summary>
+  public int PenetrableCount { get; private set; } = 0;
+
+  /// <summary>
+  /// 速度補正値
+  /// </summary>
+  public float SpeedCorrectionValue { get; private set; } = 0f;
 
   /// <summary>
   /// スキルID
@@ -129,10 +141,12 @@ public class Skill : ISkill
   /// </summary>
   public void SetExp(int exp)
   {
-    exp        = Mathf.Max(0, exp);
-    Lv         = CalcLevelBy(exp);
-    RecastTime = CalcRecastTimeBy(Lv);
-    Power      = CalcPowerBy(Lv);
+    exp                  = Mathf.Max(0, exp);
+    Lv                   = CalcLevelBy(exp);
+    RecastTime           = CalcRecastTimeBy(Lv);
+    Power                = CalcPowerBy(Lv);
+    PenetrableCount      = CalcPenetrableCount(Lv);
+    SpeedCorrectionValue = CalcSpeedCorrectionValue(Lv);
   }
 
   /// <summary>
@@ -184,6 +198,22 @@ public class Skill : ISkill
   private int CalcPowerBy(int lv)
   {
     return (int)LerpParam(config.FirstPower, config.LastPower, lv);
+  }
+
+  /// <summary>
+  /// Lvに応じた貫通数を計算
+  /// </summary>
+  private int CalcPenetrableCount(int lv)
+  {
+    return (int)LerpParam(config.FirstPenetrableCount, config.LastPenetrableCount, lv);
+  }
+
+  /// <summary>
+  /// Lvに応じた速度補正値を計算
+  /// </summary>
+  private float CalcSpeedCorrectionValue(int lv)
+  {
+    return LerpParam(1f, config.SpeedGrowthRate, lv);
   }
 
   /// <summary>
