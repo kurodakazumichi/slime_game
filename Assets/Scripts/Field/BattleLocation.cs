@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
-using static UnityEngine.GraphicsBuffer;
 
 public class BattleLocation : MyMonoBehaviour
 {
@@ -64,15 +62,6 @@ public class BattleLocation : MyMonoBehaviour
   //============================================================================
 
   /// <summary>
-  /// Waveデータを持っているか
-  /// </summary>
-  public bool HasWaves {
-    get {
-      return 0 < data.Count;
-    }
-  }
-
-  /// <summary>
   /// 出現する敵のIDリスト
   /// </summary>
   public List<EnemyId> AppearingEnemyIds 
@@ -123,9 +112,23 @@ public class BattleLocation : MyMonoBehaviour
   //----------------------------------------------------------------------------
   // Public
   //----------------------------------------------------------------------------
+
+  /// <summary>
+  /// Idle状態にする、同時に非アクティブ化
+  /// </summary>
+  public void Idle()
+  {
+    state.SetState(State.Idle);
+    SetActive(false);
+  }
+
+  /// <summary>
+  /// 通常状態にする、同時にアクティブ化
+  /// </summary>
   public void Run()
   {
     if (state.StateKey == State.Idle) {
+      SetActive(true);
       state.SetState(State.Usual);
     }
   }
@@ -137,21 +140,20 @@ public class BattleLocation : MyMonoBehaviour
   protected override void MyAwake()
   {
     collider = GetComponent<SphereCollider>();
-    CollectWaveData();
 
     state.Add(State.Idle);
     state.Add(State.Usual, EnterUsual, UpdateUsual);
     state.Add(State.Contact, EnterContact, UpdateContact, ExitContact);
-    state.SetState(State.Idle);
+    Idle();
 
+    // 子要素に設定されているWaveDataを収集
+    CollectWaveData();
+    Validate();
+
+    // FieldManagerがあれば自身を登録する
     if (FieldManager.Instance) {
       FieldManager.Instance.RegistBattleLocation(this);
     }
-  }
-
-  private void Start()
-  {
-    Validate();
   }
 
   private void Update()
@@ -161,19 +163,22 @@ public class BattleLocation : MyMonoBehaviour
 
   private void LateUpdate()
   {
-    if (state.StateKey == State.Idle) {
-      return;
-    }
+    if (state.StateKey == State.Idle) return;
 
-    var a = PlayerManager.Instance.Position;
+    // プレイヤーとの衝突判定
+    var pm = PlayerManager.Instance;
+    var a = pm.Position;
     var b = collider.transform.position;
-    var r = PlayerManager.Instance.Collider.radius + collider.radius;
+    var r = pm.Collider.radius + collider.radius;
     isPlayerHit = CollisionUtil.IsCollideAxB(a, b, r);
   }
 
   //----------------------------------------------------------------------------
   // for Update
   //----------------------------------------------------------------------------
+
+  //----------------------------------------------------------------------------
+  // Usual State
 
   private void EnterUsual()
   {
@@ -188,19 +193,32 @@ public class BattleLocation : MyMonoBehaviour
     }
   }
 
+  //----------------------------------------------------------------------------
+  // Contact State
+
   private void EnterContact()
   {
-    // WaveManagerにBattleLocationを予約する
     Logger.Log("[BattleLocation] OnHitPlayerEnter");
 
-    FieldManager.Instance.ReserveBattleLocation(this);
-    UIManager.Instance.BattleInfo.Show(LocationName, lv, AppearingEnemyIds);
-    UIManager.Instance.BattleInfo.TargetCount = RequiredKillCount;
+    // 戦場を予約
+    if (FieldManager.Instance) {
+      FieldManager.Instance.ReserveLocation(this);
+    }
+
+    // UIを表示
+    if (UIManager.Instance)
+    { 
+      UIManager.Instance.BattleLocationBoard.Show(new BattleLocationInfo() {
+        Name        = LocationName,
+        Lv          = lv,
+        EnemyIds    = AppearingEnemyIds,
+        TargetCount = RequiredKillCount,
+      });
+    }
   }
 
   private void UpdateContact()
   {
-    //Logger.Log("[BattleLocation] OnHitPlayerStay");
     if (isPlayerHit == false) {
       state.SetState(State.Usual);
       return;
@@ -210,14 +228,20 @@ public class BattleLocation : MyMonoBehaviour
   private void ExitContact()
   {
     Logger.Log("[BattleLocation] OnHitPlayerExit");
-    // WaveManagerにWaveデータの破棄を依頼する
-    FieldManager.Instance.CancelBattleLocation();
 
-    UIManager.Instance.BattleInfo.Hide();
+    // 戦場予約を解除
+    if (FieldManager.Instance) {
+      FieldManager.Instance.ReserveLocation(null);
+    }
+    
+    // UIを非表示
+    if (UIManager.Instance) {
+      UIManager.Instance.BattleLocationBoard.Hide();
+    }
   }
 
   //----------------------------------------------------------------------------
-  // for Me
+  // Other
   //----------------------------------------------------------------------------
 
   /// <summary>
@@ -242,7 +266,7 @@ public class BattleLocation : MyMonoBehaviour
         break;
       }
 
-      // WaveXというオブジェクトの配下にあるEnemyWaveSettingsコンポーネントを取得、保持
+      // Wave{i}というオブジェクトの配下にあるEnemyWaveConfigコンポーネントを取得、保持
       var configs = wave.GetComponentsInChildren<EnemyWaveConfig>();
 
       if (!this.data.ContainsKey(i)) {
@@ -250,7 +274,7 @@ public class BattleLocation : MyMonoBehaviour
       }
     }
 
-    // BattleLocationに設定されているLvをconfigに設定する
+    // BattleLocationに設定されているLvをconfig側に設定する
     ForeachWaveData((config) => { 
       config.props.EnemyLv = lv; 
     });
@@ -275,13 +299,14 @@ public class BattleLocation : MyMonoBehaviour
   }
 
   /// <summary>
-  /// BattleLocationに設定されている設定から、敵Waveプロパティ一式を生成する
+  /// BattleLocationに設定されているEnemyWaveConfigからEnemyWaveProperty一式を生成する
   /// </summary>
   public Dictionary<int, List<EnemyWaveProperty>> MakeEnemyWavePropertySet()
   {
     var data = new Dictionary<int, List<EnemyWaveProperty>>();
 
-    foreach (var kv in this.data) {
+    foreach (var kv in this.data) 
+    {
       data.Add(kv.Key, new List<EnemyWaveProperty>());
 
       foreach (var config in kv.Value) {
@@ -313,6 +338,7 @@ public class BattleLocation : MyMonoBehaviour
     });
   }
 
+  [Conditional("_DEBUG")]
   private void ErrorLog(EnemyWaveConfig config, string msg)
   {
     var parentName = config.CachedTransform.parent.name;
@@ -320,6 +346,7 @@ public class BattleLocation : MyMonoBehaviour
     Logger.Error($"[BattleLocation] {LocationName}.{parentName}.{name} {msg}");
   }
 
+  [Conditional("_DEBUG")]
   private void ErrorLog(string msg)
   {
     Logger.Error($"[BattleLocation] {LocationName} {msg}");

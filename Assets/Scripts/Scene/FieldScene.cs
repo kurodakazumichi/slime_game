@@ -168,7 +168,8 @@ public class FieldScene : MyMonoBehaviour
 
   private void UpdateSearch()
   {
-    if (FieldManager.Instance.IsBattleReserved && Input.GetKeyDown(KeyCode.A)) {
+    if (FieldManager.Instance.HasReservedLocation && Input.GetKeyDown(KeyCode.A)) {
+      FieldManager.Instance.FixLocation(); // 戦場を確定
       state.SetState(State.Battle);
     }
   }
@@ -178,27 +179,27 @@ public class FieldScene : MyMonoBehaviour
     TimeSystem.Player.Scale = 0.5f;
     UIManager.Instance.Toaster.Bake("戦闘開始!!");
 
-    // このフェーズはバトルが予約されている時にしか遷移してこないのでチェックしておく
-    if (!FieldManager.Instance.IsBattleReserved) 
+#if _DEBUG
+    // このフェーズは戦場が確定しているときしかこないのでチェックしておく
+    if (!FieldManager.Instance.HasFixedLocation) 
     {
       Logger.Error("[FieldScene] Battle status must be reserved for the battle.");
       return;
     }
-
+#endif
 
     // スキルを起動
     RunSkill();
 
-    UIManager.Instance.BattleInfo.IsVisible = false;
+    UIManager.Instance.BattleLocationBoard.IsVisible = false;
 
     var fm = FieldManager.Instance;
     var wm = WaveManager.Instance;
 
-    wm.SetEnemyWavePropertySet(fm.MakeCurrentEnemyWavePropertySet());
-    stageRequiredKillCount  = fm.RequiredKillCountCandidate;
-    stageRemainingKillCount = fm.RequiredKillCountCandidate;
+    wm.SetEnemyWavePropertySet(fm.MakeFixedEnemyWavePropertySet());
+    stageRequiredKillCount  = fm.RequiredKillCount;
+    stageRemainingKillCount = fm.RequiredKillCount;
     fm.ActivateBattleCircle();
-    fm.CancelBattleLocation();          // もうWaveの情報は生成したので予約は解除
     fm.SetActiveBattleLocations(false); // BattleLocationは非表示
     WaveManager.Instance.Run();
 

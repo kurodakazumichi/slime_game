@@ -1,12 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class BattleInfo : MyMonoBehaviour
+/// <summary>
+/// íê‚Ìî•ñ
+/// </summary>
+public struct BattleLocationInfo { 
+  public string Name;
+  public int Lv;
+  public int TargetCount;
+  public List<EnemyId> EnemyIds;
+}
+
+/// <summary>
+/// [UI]íê‚Ìî•ñ‚ğ•\¦‚·‚éŠÅ”Â
+/// </summary>
+public class BattleLocationBoard : MyMonoBehaviour
 {
   [SerializeField]
   private Text nameText;
@@ -43,17 +53,18 @@ public class BattleInfo : MyMonoBehaviour
     set { SetActive(value); }
   }
 
-  public void Show(string name, int lv, List<EnemyId> ids)
+  public void Show(BattleLocationInfo info)
   {
     IsVisible = true;
-    nameText.text = name;
-    Lv = lv;
+    nameText.text = info.Name;
+    Lv = info.Lv;
+    TargetCount = info.TargetCount;
 
-    var x = -55 * (ids.Count - 1);
+    var x = -55 * (info.EnemyIds.Count - 1);
 
-    for(int i = 0, count = ids.Count; i < count; ++i) 
+    for(int i = 0, count = info.EnemyIds.Count; i < count; ++i) 
     {
-      var id = ids[i];
+      var id = info.EnemyIds[i];
 
       var icon = iconPool.Get();
       icon.SetSprite(IconManager.Instance.Enemy(id));

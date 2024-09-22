@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class FieldManager : SingletonMonoBehaviour<FieldManager>
 {
+  //============================================================================
+  // Inspector
+  //============================================================================
+
   [SerializeField]
   private GameObject battleCirclePrefab;
-
-
 
   //============================================================================
   // Variables
@@ -19,10 +21,18 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   private List<BattleLocation> battleLocations = new List<BattleLocation>();
 
   /// <summary>
-  /// 戦闘予定のロケーションを格納
+  /// 予約された戦場
   /// </summary>
-  private BattleLocation battleLocationCandidate = null;
+  private BattleLocation reservedLocation = null;
 
+  /// <summary>
+  /// 確定された戦場
+  /// </summary>
+  private BattleLocation fixedLocation = null;
+
+  /// <summary>
+  /// 戦場の範囲を表す円上のオブジェクト
+  /// </summary>
   private  GameObject battleCircle;
 
   //============================================================================
@@ -30,18 +40,23 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   //============================================================================
 
   /// <summary>
-  /// 戦地が予約されているならばtrue
+  /// 予約されている場所がある
   /// </summary>
-  public bool IsBattleReserved {
-    get { return battleLocationCandidate != null; }
-  }
+  public bool HasReservedLocation => reservedLocation != null;
 
   /// <summary>
-  /// 予約されている戦場に設定されている要求撃破数
+  /// 場所(戦場)は確定している
   /// </summary>
-  public int RequiredKillCountCandidate {
+  public bool HasFixedLocation => fixedLocation != null;
+
+  /// <summary>
+  /// 戦場クリアに必要なキル数、予約地、もしくは確定地から取得する。
+  /// </summary>
+  public int RequiredKillCount {
     get {
-      return (IsBattleReserved)? battleLocationCandidate.RequiredKillCount : 0;
+      if (HasReservedLocation) return reservedLocation.RequiredKillCount;
+      if (HasFixedLocation)    return fixedLocation.RequiredKillCount;
+      return 0;
     }
   }
 
@@ -75,6 +90,9 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   // Public
   //----------------------------------------------------------------------------
 
+  //----------------------------------------------------------------------------
+  // For　BattleLocation
+
   /// <summary>
   /// BattleLocationを登録する
   /// </summary>
@@ -84,23 +102,66 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   }
 
   /// <summary>
-  /// 戦地の候補を予約する
+  /// 戦場を予約する
   /// </summary>
-  public void ReserveBattleLocation(BattleLocation location)
+  public void ReserveLocation(BattleLocation location)
   {
-    battleLocationCandidate = location;
+    reservedLocation = location;
   }
+
+  /// <summary>
+  /// 場所を確定する
+  /// </summary>
+  public void FixLocation()
+  {
+    if (!HasReservedLocation) {
+      Logger.Error("[FieldManager.FixedLocation] The reserved location does not exist.");
+      return;
+    }
+
+    fixedLocation    = reservedLocation;
+    reservedLocation = null;
+  }
+
+  /// <summary>
+  /// Field上のバトルロケーションの有効化、無効化
+  /// </summary>
+  public void SetActiveBattleLocations(bool flag)
+  {
+    foreach (var location in battleLocations) {
+      if (flag) {
+        location.Run();
+      }
+      else {
+        location.Idle();
+      }
+    }
+  }
+
+  /// <summary>
+  /// 確定済のBattleLocationからEnemyWaveProperty一式を生成する
+  /// </summary>
+  public Dictionary<int, List<EnemyWaveProperty>> MakeFixedEnemyWavePropertySet()
+  {
+    if (HasFixedLocation) {
+      return fixedLocation.MakeEnemyWavePropertySet();
+    }
+    else {
+      return null;
+    }
+  }
+
+  //----------------------------------------------------------------------------
+  // For　BattleCircle
 
   /// <summary>
   /// BattleCircleを発動する
   /// </summary>
   public void ActivateBattleCircle()
   {
-    if (battleLocationCandidate is null) {
-      return;
-    }
+    if (HasFixedLocation) return;
 
-    battleCircle.transform.position = battleLocationCandidate.Position;
+    battleCircle.transform.position = fixedLocation.Position;
     battleCircle.gameObject.SetActive(true);
   }
 
@@ -112,49 +173,13 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     battleCircle.gameObject.SetActive(false);
   }
 
+  /// <summary>
+  /// 指定した座標{position}がBattleCircleの円内にあるならばtrue
+  /// </summary>
   public bool IsInBattleCircle(Vector3 position)
   {
-    if (!HasBattleCircle) {
-      return false;
-    }
-
-    var v = BattleCircleCenter - position;
-    var r = App.BATTLE_CIRCLE_RADIUS;
-    return (v.sqrMagnitude <= r * r);
-  }
-
-  /// <summary>
-  /// 戦地をキャンセルする
-  /// </summary>
-  public void CancelBattleLocation()
-  {
-    battleLocationCandidate = null;
-  }
-
-  /// <summary>
-  /// Field上のバトルロケーションのアクティブを設定
-  /// </summary>
-  public void SetActiveBattleLocations(bool flag)
-  {
-    foreach (var location in battleLocations)
-    {
-      location.SetActive(flag);
-      if (flag) {
-        location.Run();
-      }
-    }
-  }
-
-  /// <summary>
-  /// 現在設定されているBattleLocationからEnemyWaveProperty一式を生成する
-  /// </summary>
-  public Dictionary<int, List<EnemyWaveProperty>> MakeCurrentEnemyWavePropertySet()
-  {
-    if (IsBattleReserved) {
-      return battleLocationCandidate.MakeEnemyWavePropertySet();
-    } else {
-      return null;
-    }
+    if (!HasBattleCircle) return false;
+    return CollisionUtil.IsCollideAxB(BattleCircleCenter, position, App.BATTLE_CIRCLE_RADIUS);
   }
 
 #if _DEBUG
@@ -172,8 +197,8 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
 
 
     GUILayout.Label("Reserved Battle Location");
-    if (IsBattleReserved) {
-      battleLocationCandidate.OnDebug();
+    if (HasReservedLocation) {
+      reservedLocation.OnDebug();
     }
 
     var tmp = _isShowBattleLocations;

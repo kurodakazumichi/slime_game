@@ -6,14 +6,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
   private HUD hud;
 
   [SerializeField]
-  private BattleInfo battleInfo;
+  private BattleLocationBoard battleLocationBoard;
 
   [SerializeField]
   private Toaster toaster;
 
   public HUD HUD { get { return hud; } }
 
-  public BattleInfo BattleInfo { get { return battleInfo; } }
+  public BattleLocationBoard BattleLocationBoard { get { return battleLocationBoard; } }
 
   public Toaster Toaster { get { return toaster; } }
 }
