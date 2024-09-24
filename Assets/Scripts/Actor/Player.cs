@@ -62,7 +62,7 @@ public class Player : MyMonoBehaviour, IActor
 
     hp.Now -= info.Power;
     
-    SyncHpToHudHpGauge();
+    SyncWithHp();
 
     if (hp.IsEmpty) {
       state.SetState(State.Dead);
@@ -78,8 +78,8 @@ public class Player : MyMonoBehaviour, IActor
   public void Respawn()
   {
     hp.Full();
+    SyncWithHp();
     state.SetState(State.Idle);
-    SyncHpToHudHpGauge();
   }
 
   public void SetStateUsual()
@@ -108,7 +108,7 @@ public class Player : MyMonoBehaviour, IActor
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
-    SyncHpToHudHpGauge();
+    SyncWithHp();
   }
 
   private void Update()
@@ -233,12 +233,18 @@ public class Player : MyMonoBehaviour, IActor
   }
 
   //----------------------------------------------------------------------------
-  // UI
+  // Other
   //----------------------------------------------------------------------------
 
-  private void SyncHpToHudHpGauge()
+  /// <summary>
+  /// HPと同期をとる
+  /// </summary>
+  private void SyncWithHp()
   {
+    // HPに合わせて色を設定
     spriteRenderer.color = Color.Lerp(Color.white, Color.red, 1f-hp.Rate);
+
+    // HP変更時の処理を実行
     OnChangeHP?.Invoke((int)hp.Now, hp.Rate);
   }
 }
