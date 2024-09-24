@@ -149,8 +149,8 @@ MonoBehaviour:
     m_FontSize: 62
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 93
+    m_MinSize: 6
+    m_MaxSize: 102
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 7806192878980588914}
   - component: {fileID: 2821206734837016874}
   m_Layer: 5
-  m_Name: BattleInfo
+  m_Name: BattleLocationBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,7 +377,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8049828628406026159}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
