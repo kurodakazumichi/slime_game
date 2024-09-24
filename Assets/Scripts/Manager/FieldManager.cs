@@ -159,7 +159,7 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
   /// </summary>
   public void ActivateBattleCircle()
   {
-    if (HasFixedLocation) return;
+    if (!HasFixedLocation) return;
 
     battleCircle.transform.position = fixedLocation.Position;
     battleCircle.gameObject.SetActive(true);
