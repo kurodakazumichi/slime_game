@@ -559,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hud: {fileID: 702327977}
-  battleInfo: {fileID: 5219509078864660797}
+  battleLocationBoard: {fileID: 5219509078864660797}
   toaster: {fileID: 1116001606}
 --- !u!114 &417701252
 MonoBehaviour:
@@ -1615,7 +1615,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049828628406026159, guid: d0e62ee98d3443e4c9b6fafa9afe6bb1, type: 3}
       propertyPath: m_Name
-      value: BattleInfo
+      value: BattleLocationBoard
       objectReference: {fileID: 0}
     - target: {fileID: 8049828628406026159, guid: d0e62ee98d3443e4c9b6fafa9afe6bb1, type: 3}
       propertyPath: m_IsActive
