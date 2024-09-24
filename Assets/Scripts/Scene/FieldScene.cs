@@ -29,6 +29,7 @@ public class FieldScene : MyMonoBehaviour
 
   private int stageRemainingKillCount = 0;
   private int stageRequiredKillCount = 0;
+  private BattleResult battleResult = BattleResult.Undefined;
 
   //============================================================================
   // Properties
@@ -174,57 +175,76 @@ public class FieldScene : MyMonoBehaviour
     }
   }
 
+  //----------------------------------------------------------------------------
+  // for Battle
+
   private void EnterBattle()
   {
-    TimeSystem.Player.Scale = 0.5f;
-    UIManager.Instance.Toaster.Bake("戦闘開始!!");
-
 #if _DEBUG
     // このフェーズは戦場が確定しているときしかこないのでチェックしておく
-    if (!FieldManager.Instance.HasFixedLocation) 
-    {
+    if (!FieldManager.Instance.HasFixedLocation) {
       Logger.Error("[FieldScene] Battle status must be reserved for the battle.");
       return;
     }
 #endif
 
-    // スキルを起動
-    RunSkill();
-
-    UIManager.Instance.BattleLocationBoard.IsVisible = false;
-
+    // Syntax sugar
     var fm = FieldManager.Instance;
     var wm = WaveManager.Instance;
+    var ui = UIManager.Instance;
 
-    wm.SetEnemyWavePropertySet(fm.MakeFixedEnemyWavePropertySet());
+    // プレイヤーを遅くする
+    TimeSystem.Player.Scale = 0.5f;
+
+    // フィールドに関する処理
     stageRequiredKillCount  = fm.RequiredKillCount;
     stageRemainingKillCount = fm.RequiredKillCount;
     fm.ActivateBattleCircle();
     fm.SetActiveBattleLocations(false); // BattleLocationは非表示
-    WaveManager.Instance.Run();
 
+    // UI
     ShowHudGauge();
-    UIManager.Instance.HUD.UpdateClearGauge(stageRemainingKillCount, 0f);
+    ui.HUD.UpdateClearGauge(stageRemainingKillCount, 0f);
+    ui.BattleLocationBoard.IsVisible = false;
+    ui.Toaster.Bake("戦闘開始!!");
+
+    // 敵Wave発動
+    wm.SetEnemyWavePropertySet(fm.MakeFixedEnemyWavePropertySet());
+    wm.Run();
+
+    // スキルを起動
+    RunSkill();
   }
 
   private void UpdateBattle()
   {
     // プレイヤーが死亡したか敵が全滅したらリザルトへ
     if (PlayerManager.Instance.PlayerIsDead) {
-      UIManager.Instance.Toaster.Bake("敗北!!");
-      ItemManager.Instance.Clear();
+      OnLoseBattle();
       state.SetState(State.BattleEnded);
       return;
     }
 
     // 目標撃破数に到達したらリザルトへ
     if (stageRemainingKillCount <= 0) {
-      UIManager.Instance.Toaster.Bake("勝利!!");
-      ItemManager.Instance.Collect(PlayerManager.Instance.Position);
-
+      OnWinBattle();
       state.SetState(State.BattleEnded);
       return;
     }
+  }
+
+  private void OnLoseBattle()
+  {
+    UIManager.Instance.Toaster.Bake("敗北!!");
+    battleResult = BattleResult.Lose;
+    ItemManager.Instance.Clear();
+  }
+
+  private void OnWinBattle()
+  {
+    UIManager.Instance.Toaster.Bake("勝利!!");
+    battleResult = BattleResult.Win;
+    ItemManager.Instance.Collect(PlayerManager.Instance.Position);
   }
 
   //----------------------------------------------------------------------------
@@ -238,8 +258,6 @@ public class FieldScene : MyMonoBehaviour
     BulletManager.Instance.Terminate();
     WaveManager.Instance.Terminate();
     FieldManager.Instance.InactivateBattleCircle();
-
-    UIManager.Instance.Toaster.Bake("戦闘終了!!");
   }
 
   private void UpdateBattleEnded()
@@ -279,6 +297,7 @@ public class FieldScene : MyMonoBehaviour
   private void ExitResult()
   {
     TimeSystem.MenuPause = false;
+    battleResult = BattleResult.Undefined;
   }
 
   //----------------------------------------------------------------------------

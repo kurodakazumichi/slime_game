@@ -82,3 +82,10 @@ public enum Attribute
   Hol = 1 << 7, // 聖
   Dar = 1 << 8, // 闇
 }
+
+public enum BattleResult
+{
+  Undefined, // 未定義
+  Win,       // 勝利
+  Lose,      // 敗北
+}
