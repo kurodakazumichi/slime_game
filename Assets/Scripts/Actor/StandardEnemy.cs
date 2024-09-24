@@ -103,7 +103,7 @@ public class StandardEnemy : Enemy<StandardEnemy.State>
 
   private void EnterDead()
   {
-    timer = 0.5f; 
+    timer = 0.25f; 
     Alpha = 1f;
   }
 
