@@ -562,6 +562,7 @@ MonoBehaviour:
   hud: {fileID: 702327977}
   battleLocationBoard: {fileID: 5219509078864660797}
   toaster: {fileID: 1116001606}
+  result: {fileID: 1008821717}
 --- !u!114 &417701252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,6 +1236,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3643722009682889857, guid: dc6e97dab0e143045834f56c7cffafce, type: 3}
   m_PrefabInstance: {fileID: 1008821715}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1008821717 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6329182479945817418, guid: dc6e97dab0e143045834f56c7cffafce, type: 3}
+  m_PrefabInstance: {fileID: 1008821715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22950b481fbbd9f4d9f49e424a3b9698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1034343628
 GameObject:
   m_ObjectHideFlags: 0

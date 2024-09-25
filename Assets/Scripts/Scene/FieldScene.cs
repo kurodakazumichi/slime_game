@@ -282,9 +282,12 @@ public class FieldScene : MyMonoBehaviour
     state.SetState(State.Result);
   }
 
+  //----------------------------------------------------------------------------
+  // for Result
+
   private void EnterResult()
   {
-
+    UIManager.Instance.Result.Show();
   }
 
   private void UpdateResult()
@@ -296,7 +299,8 @@ public class FieldScene : MyMonoBehaviour
 
   private void ExitResult()
   {
-    TimeSystem.MenuPause = false;
+    TimeSystem.Player.Pause(false);
+    UIManager.Instance.Result.Hide();
     battleResult = BattleResult.Undefined;
   }
 
