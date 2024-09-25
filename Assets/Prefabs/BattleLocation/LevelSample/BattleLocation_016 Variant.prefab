@@ -47,9 +47,9 @@ MonoBehaviour:
   props:
     EnemyId: Enemy016
     RoleId: Random
-    WaveCount: 25
-    WaveInterval: 3
-    EnemyAmountPerWave: 8
+    WaveCount: 1
+    WaveInterval: 1
+    EnemyAmountPerWave: 20
     WaitTime: 0
     OriginAngle: -1
     EnemyLv: 2
@@ -103,7 +103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1233194861112042554, guid: 55a61b058b8b5074f97756eba4766321, type: 3}
       propertyPath: requiredKillCount
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1487356263075315522, guid: 55a61b058b8b5074f97756eba4766321, type: 3}
       propertyPath: m_Text

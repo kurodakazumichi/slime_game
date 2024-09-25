@@ -221,22 +221,7 @@ public class Skill : ISkill
   /// </summary>
   private int GetNeedExp(int lv)
   {
-    // 成長タイプ別係数
-    const float GROWTH_FAST_FACTOR = 2.0f;
-    const float GROWTH_SLOW_FACTOR = 0.5f;
-
-    lv = Mathf.Clamp(lv, 0, App.SKILL_MAX_LEVEL);
-
-    var rate = (float)(lv) / App.SKILL_MAX_LEVEL;
-
-    // 成長タイプ補正
-    switch (config.GrowthType) {
-      case Growth.Fast: rate = Mathf.Pow(rate, GROWTH_FAST_FACTOR); break;
-      case Growth.Slow: rate = Mathf.Pow(rate, GROWTH_SLOW_FACTOR); break;
-      default: break;
-    }
-
-    return (int)Mathf.Lerp(0, config.MaxExp, rate);
+    return SkillManager.GetNeedExp(config, lv);
   }
 
   /// <summary>

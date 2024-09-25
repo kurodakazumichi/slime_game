@@ -47,9 +47,9 @@ public class BattleLocationBoard : MyMonoBehaviour
   // Variables
   //============================================================================
 
-  private IObjectPool<Icon> iconPool;
+  private IObjectPool<EnemyIcon> iconPool;
 
-  private List<Icon> icons = new();
+  private List<EnemyIcon> icons = new();
 
   //============================================================================
   // Properties
@@ -120,8 +120,8 @@ public class BattleLocationBoard : MyMonoBehaviour
   {
     IsVisible = false;
 
-    iconPool = new LinkedPool<Icon>(
-      () => Instantiate(iconPrefab, EnemyIconFolder).GetComponent<Icon>(),
+    iconPool = new LinkedPool<EnemyIcon>(
+      () => Instantiate(iconPrefab, EnemyIconFolder).GetComponent<EnemyIcon>(),
       icon => icon.SetActive(true),
       icon => icon.SetActive(false),
       icon => Destroy(icon.gameObject)

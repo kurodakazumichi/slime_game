@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 3851575110707550916}
+  skillRecordPrefab: {fileID: 1822138547945262480, guid: 183bfb50fa0ec7040af11d88dd5d1f72, type: 3}
 --- !u!1 &2236559465492846033
 GameObject:
   m_ObjectHideFlags: 0

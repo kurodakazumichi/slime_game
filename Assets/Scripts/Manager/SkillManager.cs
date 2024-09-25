@@ -140,6 +140,10 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   /// </summary>
   public void AddExp(SkillId id, int exp)
   {
+    if (BattleLog.Instance is not null) {
+      BattleLog.Instance.AddExp(id, exp);
+    }
+
     if (GetExp(id) < 0) {
       Logger.Log($"[SkillManager.AddExp] New {id.ToString()}");
 
@@ -178,6 +182,47 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   private ISkill GetSkill(SkillId id)
   {
     return skills[(int)id];
+  }
+
+  //----------------------------------------------------------------------------
+  // Static
+
+  /// <summary>
+  /// 設定の基づいてexpからLvを逆算する
+  /// </summary>
+  public static int CalcLevelBy(ISkillEntityRO config, int exp)
+  {
+    for (int i = App.SKILL_MAX_LEVEL; 0 <= i; --i) {
+
+      if (GetNeedExp(config, i) <= exp) {
+        return i;
+      }
+    }
+
+    return 0;
+  }
+
+  /// <summary>
+  /// Lvに必要な経験値を取得
+  /// </summary>
+  public static int GetNeedExp(ISkillEntityRO config,  int lv)
+  {
+    // 成長タイプ別係数
+    const float GROWTH_FAST_FACTOR = 2.0f;
+    const float GROWTH_SLOW_FACTOR = 0.5f;
+
+    lv = Mathf.Clamp(lv, 0, App.SKILL_MAX_LEVEL);
+
+    var rate = (float)(lv) / App.SKILL_MAX_LEVEL;
+
+    // 成長タイプ補正
+    switch (config.GrowthType) {
+      case Growth.Fast: rate = Mathf.Pow(rate, GROWTH_FAST_FACTOR); break;
+      case Growth.Slow: rate = Mathf.Pow(rate, GROWTH_SLOW_FACTOR); break;
+      default: break;
+    }
+
+    return (int)Mathf.Lerp(0, config.MaxExp, rate);
   }
 
   //----------------------------------------------------------------------------

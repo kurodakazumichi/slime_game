@@ -188,6 +188,9 @@ public class FieldScene : MyMonoBehaviour
     }
 #endif
 
+    // ログを初期化
+    BattleLog.Instance.Reset();
+
     // Syntax sugar
     var fm = FieldManager.Instance;
     var wm = WaveManager.Instance;
