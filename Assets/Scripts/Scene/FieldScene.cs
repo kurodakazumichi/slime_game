@@ -235,14 +235,12 @@ public class FieldScene : MyMonoBehaviour
 
   private void OnLoseBattle()
   {
-    UIManager.Instance.Toaster.Bake("敗北!!");
     battleResult = BattleResult.Lose;
     ItemManager.Instance.Clear();
   }
 
   private void OnWinBattle()
   {
-    UIManager.Instance.Toaster.Bake("勝利!!");
     battleResult = BattleResult.Win;
     ItemManager.Instance.Collect(PlayerManager.Instance.Position);
   }
@@ -287,6 +285,12 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterResult()
   {
+    if (battleResult == BattleResult.Lose) {
+      UIManager.Instance.Result.Lose();
+    } else {
+      UIManager.Instance.Result.Win();
+    }
+
     UIManager.Instance.Result.Show();
   }
 

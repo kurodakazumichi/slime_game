@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace MyGame.UI
@@ -7,6 +7,16 @@ namespace MyGame.UI
   {
     [SerializeField]
     private Text title;
+
+    public void Win()
+    {
+      title.text = "勝利";
+    }
+
+    public void Lose()
+    {
+      title.text = "敗北";
+    }
 
     public void Show()
     {
