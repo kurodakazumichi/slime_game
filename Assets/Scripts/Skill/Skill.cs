@@ -142,11 +142,11 @@ public class Skill : ISkill
   public void SetExp(int exp)
   {
     exp                  = Mathf.Max(0, exp);
-    Lv                   = CalcLevelBy(exp);
-    RecastTime           = CalcRecastTimeBy(Lv);
-    Power                = CalcPowerBy(Lv);
-    PenetrableCount      = CalcPenetrableCount(Lv);
-    SpeedCorrectionValue = CalcSpeedCorrectionValue(Lv);
+    Lv                   = SkillUtil.CalcLevelBy(config, exp);
+    RecastTime           = SkillUtil.CalcRecastTimeBy(config, Lv);
+    Power                = SkillUtil.CalcPowerBy(config, Lv);
+    PenetrableCount      = SkillUtil.CalcPenetrableCount(config, Lv);
+    SpeedCorrectionValue = SkillUtil.CalcSpeedCorrectionValue(config, Lv);
   }
 
   /// <summary>
@@ -156,22 +156,7 @@ public class Skill : ISkill
   public void SetLv(int lv)
   {
     lv = Mathf.Clamp(lv, 0, App.SKILL_MAX_LEVEL);
-    SetExp(GetNeedExp(lv));
-  }
-
-  /// <summary>
-  /// 経験値からレベルを計算
-  /// </summary>
-  private int CalcLevelBy(int exp)
-  {
-    for (int i = App.SKILL_MAX_LEVEL; 0 <= i; --i) {
-
-      if (GetNeedExp(i) <= exp) {
-        return i;
-      }
-    }
-
-    return 0;
+    SetExp(SkillUtil.GetNeedExp(config, lv));
   }
 
   /// <summary>
@@ -185,51 +170,11 @@ public class Skill : ISkill
   }
 
   /// <summary>
-  /// Lvに応じたリキャストタイムを計算
-  /// </summary>
-  private float CalcRecastTimeBy(int lv)
-  {
-    return LerpParam(config.FirstRecastTime, config.LastRecastTime, lv);
-  }
-
-  /// <summary>
-  /// Lvに応じたパワーを計算
-  /// </summary>
-  private int CalcPowerBy(int lv)
-  {
-    return (int)LerpParam(config.FirstPower, config.LastPower, lv);
-  }
-
-  /// <summary>
-  /// Lvに応じた貫通数を計算
-  /// </summary>
-  private int CalcPenetrableCount(int lv)
-  {
-    return (int)LerpParam(config.FirstPenetrableCount, config.LastPenetrableCount, lv);
-  }
-
-  /// <summary>
-  /// Lvに応じた速度補正値を計算
-  /// </summary>
-  private float CalcSpeedCorrectionValue(int lv)
-  {
-    return LerpParam(1f, config.SpeedGrowthRate, lv);
-  }
-
-  /// <summary>
-  /// Lvに必要な経験値を取得
-  /// </summary>
-  private int GetNeedExp(int lv)
-  {
-    return SkillManager.GetNeedExp(config, lv);
-  }
-
-  /// <summary>
   /// 次のレベルの経験値
   /// </summary>
   private int GetNextExp()
   {
-    return GetNeedExp(Lv + 1);
+    return SkillUtil.GetNeedExp(config, Lv + 1);
   }
 
 #if _DEBUG
