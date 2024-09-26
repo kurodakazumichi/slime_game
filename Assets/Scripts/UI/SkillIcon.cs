@@ -9,7 +9,16 @@ public class SkillIcon : MyUIBehaviour
   // Inspector
   //============================================================================
   [SerializeField]
+  private Image uiBackground;
+
+  [SerializeField]
   private Image uiIconImage;
+
+  public bool IsSelected {
+    set {
+      uiBackground.color = (value)? Color.yellow : Color.white;
+    }
+  }
 
   public void SetSprite(Sprite sprite)
   {

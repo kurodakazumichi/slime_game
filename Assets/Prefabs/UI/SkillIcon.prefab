@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiIconImage: {fileID: 2420781066640006215}
+  uiBackground: {fileID: 2599142258181707713}
 --- !u!1 &2053822141220766408
 GameObject:
   m_ObjectHideFlags: 0
