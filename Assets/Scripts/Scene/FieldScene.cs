@@ -31,6 +31,8 @@ public class FieldScene : MyMonoBehaviour
   private int stageRequiredKillCount = 0;
   private BattleResult battleResult = BattleResult.Undefined;
 
+  private MyGame.UI.SkillSettingController uiSkillController = new();
+
   //============================================================================
   // Properties
   //============================================================================
@@ -64,7 +66,7 @@ public class FieldScene : MyMonoBehaviour
     state.Add(State.Battle, EnterBattle, UpdateBattle);
     state.Add(State.BattleEnded, EnterBattleEnded, UpdateBattleEnded);
     state.Add(State.Result, EnterResult, UpdateResult, ExitResult);
-    state.Add(State.Menu);
+    state.Add(State.Menu, EnterMenu, UpdateMenu, ExitMenu);
     state.SetState(State.Idle);
   }
   
@@ -109,6 +111,12 @@ public class FieldScene : MyMonoBehaviour
     SkillManager.Instance.OnLevelUpSkill    = OnLevelUpSkill;
     EnemyManager.Instance.OnDeadEnemy       = OnDeadEnemy;
     PlayerManager.Instance.OnChangePlayerHP = OnChangePlayerHP;
+
+    uiSkillController.Init(
+      SkillManager.Instance, 
+      IconManager.Instance, 
+      UIManager.Instance.SkillSetting
+    );
   }
 
   private void UpdateSystemSetup()
@@ -172,6 +180,11 @@ public class FieldScene : MyMonoBehaviour
     if (FieldManager.Instance.HasReservedLocation && Input.GetKeyDown(KeyCode.A)) {
       FieldManager.Instance.FixLocation(); // 戦場を確定
       state.SetState(State.Battle);
+    }
+
+    if (Input.GetKeyDown(KeyCode.X)) {
+      state.SetState(State.Menu);
+      return;
     }
   }
 
@@ -310,6 +323,31 @@ public class FieldScene : MyMonoBehaviour
     UIManager.Instance.Result.Hide();
     battleResult = BattleResult.Undefined;
   }
+
+  //----------------------------------------------------------------------------
+  // for Menu
+
+  private void EnterMenu()
+  {
+    TimeSystem.MenuPause = true;
+    uiSkillController.Open();
+  }
+
+  private void UpdateMenu()
+  {
+    if (Input.GetKeyDown(KeyCode.X)) {
+      state.SetState(State.Serach);
+      return;
+    }
+    uiSkillController.Update();
+  }
+
+  private void ExitMenu()
+  {
+    uiSkillController.Close();
+    TimeSystem.MenuPause = false;
+  }
+
 
   //----------------------------------------------------------------------------
   // Callback
