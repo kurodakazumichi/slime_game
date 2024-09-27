@@ -82,4 +82,28 @@ public static class SkillUtil
     float rate = lv / (float)(App.SKILL_MAX_LEVEL);
     return Mathf.Lerp(min, max, rate);
   }
+
+  /// <summary>
+  /// SkillAimingTypeの名称を取得
+  /// </summary>
+  public static string GetSkillAimingTypeName(SkillAimingType aim)
+  {
+    switch(aim) {
+      case SkillAimingType.Player: return "自分";
+      case SkillAimingType.Random: return "ランダム";
+      case SkillAimingType.Nearest: return "一番近く";
+      case SkillAimingType.Weakest: return "弱点狙い";
+      default:                      return "--";
+    }
+  }
+
+  public static string GetGrowthName(Growth growth)
+  {
+    switch (growth) {
+      case Growth.Normal: return "普通";
+      case Growth.Slow  : return "遅い";
+      case Growth.Fast  : return "速い";
+      default           : return "--";
+    }
+  }
 }

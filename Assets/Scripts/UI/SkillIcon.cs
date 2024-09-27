@@ -14,15 +14,25 @@ public class SkillIcon : MyUIBehaviour
   [SerializeField]
   private Image uiIconImage;
 
+  [SerializeField]
+  private GameObject uiEquipIcon;
+
   public bool IsSelected {
     set {
       uiBackground.color = (value)? Color.yellow : Color.white;
     }
   }
 
+  public bool IsEquipped {
+    set {
+      uiEquipIcon.SetActive(value);
+    }
+  }
+
   public void SetSprite(Sprite sprite)
   {
     uiIconImage.sprite = sprite;
+    uiIconImage.color = (sprite is null)? new Color(0, 0, 0, 0) : Color.white;
   }
 
   public void SetSize(float x, float y)

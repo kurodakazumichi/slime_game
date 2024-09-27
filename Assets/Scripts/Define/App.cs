@@ -2,7 +2,7 @@
 
 public static class App
 {
-  public const int ACTIVE_SKILL_MAX = 10;
+  public const int ACTIVE_SKILL_MAX = 5;
   public const int SKILL_MAX_LEVEL = 10;
   public const int ENEMY_MAX_LEVEL = 10;
   public const float CAMERA_ANGLE_X = 45f;
@@ -61,6 +61,7 @@ public enum BulletOwner
 /// </summary>
 public enum Growth
 {
+  Undefined, // 未定義
   Normal, // 普通
   Slow,   // 遅い
   Fast,   // 速い

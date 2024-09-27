@@ -46,7 +46,7 @@ public class BattleLog : SingletonMonoBehaviour<BattleLog>
       var crntExp = SkillManager.Instance.GetExp(id);
       var prevExp = crntExp - exp;
       var crntLv = SkillManager.Instance.GetLevel(id);
-      var prevLv = SkillManager.CalcLevelBy(config, prevExp);
+      var prevLv = SkillUtil.CalcLevelBy(config, prevExp);
       var isNew  = (prevExp < 0);
 
       action?.Invoke(new SkillRecordInfo() {

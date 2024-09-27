@@ -7,24 +7,42 @@ namespace MyGame.UiTest
 {
   public class UISkillSettingTestScene : MonoBehaviour
   {
+    public GameObject SkillIconPrefab;
     public SkillSetting UI;
+
+    private SkillSettingController controller = new ();
+
+    void Start()
+    {
+      DebugManager.Instance.Regist(ResourceManager.Instance);
+      DebugManager.Instance.Regist(SkillManager.Instance);
+      DebugManager.Instance.Regist(IconManager.Instance);
+
+      // IconÇÉçÅ[ÉhÇµÇƒÇ®Ç≠
+      IconManager.Instance.Load();
+
+      MyEnum.ForEach<SkillId>(id => {
+        if (id != SkillId.Undefined) {
+          SkillManager.Instance.SetExp(id, 100);
+        }
+      });
+
+      // SkillSettingControllerÇê∂ê¨
+      controller.Init(SkillManager.Instance, IconManager.Instance, UI);
+    }
 
     private void Update()
     {
-      if (Input.GetKeyDown(KeyCode.Alpha1)) {
-        UI.SelectSlot(0);
+      if (ResourceManager.Instance.IsLoading) return;
+
+      controller.Update();
+
+      if (Input.GetKeyDown(KeyCode.O)) {
+        controller.Open();
       }
-      if (Input.GetKeyDown(KeyCode.Alpha2)) {
-        UI.SelectSlot(1);
-      }
-      if (Input.GetKeyDown(KeyCode.Alpha3)) {
-        UI.SelectSlot(2);
-      }
-      if (Input.GetKeyDown(KeyCode.Alpha4)) {
-        UI.SelectSlot(3);
-      }
-      if (Input.GetKeyDown(KeyCode.Alpha5)) {
-        UI.SelectSlot(4);
+
+      if (Input.GetKeyDown(KeyCode.C)) {
+        controller.Close();
       }
     }
   }
