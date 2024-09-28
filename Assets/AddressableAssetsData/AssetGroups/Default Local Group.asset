@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f3e80e085d4b5384487623b1e30ede70
   m_SerializeEntries:
+  - m_GUID: 0329fb396068e734991d3ef19a67b9aa
+    m_Address: Master/Enemy/Enemy022.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 058bfa9b86b44b043a5bee99a8beb71a
     m_Address: Item/SkillItem.prefab
     m_ReadOnly: 0
@@ -37,6 +42,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fd6320e39aa05c42931cd44b8f0bcd8
+    m_Address: Master/Enemy/Enemy000.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0ffa9cdbd4958f44f8dd93a440d422cd
     m_Address: Bullet/NormalBullet1/Object.prefab
     m_ReadOnly: 0
@@ -44,6 +54,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1afa196ba4b5f0a4691e799e44b4157a
     m_Address: Bullet/LeafBullet1/Object.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1da6b24166f00d1459a4efb79946434d
+    m_Address: Master/Enemy/Enemy011.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -84,6 +99,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4146f5002dda1134db94e022e1541402
     m_Address: Enemy/014/014.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43a0b4c5cb27551468ab0283db6a172a
+    m_Address: Master/Enemy/Enemy016.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -132,6 +152,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a4ce439d0fe2d344afe2aba979e0f41
+    m_Address: Master/Enemy/Enemy024.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6df102c40d2bab446a0e37b7cf0e8c86
     m_Address: Bullet/WaterBullet1/WaterBullet1.png
     m_ReadOnly: 0
@@ -139,6 +164,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 782888dd8fb6e9648946ca61ac98d9e9
     m_Address: Bullet/LeafBullet1/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b112cdc83a0ee140b811fddbcd775bf
+    m_Address: Master/Enemy/Enemy027.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -227,6 +257,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2b4f3f561b9e9e4e84ad64f081d900c
+    m_Address: Master/Enemy/Enemy013.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b94bb71b16386174da466dea1a392f81
+    m_Address: Master/Enemy/Enemy020.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb6044dc3dac17a4eb214d31fe9e54fc
     m_Address: Icon/Enemies.png
     m_ReadOnly: 0
@@ -234,6 +274,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bdfac0910f7ea3c46b74f67f82a11145
     m_Address: Enemy/020/020.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bee45dff572a0e14f9a7828917f00a5c
+    m_Address: Master/Enemy/Enemy003.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1a34a5eefbc35840923195c6eeee474
+    m_Address: Master/Enemy/Enemy006.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -262,6 +312,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e110c5c5fe723c1488636c7664868698
+    m_Address: Master/csv/Enemy.csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eef6a7332a65cd443a7ccff094038796
     m_Address: Bullet/LeafBullet1/LeafBullet1.png
     m_ReadOnly: 0
@@ -274,6 +329,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f966fcd7491758342b087ebb9ae23c20
     m_Address: Bullet/PiercingBullet1/Usual.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fbc0a8ea4a5c57f438c2dc57ad42afa3
+    m_Address: Master/Enemy/Enemy017.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe93a44849f3725418d434efea4b951e
+    m_Address: Master/Enemy/Enemy014.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
