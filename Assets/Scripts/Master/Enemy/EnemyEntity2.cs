@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MyGame.Master
 {
-  public class EnemyEntity2 : ScriptableObject, IEnemyEntityRO
+  public interface IConvertibleCsvText
+  {
+    string ToCsvText();
+  }
+
+  public class EnemyEntity2 : ScriptableObject, IEnemyEntityRO, IConvertibleCsvText
   {
     //=========================================================================
     // Inspector
@@ -68,7 +74,36 @@ namespace MyGame.Master
 
     public string IconPath => throw new System.NotImplementedException();
 
+    //=========================================================================
+    // ToString
+    //=========================================================================
 
+    public static string CsvHeaderString()
+    {
+      return "Id,No,Name,HP,Power,Speed,Mass,AttackAttr,WeakAttr,ResistAttr,NullfiedAttr,SkillId,Exp";
+    }
+
+    public string ToCsvText()
+    {
+      string[] datas = { 
+        _id,
+        _no.ToString(),
+        _name,
+        _hp.ToString(),
+        _power.ToString(),
+        _speed.ToString(),
+        _mass.ToString(),
+        _attackAttributes,
+        _weakAttributes,
+        _resistAttributes,
+        _nullfiedAttributes,
+        _skillId.ToString(),
+        _exp.ToString(),
+      };
+
+      return string.Join(",", datas);
+
+    }
   }
 }
 

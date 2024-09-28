@@ -1,17 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
 using MyGame.Master;
+using System.Text;
 
 public class ConvertMaster
 {
+  //===========================================================================
+  // Const
+  //===========================================================================
+  /// <summary>
+  /// Masterデータの大元となるcsvファイルを格納しているディレクトリパス
+  /// </summary>
   const string CSV_BASE_PATH = "Assets/Addressables/Master/csv";
-  const string DAT_BASE_PATH = "Assets/Addressables/Master";
 
   /// <summary>
-  /// Convert Enemy.csv to Scriptable Objects
+  /// 各種Master(ScripatbleObject)を格納している親ディレクトリのパス
+  /// </summary>
+  const string DAT_BASE_PATH = "Assets/Addressables/Master";
+
+  //===========================================================================
+  // Convert Enemy Master
+  //===========================================================================
+  /// <summary>
+  /// 敵のデータ(csv)をScriptableObjectに出力
   /// </summary>
   [MenuItem("Assets/ConvertMaster/Enemy/csv2obj")]
   public static void ConvertEnemyCsvToEnemyMaster()
@@ -42,18 +55,66 @@ public class ConvertMaster
   }
 
   /// <summary>
-  /// CSV��1�s�ڂ��w�b�_�s�Ƃ��āACSV�����[�h�A�p�[�X������Ԃ̃f�[�^��Ԃ�
+  /// 敵のデータ(ScriptableObject)の内容をcsvファイルに出力
   /// </summary>
-  public static List<Dictionary<string, string>> LoadAndParseCsv(string path)
+  [MenuItem("Assets/ConvertMaster/Enemy/obj2csv")]
+  public static void ConvertEnemyMasterToEnemyCsv()
   {
-    // CSV���[�h
+    var DATA_DIR = $"{DAT_BASE_PATH}/Enemy/";
+    var CSV_PATH = $"{CSV_BASE_PATH}/Enemy.csv";
+
+    // DATA_DIRにある全ScriptableObjectの内容をCsvTextにする
+    var text = MakeCsvTextFromMasterDatas<EnemyEntity2>(DATA_DIR, EnemyEntity2.CsvHeaderString());
+
+    // ファイル書き込み
+    using (var writer = new StreamWriter(CSV_PATH)) {
+      writer.Write(text);
+    }
+      
+    // UnityにImport
+    AssetDatabase.ImportAsset(CSV_PATH);
+  }
+
+  //===========================================================================
+  // Common
+  //===========================================================================
+
+  /// <summary>
+  /// 指定されたディレクトリにあるMasterデータを元にCsvTextを生成する
+  /// </summary>
+  private static string MakeCsvTextFromMasterDatas<T>(string dataDirPath, string header) where T : ScriptableObject
+  {
+    // データを格納しているディレクトリにあるScriptableObjectのパスを全て取得
+    var paths = GetFilesWithExtension(dataDirPath, "*.asset");
+
+    // ScriptableObjectの内容をCSV形式のデータに変換
+    StringBuilder sb = new();
+    sb.Append(EnemyEntity2.CsvHeaderString());
+    sb.Append("\r\n");
+
+    foreach (var path in paths) 
+    {
+      var so = AssetDatabase.LoadAssetAtPath<T>(path) as IConvertibleCsvText;
+      sb.Append(so.ToCsvText());
+      sb.Append("\r\n");
+    }
+
+    return sb.ToString();
+  }
+
+  /// <summary>
+  /// CSVの1行目をヘッダ行として、CSVをロード、パースした状態のデータを返す
+  /// </summary>
+  private static List<Dictionary<string, string>> LoadAndParseCsv(string path)
+  {
+    // CSVロード
     var csv    = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
     var reader = new StringReader(csv.text);
 
-    // �w�b�_�s�ǂݍ���
+    // ヘッダ行読み込み
     var header = reader.ReadLine().Split(',');
 
-    // �f�[�^�s�ǂݍ���
+    // データ行読み込み
     List<Dictionary<string, string>> datas = new();
 
     while(reader.Peek() != -1) 
@@ -74,9 +135,9 @@ public class ConvertMaster
   }
 
   /// <summary>
-  /// {path}�Ŏw�肵���t�@�C��(ScriptableObject)�����[�h�A�t�@�C�����Ȃ���ΐV�K�쐬����B
+  /// {path}で指定したファイル(ScriptableObject)をロード、ファイルがなければ新規作成する。
   /// </summary>
-  public static T LoadOrCreate<T>(string path) where T : ScriptableObject
+  private static T LoadOrCreate<T>(string path) where T : ScriptableObject
   {
     var so = AssetDatabase.LoadAssetAtPath<T>(path);
 
@@ -86,5 +147,21 @@ public class ConvertMaster
     }
 
     return so;
+  }
+
+  /// <summary>
+  /// 特定の拡張子を持つファイル一覧を取得するメソッド 
+  /// </summary>
+  private static string[] GetFilesWithExtension(string folderPath, string extension)
+  {
+    // パスが存在するかチェック
+    if (!Directory.Exists(folderPath))
+    {
+      Debug.LogError("フォルダが存在しません: " + folderPath);
+      return new string[0];
+    }
+
+    // 拡張子に基づいてファイル一覧を取得
+    return Directory.GetFiles(folderPath, extension, SearchOption.TopDirectoryOnly);
   }
 }
