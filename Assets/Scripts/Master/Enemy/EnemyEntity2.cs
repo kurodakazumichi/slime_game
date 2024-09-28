@@ -5,10 +5,7 @@ using UnityEngine;
 
 namespace MyGame.Master
 {
-  public interface IConvertibleCsvText
-  {
-    string ToCsvText();
-  }
+
 
   public class EnemyEntity2 : ScriptableObject, IEnemyEntityRO, IConvertibleCsvText
   {
