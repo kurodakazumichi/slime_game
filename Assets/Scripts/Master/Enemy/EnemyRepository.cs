@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace MyGame.Master
 {
@@ -20,21 +19,12 @@ namespace MyGame.Master
       {
         if (id == EnemyId.Undefined) return;
 
-        var entity = LoadEntity(id);
+        var dir    = "Enemy";
+        var file   = id.ToString();
+        var entity = MasterUtil.LoadEntity<EnemyEntity>(dir, file);
         entity.Init();
         entities.Add(entity);
       });
-    }
-
-    /// <summary>
-    /// EnemyIdに対応するMasterデータをロードする
-    /// </summary>
-    private static EnemyEntity LoadEntity(EnemyId id)
-    {
-      var path = $"Master/Enemy/{id.ToString()}.asset";
-      var handle = Addressables.LoadAssetAsync<EnemyEntity>(path);
-      handle.WaitForCompletion();
-      return handle.Result;
     }
   }
 }
