@@ -98,8 +98,8 @@ public class ConvertMaster
       so._maxExp          = int.Parse(data["MaxExp"]);
       so._recastF         = float.Parse(data["RecastF"]);
       so._recastL         = float.Parse(data["RecastL"]);
-      so._powerF          = float.Parse(data["PowerF"]);
-      so._powerL          = float.Parse(data["PowerL"]);
+      so._powerF          = int.Parse(data["PowerF"]);
+      so._powerL          = int.Parse(data["PowerL"]);
       so._penetrableF     = int.Parse(data["PenetrableF"]);
       so._penetrableL     = int.Parse(data["PenetrableL"]);
       so._speedGrowthRate = float.Parse(data["SpeedGrowthRate"]);

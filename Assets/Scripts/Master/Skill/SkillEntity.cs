@@ -14,8 +14,8 @@ namespace MyGame.Master
     public int _maxExp;
     public float _recastF;
     public float _recastL;
-    public float _powerF;
-    public float _powerL;
+    public int _powerF;
+    public int _powerL;
     public int _penetrableF;
     public int _penetrableL;
     public float _speedGrowthRate;
@@ -26,39 +26,71 @@ namespace MyGame.Master
     public string _aimingType;
 
     //=========================================================================
+    // Variables that need to be converted.
+    // Inspectorで設定された文字列やデータの中で変換する必要があるパラメータを定義
+    // 以下に定義されたデータはInitのタイミングで使える形式に変換される。
+    //=========================================================================
+    private SkillId id;
+    private Growth growthType;
+    private SkillAimingType aimingType;
+    private uint attributes;
+    private string prefab;
+
+    //=========================================================================
     // Property
     //=========================================================================
-    public SkillId Id => throw new System.NotImplementedException();
+    public SkillId Id => id;
 
-    public int MaxExp => throw new System.NotImplementedException();
+    public int MaxExp => _maxExp;
 
-    public float FirstRecastTime => throw new System.NotImplementedException();
+    public float FirstRecastTime => _recastF;
 
-    public float LastRecastTime => throw new System.NotImplementedException();
+    public float LastRecastTime => _recastL;
 
-    public int FirstPower => throw new System.NotImplementedException();
+    public int FirstPower => _powerF;
 
-    public int LastPower => throw new System.NotImplementedException();
+    public int LastPower => _powerL;
 
-    public int FirstPenetrableCount => throw new System.NotImplementedException();
+    public int FirstPenetrableCount => _penetrableF;
 
-    public int LastPenetrableCount => throw new System.NotImplementedException();
+    public int LastPenetrableCount => _penetrableL;
 
-    public float SpeedGrowthRate => throw new System.NotImplementedException();
+    public float SpeedGrowthRate => _speedGrowthRate;
 
-    public uint Attr => throw new System.NotImplementedException();
+    public uint Attr => attributes;
 
-    public string Name => throw new System.NotImplementedException();
+    public string Name => _name;
 
-    public string Prefab => throw new System.NotImplementedException();
+    public string Prefab => prefab;
 
-    public Growth GrowthType => throw new System.NotImplementedException();
+    public Growth GrowthType => growthType;
 
-    public float Impact => throw new System.NotImplementedException();
+    public float Impact => _impact;
 
-    public int IconNo => throw new System.NotImplementedException();
+    public int IconNo => _iconNo;
 
-    public SkillAimingType Aiming => throw new System.NotImplementedException();
+    public SkillAimingType Aiming => aimingType;
+
+    //=========================================================================
+    // Method
+    //=========================================================================
+    public void Init()
+    {
+      if (!MyEnum.TryParse<SkillId>(_id, out id)) {
+        Logger.Error($"SkillId {_id} parse failed.");
+      }
+
+      if (!MyEnum.TryParse<Growth>(_growthType, out growthType)) {
+        Logger.Error($"Growth {_growthType} parse failed.");
+      }
+
+      if (!MyEnum.TryParse<SkillAimingType>(_aimingType, out aimingType)) {
+        Logger.Error($"SkillAimingType {_aimingType} parse failed.");
+      }
+
+      attributes = AttributeUtil.GetAttributesFromString(_attributes);
+      prefab = $"Bullet/{_id}/Object.prefab";
+    }
 
     //=========================================================================
     // ToString
