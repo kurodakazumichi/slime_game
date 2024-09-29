@@ -1,5 +1,5 @@
 Id,No,Name,HP,Power,Speed,Mass,AttackAttr,WeakAttr,ResistAttr,NullfiedAttr,SkillId,Exp
-FireBullet1,7,ファイアバレット2,999,2,1,10,30,0,0,1,Fir,Normal,1,3,Weakest
+FireBullet1,7,ファイアバレット,999,2,1,10,30,0,0,1,Fir,Normal,1,3,Weakest
 IceBullet1,11,アイスランス,999,1,0.2,1,10,0,0,1,Ice,Normal,1,8,Weakest
 LeafBullet1,10,リーフカッター,999,10,5,1,5,0,10,1,Lef,Normal,10,2,Player
 NormalBullet1,1,通常弾,999,2,1,5,20,0,2,2,Non,Fast,1,0,Nearest
