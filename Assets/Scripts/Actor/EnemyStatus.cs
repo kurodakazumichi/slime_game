@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using MyGame.Master;
 
 public class EnemyStatus
 {
@@ -9,7 +10,7 @@ public class EnemyStatus
   /// <summary>
   /// Enemy Master
   /// </summary>
-  private IEnemyEntityRO master;
+  private IEnemyEntity master;
 
   /// <summary>
   /// Lv

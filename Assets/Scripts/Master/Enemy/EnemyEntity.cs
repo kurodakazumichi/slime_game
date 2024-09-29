@@ -1,99 +1,154 @@
-﻿/// <summary>
-/// ReadOnlyのEnemyEntityインターフェース
-/// </summary>
-public interface IEnemyEntityRO
+﻿using UnityEngine;
+
+namespace MyGame.Master
 {
-  EnemyId Id { get; }
-  int No { get; }
-  string Name { get; }
-  float HP { get; }
-  float Power { get; }
-  float Speed { get; }
-  float Mass { get; }
-  uint AttackAttr { get; }
-  uint WeakAttr { get; }
-  uint ResistAttr { get; }
-  uint NullfiedAttr { get; }
-  SkillId SkillId { get; }
-  int Exp { get; }
-  string PrefabPath { get; }
-  string IconPath { get; }
+  public class EnemyEntity : ScriptableObject, IEnemyEntity, IConvertibleCsvText
+  {
+    //=========================================================================
+    // Inspector
+    //=========================================================================
+    public string _id;
+
+    public int _no;
+
+    public string _name;
+
+    public int _hp;
+
+    public int _power;
+
+    public float _speed;
+
+    public float _mass;
+
+    public string _attackAttributes;
+
+    public string _weakAttributes;
+
+    public string _resistAttributes;
+
+    public string _nullfiedAttributes;
+
+    public string _skillId;
+
+    public int _exp;
+
+    //=========================================================================
+    // Variables that need to be converted.
+    // Inspectorで設定された文字列やデータの中で変換する必要があるパラメータを定義
+    // 以下に定義されたデータはInitのタイミングで使える形式に変換される。
+    //=========================================================================
+    private EnemyId id;
+    private SkillId skillId;
+    private string prefabPath;
+    private uint attackAttributes;
+    private uint weakAttributes;
+    private uint resistAttributes;
+    private uint nullfiedAttributes;
+
+    //=========================================================================
+    // Property
+    //=========================================================================
+    public EnemyId Id => id;
+
+    public int No => _no;
+
+    public string Name => _name;
+
+    public float HP => _hp;
+
+    public float Power => _power;
+
+    public float Speed => _speed;
+
+    public float Mass => _mass;
+
+    public uint AttackAttr => attackAttributes;
+
+    public uint WeakAttr => weakAttributes;
+
+    public uint ResistAttr => resistAttributes;
+
+    public uint NullfiedAttr => nullfiedAttributes;
+
+    public SkillId SkillId => skillId;
+
+    public int Exp => _exp;
+
+    public string PrefabPath => prefabPath;
+
+    //=========================================================================
+    // Method
+    //=========================================================================
+    public void Init()
+    {
+      if (!MyEnum.TryParse<EnemyId>(_id, out id)) {
+        Logger.Error($"EnemyId {_id} parse failed.");
+      }
+      if (!MyEnum.TryParse<SkillId>(_skillId, out skillId)) {
+        Logger.Error($"SkillId {_skillId} parse failed.");
+      }
+
+      {
+        var no = _no.ToString("000");
+        prefabPath = $"Enemy/{no}/{no}.prefab";
+      }
+
+      attackAttributes   = ToAttributesFromString(_attackAttributes);
+      weakAttributes     = ToAttributesFromString(_weakAttributes);
+      resistAttributes   = ToAttributesFromString(_resistAttributes);
+      nullfiedAttributes = ToAttributesFromString(_nullfiedAttributes);
+    }
+
+    private uint ToAttributesFromString(string attributesString)
+    {
+      string[] words = attributesString.Split("|");
+
+      uint flag = 0;
+
+      foreach(string word in words) 
+      {
+        if (MyEnum.TryParse<Attribute>(word, out var attr)) {
+          flag |= (uint)attr;
+        }else {
+          Logger.Error($"{word} attribute parse failed.");
+        }
+      }
+
+      return flag;
+    }
+
+    //=========================================================================
+    // ToString
+    //=========================================================================
+
+    public static string CsvHeaderString()
+    {
+      return "Id,No,Name,HP,Power,Speed,Mass,AttackAttr,WeakAttr,ResistAttr,NullfiedAttr,SkillId,Exp";
+    }
+
+    public string ToCsvText()
+    {
+      string[] datas = { 
+        _id,
+        _no.ToString(),
+        _name,
+        _hp.ToString(),
+        _power.ToString(),
+        _speed.ToString(),
+        _mass.ToString(),
+        _attackAttributes,
+        _weakAttributes,
+        _resistAttributes,
+        _nullfiedAttributes,
+        _skillId.ToString(),
+        _exp.ToString(),
+      };
+
+      return string.Join(",", datas);
+
+    }
+  }
 }
 
-public class EnemyEntity : IEnemyEntityRO 
-{
-  /// <summary>
-  /// Enemy ID
-  /// </summary>
-  public EnemyId Id { get; set; }
 
-  /// <summary>
-  /// No
-  /// </summary>
-  public int No { get; set; }
-
-  /// <summary>
-  /// 名称
-  /// </summary>
-  public string Name { get; set; }
-
-  /// <summary>
-  /// HP
-  /// </summary>
-  public float HP { get; set; }
-
-  /// <summary>
-  /// 力、敵の攻撃力に使われる
-  /// </summary>
-  public float Power { get; set; }
-
-  /// <summary>
-  /// 敵の動きの速さに使う
-  /// </summary>
-  public float Speed { get; set; }
-
-  /// <summary>
-  /// 質量
-  /// </summary>
-  public float Mass { get; set; }
-
-  /// <summary>
-  /// 攻撃属性
-  /// </summary>
-  public uint AttackAttr { get; set; }
-
-  /// <summary>
-  /// 弱点属性
-  /// </summary>
-  public uint WeakAttr { get; set; }
-
-  /// <summary>
-  /// 耐性属性
-  /// </summary>
-  public uint ResistAttr { get; set; }
-
-  /// <summary>
-  /// 無効化属性
-  /// </summary>
-  public uint NullfiedAttr { get; set; }
-
-  /// <summary>
-  /// 敵の持つスキルID
-  /// </summary>
-  public SkillId SkillId { get; set; }
-
-  /// <summary>
-  /// 敵を倒した時に得られる経験値
-  /// </summary>
-  public int Exp { get; set; }
-
-  /// <summary>
-  /// 敵のPrefabがあるパス
-  /// </summary>
-  public string PrefabPath { get; set; }
-
-  /// <summary>
-  /// 敵のアイコン画像があるパス
-  /// </summary>
-  public string IconPath { get; set; }
-}

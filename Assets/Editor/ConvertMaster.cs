@@ -35,7 +35,7 @@ public class ConvertMaster
     foreach (var data in datas)
     {
       var path = $"{DAT_BASE_PATH}/Enemy/{data["Id"]}.asset";
-      var so = LoadOrCreate<EnemyEntity2>(path);
+      var so = LoadOrCreate<EnemyEntity>(path);
 
       so._id                 = data["Id"];
       so._no                 = int.Parse(data["No"]);
@@ -65,7 +65,7 @@ public class ConvertMaster
     var CSV_PATH = $"{CSV_BASE_PATH}/Enemy.csv";
 
     // DATA_DIRにある全ScriptableObjectの内容をCsvTextにする
-    var text = MakeCsvTextFromMasterDatas<EnemyEntity2>(DATA_DIR, EnemyEntity2.CsvHeaderString());
+    var text = MakeCsvTextFromMasterDatas<EnemyEntity>(DATA_DIR, EnemyEntity.CsvHeaderString());
 
     // ファイル書き込み
     using (var writer = new StreamWriter(CSV_PATH)) {
@@ -90,7 +90,7 @@ public class ConvertMaster
 
     // ScriptableObjectの内容をCSV形式のデータに変換
     StringBuilder sb = new();
-    sb.Append(EnemyEntity2.CsvHeaderString());
+    sb.Append(EnemyEntity.CsvHeaderString());
     sb.Append("\r\n");
 
     foreach (var path in paths) 

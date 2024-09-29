@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using MyGame.Master;
 
 public class FieldScene : MyMonoBehaviour
 {
@@ -98,6 +99,9 @@ public class FieldScene : MyMonoBehaviour
 
   private void EnterSystemSetup()
   {
+    // Master初期化
+    EnemyMaster.Init();
+
     // デバッグマネージャーに登録
     DebugManager.Instance.Regist(this);
     DebugManager.Instance.Regist(FieldManager.Instance);

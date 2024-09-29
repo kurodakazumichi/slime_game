@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.UIElements;
+using MyGame.Master;
 
 /// <summary>
 /// 敵のインターフェース

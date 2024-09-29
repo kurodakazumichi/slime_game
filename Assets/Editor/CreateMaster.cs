@@ -17,7 +17,7 @@ public class CreateMaster
       return;
     }
 
-    var obj = ScriptableObject.CreateInstance<EnemyEntity2>();
+    var obj = ScriptableObject.CreateInstance<EnemyEntity>();
     var filename = $"NewEnemyEneity.asset";
 
     AssetDatabase.CreateAsset(obj, Path.Combine(path+"\\", filename));

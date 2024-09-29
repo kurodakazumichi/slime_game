@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -97,7 +96,11 @@ public class EnemyWaveProperty
   {
     const float TIME = 60f;
 
-    var hp = EnemyMaster.FindById(Id).HP * lv;
+    // TODO: EnemyMasterは仕様変更により初期化しないと使えなくなったので
+    //     : ここでは使えなくなった。ひとまず適当なhpを設定してしのぐ。
+    //     : そもそもEIPSという指標はいらないかも
+    //var hp = EnemyMaster.FindById(Id).HP * lv;
+    var hp = 10;
 
     // 1秒あたりの敵の出現数を{a}、初めて敵が出現する時間を{t}とおくと
     var a = EnemyAmountPerWave / Mathf.Max(1f, WaveInterval);
