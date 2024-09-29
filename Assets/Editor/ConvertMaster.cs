@@ -77,7 +77,7 @@ public class ConvertMaster
   }
 
   //===========================================================================
-  // Convert Enemy Master
+  // Convert Skill Master
   //===========================================================================
   /// <summary>
   /// スキルデータ(csv)をScriptableObjectに出力
@@ -149,7 +149,7 @@ public class ConvertMaster
 
     // ScriptableObjectの内容をCSV形式のデータに変換
     StringBuilder sb = new();
-    sb.Append(EnemyEntity.CsvHeaderString());
+    sb.Append(header);
     sb.Append("\r\n");
 
     foreach (var path in paths) 
