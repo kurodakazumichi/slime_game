@@ -94,28 +94,10 @@ namespace MyGame.Master
         prefabPath = $"Enemy/{no}/{no}.prefab";
       }
 
-      attackAttributes   = ToAttributesFromString(_attackAttributes);
-      weakAttributes     = ToAttributesFromString(_weakAttributes);
-      resistAttributes   = ToAttributesFromString(_resistAttributes);
-      nullfiedAttributes = ToAttributesFromString(_nullfiedAttributes);
-    }
-
-    private uint ToAttributesFromString(string attributesString)
-    {
-      string[] words = attributesString.Split("|");
-
-      uint flag = 0;
-
-      foreach(string word in words) 
-      {
-        if (MyEnum.TryParse<Attribute>(word, out var attr)) {
-          flag |= (uint)attr;
-        }else {
-          Logger.Error($"{word} attribute parse failed.");
-        }
-      }
-
-      return flag;
+      attackAttributes   = AttributeUtil.GetAttributesFromString(_attackAttributes);
+      weakAttributes     = AttributeUtil.GetAttributesFromString(_weakAttributes);
+      resistAttributes   = AttributeUtil.GetAttributesFromString(_resistAttributes);
+      nullfiedAttributes = AttributeUtil.GetAttributesFromString(_nullfiedAttributes);
     }
 
     //=========================================================================
