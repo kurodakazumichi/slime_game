@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class SkillMaster
 {
-  public static ISkillEntityRO FindById(SkillId id)
+  public static ISkillEntity FindById(SkillId id)
   {
     return SkillRepository.entities.Find(entity => entity.Id == id);
   }

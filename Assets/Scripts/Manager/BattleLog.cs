@@ -5,7 +5,7 @@ using UnityEngine;
 
 public struct SkillRecordInfo { 
   public int Index;
-  public ISkillEntityRO Config;
+  public ISkillEntity Config;
   public int Exp;
   public int PrevLv;
   public int CrntLv;

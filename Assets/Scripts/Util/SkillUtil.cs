@@ -6,7 +6,7 @@ public static class SkillUtil
   /// <summary>
   /// 設定の基づいてexpからLvを逆算する
   /// </summary>
-  public static int CalcLevelBy(ISkillEntityRO config, int exp)
+  public static int CalcLevelBy(ISkillEntity config, int exp)
   {
     for (int i = App.SKILL_MAX_LEVEL; 0 <= i; --i) {
 
@@ -21,7 +21,7 @@ public static class SkillUtil
   /// <summary>
   /// Lvに必要な経験値を取得
   /// </summary>
-  public static int GetNeedExp(ISkillEntityRO config, int lv)
+  public static int GetNeedExp(ISkillEntity config, int lv)
   {
     // 成長タイプ別係数
     const float GROWTH_FAST_FACTOR = 2.0f;
@@ -44,7 +44,7 @@ public static class SkillUtil
   /// <summary>
   /// Lvに応じたリキャストタイムを計算
   /// </summary>
-  public static float CalcRecastTimeBy(ISkillEntityRO config, int lv)
+  public static float CalcRecastTimeBy(ISkillEntity config, int lv)
   {
     return LerpParam(config.FirstRecastTime, config.LastRecastTime, lv);
   }
@@ -52,7 +52,7 @@ public static class SkillUtil
   /// <summary>
   /// Lvに応じたパワーを計算
   /// </summary>
-  public static int CalcPowerBy(ISkillEntityRO config, int lv)
+  public static int CalcPowerBy(ISkillEntity config, int lv)
   {
     return (int)LerpParam(config.FirstPower, config.LastPower, lv);
   }
@@ -60,7 +60,7 @@ public static class SkillUtil
   /// <summary>
   /// Lvに応じた貫通数を計算
   /// </summary>
-  public static int CalcPenetrableCount(ISkillEntityRO config, int lv)
+  public static int CalcPenetrableCount(ISkillEntity config, int lv)
   {
     return (int)LerpParam(config.FirstPenetrableCount, config.LastPenetrableCount, lv);
   }
@@ -68,7 +68,7 @@ public static class SkillUtil
   /// <summary>
   /// Lvに応じた速度補正値を計算
   /// </summary>
-  public static float CalcSpeedCorrectionValue(ISkillEntityRO config, int lv)
+  public static float CalcSpeedCorrectionValue(ISkillEntity config, int lv)
   {
     return LerpParam(1f, config.SpeedGrowthRate, lv);
   }

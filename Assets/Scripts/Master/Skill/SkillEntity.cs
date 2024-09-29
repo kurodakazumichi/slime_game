@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// ReadOnlyのSkillEntityインターフェース
 /// </summary>
-public interface ISkillEntityRO
+public interface ISkillEntity
 {
   SkillId Id { get; }
 
@@ -26,7 +26,7 @@ public interface ISkillEntityRO
 /// <summary>
 /// Skill Entity
 /// </summary>
-public class SkillEntity : ISkillEntityRO
+public class SkillEntity : ISkillEntity
 {
   /// <summary>
   /// Skill ID

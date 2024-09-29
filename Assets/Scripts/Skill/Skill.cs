@@ -30,7 +30,7 @@ public class Skill : ISkill
   /// <summary>
   /// Skillの設定情報
   /// </summary>
-  protected ISkillEntityRO config;
+  protected ISkillEntity config;
 
   //============================================================================
   // Properties
@@ -97,7 +97,7 @@ public class Skill : ISkill
   /// <summary>
   /// 初期化
   /// </summary>
-  public void Init(ISkillEntityRO entity, int exp)
+  public void Init(ISkillEntity entity, int exp)
   {
     this.config = entity;
     SetExp(exp);

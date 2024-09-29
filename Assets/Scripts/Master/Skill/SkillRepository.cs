@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public static class SkillRepository
 {
-  public static List<ISkillEntityRO> entities = new List<ISkillEntityRO>() 
+  public static List<ISkillEntity> entities = new List<ISkillEntity>() 
   {
     new SkillEntity() {
       Id                   = SkillId.NormalBullet1,
