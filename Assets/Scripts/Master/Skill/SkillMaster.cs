@@ -28,9 +28,13 @@ public interface ISkillEntity
 
 public static class SkillMaster
 {
+  public static void Init()
+  {
+    SkillRepository.Load();
+  }
+
   public static ISkillEntity FindById(SkillId id)
   {
-    //return SkillRepository.entities.Find(entity => entity.Id == id);
-    return null;
+    return SkillRepository.entities.Find(entity => entity.Id == id);
   }
 }

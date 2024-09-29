@@ -11,7 +11,7 @@ namespace MyGame.Tester
     void Start()
     {
       EnemyMaster.Init();
-
+      SkillMaster.Init();
       var master = EnemyMaster.FindById(EnemyId.Enemy000);
 
       if (master is not null) {
