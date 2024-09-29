@@ -1,18 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public static class MasterUtil
+namespace MyGame.Master
 {
-  /// <summary>
-  /// Masterデータの同期ロード
-  /// </summary>
-  public static T LoadEntity<T>(string dirname, string filename) where T : ScriptableObject
+  public static class MasterUtil
   {
-    var path = $"Master/{dirname}/{filename}.asset";
-    var handle = Addressables.LoadAssetAsync<T>(path);
-    handle.WaitForCompletion();
-    return handle.Result;
+    /// <summary>
+    /// Masterデータの同期ロード
+    /// </summary>
+    public static T LoadEntity<T>(string dirname, string filename) where T : ScriptableObject
+    {
+      var path = $"Master/{dirname}/{filename}.asset";
+      var handle = Addressables.LoadAssetAsync<T>(path);
+      handle.WaitForCompletion();
+
+      return handle.Result;
+    }
   }
 }
