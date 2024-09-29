@@ -61,11 +61,35 @@ namespace MyGame.Master
     public SkillAimingType Aiming => throw new System.NotImplementedException();
 
     //=========================================================================
-    // Method
+    // ToString
     //=========================================================================
+    public static string CsvHeaderString()
+    {
+      return "Id,No,Name,MaxExp,RecastF,RecastL,PowerF,PowerL,PenetrableF,PenetrableL,SpeedGrowthRate,Attributes,GrowthType,Impact,IconNo,AimingType";
+    }
+
     public string ToCsvText()
     {
-      throw new System.NotImplementedException();
+      string[] datas = {
+        _id,
+        _no.ToString(),
+        _name,
+        _maxExp.ToString(),
+        _recastF.ToString(),
+        _recastL.ToString(),
+        _powerF.ToString(),
+        _powerL.ToString(),
+        _penetrableF.ToString(),
+        _penetrableL.ToString(),
+        _speedGrowthRate.ToString(),
+        _attributes.ToString(),
+        _growthType,
+        _impact.ToString(),
+        _iconNo.ToString(),
+        _aimingType,
+      };
+
+      return string.Join(",", datas);
     }
   }
 }

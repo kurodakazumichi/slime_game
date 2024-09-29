@@ -77,6 +77,65 @@ public class ConvertMaster
   }
 
   //===========================================================================
+  // Convert Enemy Master
+  //===========================================================================
+  /// <summary>
+  /// スキルデータ(csv)をScriptableObjectに出力
+  /// </summary>
+  [MenuItem("Assets/ConvertMaster/Skill/csv2obj")]
+  public static void ConvertSkillCsvToSkillMaster()
+  {
+    var datas = LoadAndParseCsv($"{CSV_BASE_PATH}/Skill.csv");
+
+    foreach (var data in datas)
+    {
+      var path = $"{DAT_BASE_PATH}/Skill/{data["Id"]}.asset";
+      var so = LoadOrCreate<SkillEntity>(path);
+
+      so._id              = data["Id"];
+      so._no              = int.Parse(data["No"]);
+      so._name            = data["Name"];
+      so._maxExp          = int.Parse(data["MaxExp"]);
+      so._recastF         = float.Parse(data["RecastF"]);
+      so._recastL         = float.Parse(data["RecastL"]);
+      so._powerF          = float.Parse(data["PowerF"]);
+      so._powerL          = float.Parse(data["PowerL"]);
+      so._penetrableF     = int.Parse(data["PenetrableF"]);
+      so._penetrableL     = int.Parse(data["PenetrableL"]);
+      so._speedGrowthRate = float.Parse(data["SpeedGrowthRate"]);
+      so._attributes      = data["Attributes"];
+      so._growthType      = data["GrowthType"];
+      so._impact          = float.Parse(data["Impact"]);
+      so._iconNo          = int.Parse(data["IconNo"]);
+      so._aimingType      = data["AimingType"];
+
+      AssetDatabase.SaveAssets();
+    }
+  }
+
+  /// <summary>
+  /// スキルのデータ(ScriptableObject)の内容をcsvファイルに出力
+  /// </summary>
+  [MenuItem("Assets/ConvertMaster/Skill/obj2csv")]
+  public static void ConvertSkillMasterToSkillCsv()
+  {
+    var DATA_DIR = $"{DAT_BASE_PATH}/Skill/";
+    var CSV_PATH = $"{CSV_BASE_PATH}/Skill.csv";
+
+    // DATA_DIRにある全ScriptableObjectの内容をCsvTextにする
+    var text = MakeCsvTextFromMasterDatas<SkillEntity>(DATA_DIR, SkillEntity.CsvHeaderString());
+
+    // ファイル書き込み
+    using (var writer = new StreamWriter(CSV_PATH)) {
+      writer.Write(text);
+    }
+      
+    // UnityにImport
+    AssetDatabase.ImportAsset(CSV_PATH);
+  }
+
+
+  //===========================================================================
   // Common
   //===========================================================================
 
