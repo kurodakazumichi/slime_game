@@ -8,6 +8,18 @@ public class CreateMaster
   [MenuItem("Assets/CreateMaster/Enemy")]
   private static void CreateEnemyMaster()
   {
+    CreateMasterData<EnemyEntity>($"NewEnemyEneity.asset");
+  }
+
+  [MenuItem("Assets/CreateMaster/Skill")]
+  private static void CreateSkillMaster()
+  {
+    CreateMasterData<SkillEntity>($"NewSkillEneity.asset");
+  }
+
+  private static void CreateMasterData<T>(string filename)
+    where T : ScriptableObject
+  {
     // 選択中のモノのID
     var id = Selection.activeInstanceID;
     var path = AssetDatabase.GetAssetPath(id);
@@ -17,9 +29,7 @@ public class CreateMaster
       return;
     }
 
-    var obj = ScriptableObject.CreateInstance<EnemyEntity>();
-    var filename = $"NewEnemyEneity.asset";
-
+    var obj = ScriptableObject.CreateInstance<T>();
     AssetDatabase.CreateAsset(obj, Path.Combine(path+"\\", filename));
   }
 }
