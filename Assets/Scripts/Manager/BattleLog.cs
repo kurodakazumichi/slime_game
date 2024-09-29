@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using MyGame.Master;
 
 public struct SkillRecordInfo { 
   public int Index;

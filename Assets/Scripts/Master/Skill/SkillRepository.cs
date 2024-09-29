@@ -1,21 +1,29 @@
-using MyGame.Master;
 using System.Collections.Generic;
 
-public static class SkillRepository
+namespace MyGame.Master
 {
-  public static List<ISkillEntity> entities = new();
-
-  public static void Load()
+  public static class SkillRepository
   {
-    MyEnum.ForEach<SkillId>(id => 
-    {
-      if (id == SkillId.Undefined) return;
+    /// <summary>
+    /// 全データを格納しているリスト
+    /// </summary>
+    public static List<ISkillEntity> entities = new();
 
-      var dir    = "Skill";
-      var file   = id.ToString();
-      var entity = MasterUtil.LoadEntity<SkillEntity>(dir, file);
-      entity.Init();
-      entities.Add(entity);
-    });
+    /// <summary>
+    /// 全データを同期ロード
+    /// </summary>
+    public static void Load()
+    {
+      MyEnum.ForEach<SkillId>(id => 
+      {
+        if (id == SkillId.Undefined) return;
+
+        var dir    = "Skill";
+        var file   = id.ToString();
+        var entity = MasterUtil.LoadEntity<SkillEntity>(dir, file);
+        entity.Init();
+        entities.Add(entity);
+      });
+    }
   }
 }

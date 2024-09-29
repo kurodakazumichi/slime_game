@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using MyGame.Master;
 
 /// <summary>
 /// 弾丸インターフェース

@@ -1,40 +1,48 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-/// <summary>
-/// ReadOnlyのSkillEntityインターフェース
-/// </summary>
-public interface ISkillEntity
+﻿namespace MyGame.Master
 {
-  SkillId Id { get; }
-
-  int MaxExp { get; }
-  float FirstRecastTime { get; }
-  float LastRecastTime { get; }
-  int FirstPower { get; }
-  int LastPower { get; }
-  int FirstPenetrableCount { get; }
-  int LastPenetrableCount { get; }
-  float SpeedGrowthRate { get; }
-  uint Attr { get; }
-  string Name { get; }
-  string Prefab { get; }
-  Growth GrowthType { get; }
-  float Impact { get; }
-  int IconNo { get; }
-  SkillAimingType Aiming { get; }
-
-}
-
-public static class SkillMaster
-{
-  public static void Init()
+  /// <summary>
+  /// ReadOnlyのSkillEntityインターフェース
+  /// </summary>
+  public interface ISkillEntity
   {
-    SkillRepository.Load();
+    SkillId Id { get; }
+
+    int MaxExp { get; }
+    float FirstRecastTime { get; }
+    float LastRecastTime { get; }
+    int FirstPower { get; }
+    int LastPower { get; }
+    int FirstPenetrableCount { get; }
+    int LastPenetrableCount { get; }
+    float SpeedGrowthRate { get; }
+    uint Attr { get; }
+    string Name { get; }
+    string Prefab { get; }
+    Growth GrowthType { get; }
+    float Impact { get; }
+    int IconNo { get; }
+    SkillAimingType Aiming { get; }
   }
 
-  public static ISkillEntity FindById(SkillId id)
+  /// <summary>
+  /// SkillMasterデータクラス
+  /// </summary>
+  public static class SkillMaster
   {
-    return SkillRepository.entities.Find(entity => entity.Id == id);
+    /// <summary>
+    /// このクラスを利用するまえに必ず一度だけ呼ぶこと
+    /// </summary>
+    public static void Init()
+    {
+      SkillRepository.Load();
+    }
+
+    /// <summary>
+    /// SkillIdに該当するMasterデータを取得する
+    /// </summary>
+    public static ISkillEntity FindById(SkillId id)
+    {
+      return SkillRepository.entities.Find(entity => entity.Id == id);
+    }
   }
 }

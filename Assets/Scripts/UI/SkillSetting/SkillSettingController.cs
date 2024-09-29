@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor;
 using UnityEngine;
+using MyGame.Master;
 
 namespace MyGame.UI { 
 

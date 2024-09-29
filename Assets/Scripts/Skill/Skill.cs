@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using MyGame.Master;
 
 public interface ISkill
 {
