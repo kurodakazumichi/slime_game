@@ -52,6 +52,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 11db19dbea628e248a0bf56761b00e07
+    m_Address: Master/Skill/PiercingBullet1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1afa196ba4b5f0a4691e799e44b4157a
     m_Address: Bullet/LeafBullet1/Object.prefab
     m_ReadOnly: 0
@@ -87,6 +92,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c36c3f3f594918439cf12c1812f1108
+    m_Address: Master/Skill/WaterBullet1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3a2e031d72e5dc242b3171b3dc0ac6ee
     m_Address: Bullet/FireBullet1/Object.prefab
     m_ReadOnly: 0
@@ -99,6 +109,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4146f5002dda1134db94e022e1541402
     m_Address: Enemy/014/014.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4171bf02e3bc0414a89568f345c0fecc
+    m_Address: Master/Skill/WindBullet1.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -122,8 +137,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b776491a3e5e214799bbba06e23e814
+    m_Address: Master/Skill/IceBullet1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52f17f35f73c83146ad8b6b864ba4cd6
     m_Address: Bullet/ThunderBullet1/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 560c2dd954b76254ab461e84bbd974a3
+    m_Address: Master/Skill/FireBullet1.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -139,6 +164,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5c7445163bc538641ab44dd18a650020
     m_Address: Bullet/NormalBullet2/Object.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c917cc0ed8c7bf4e94d82202f2d3eff
+    m_Address: Master/Skill/LeafBullet1.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -179,6 +209,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 81ecb5531c269844ca6ae8504f16a4a5
     m_Address: Bullet/ThunderBullet1/ThunderBullet1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82bdb9e5d9c768942b9a8238de75bc38
+    m_Address: Master/Skill/NormalBullet2.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -227,6 +262,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98099c703d0361540bd2b0fb0e82328b
+    m_Address: Master/Skill/ThunderBullet1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a6b50ebb89fef048b14da5fa6f2802b
     m_Address: Icon/Bullets.png
     m_ReadOnly: 0
@@ -262,6 +302,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b4d12deab19b266429884590703cc2fd
+    m_Address: Master/csv/Skill.csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b94bb71b16386174da466dea1a392f81
     m_Address: Master/Enemy/Enemy020.asset
     m_ReadOnly: 0
@@ -294,6 +339,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb7d54865c5b19d4c824669286149c60
     m_Address: Bullet/NormalBullet2/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cea9be1ef4c1eca4f9e86b74cd98ec63
+    m_Address: Master/Skill/NormalBullet1.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

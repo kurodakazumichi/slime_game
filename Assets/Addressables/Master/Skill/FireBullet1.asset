@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 145fa1968a4c3e34cada234f05b18bf6, type: 3}
+  m_Name: FireBullet1
+  m_EditorClassIdentifier: 
+  _id: FireBullet1
+  _no: 7
+  _name: "\u30D5\u30A1\u30A4\u30A2\u30D0\u30EC\u30C3\u30C8"
+  _maxExp: 999
+  _recastF: 2
+  _recastL: 1
+  _powerF: 10
+  _powerL: 30
+  _penetrableF: 0
+  _penetrableL: 0
+  _speedGrowthRate: 1
+  _attributes: Fir
+  _growthType: Normal
+  _impact: 1
+  _iconNo: 3
+  _aimingType: Weakest
