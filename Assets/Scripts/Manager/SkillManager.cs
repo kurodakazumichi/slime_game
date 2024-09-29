@@ -40,10 +40,10 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
   //============================================================================
 
   //----------------------------------------------------------------------------
-  // Life Cycle
+  // Public
   //----------------------------------------------------------------------------
 
-  protected override void MyAwake()
+  public void Init()
   {
     base.MyAwake();
 
@@ -78,10 +78,6 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     // 暫定: アクティブスキル[0]に通常弾をセット
     SetActiveSkill(0, SkillId.NormalBullet1);
   }
-
-  //----------------------------------------------------------------------------
-  // Public
-  //----------------------------------------------------------------------------
 
   /// <summary>
   /// アクティブスキルを取得する

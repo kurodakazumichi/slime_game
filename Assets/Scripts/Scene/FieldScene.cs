@@ -101,6 +101,9 @@ public class FieldScene : MyMonoBehaviour
   {
     // Master初期化
     EnemyMaster.Init();
+    SkillMaster.Init();
+
+    SkillManager.Instance.Init();
 
     // デバッグマネージャーに登録
     DebugManager.Instance.Regist(this);
