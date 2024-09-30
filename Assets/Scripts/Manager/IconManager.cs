@@ -1,7 +1,11 @@
 using UnityEngine;
 using MyGame.Master;
+using MyGame.Core.System;
 
 public class IconManager : SingletonMonoBehaviour<IconManager>
+#if _DEBUG
+  ,IDebugable
+#endif
 {
   public void Load()
   {

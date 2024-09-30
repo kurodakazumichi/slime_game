@@ -1,7 +1,6 @@
+ï»¿using UnityEngine;
 using MyGame.UI;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using MyGame.Core.System;
 
 namespace MyGame.UiTest
 {
@@ -14,11 +13,11 @@ namespace MyGame.UiTest
 
     void Start()
     {
-      DebugManager.Instance.Regist(ResourceManager.Instance);
-      DebugManager.Instance.Regist(SkillManager.Instance);
-      DebugManager.Instance.Regist(IconManager.Instance);
+      DebugSystem.Regist(ResourceManager.Instance);
+      DebugSystem.Regist(SkillManager.Instance);
+      DebugSystem.Regist(IconManager.Instance);
 
-      // Icon‚ğƒ[ƒh‚µ‚Ä‚¨‚­
+      // Iconã‚’ãƒ­ãƒ¼ãƒ‰ã—ã¦ãŠã
       IconManager.Instance.Load();
 
       MyEnum.ForEach<SkillId>(id => {
@@ -27,12 +26,13 @@ namespace MyGame.UiTest
         }
       });
 
-      // SkillSettingController‚ğ¶¬
+      // SkillSettingControllerã‚’ç”Ÿæˆ
       controller.Init(SkillManager.Instance, IconManager.Instance, UI);
     }
 
     private void Update()
     {
+      DebugSystem.Update();
       if (ResourceManager.Instance.IsLoading) return;
 
       controller.Update();
@@ -44,6 +44,11 @@ namespace MyGame.UiTest
       if (Input.GetKeyDown(KeyCode.C)) {
         controller.Close();
       }
+    }
+
+    private void OnGUI()
+    {
+      DebugSystem.OnGUI();
     }
   }
 }

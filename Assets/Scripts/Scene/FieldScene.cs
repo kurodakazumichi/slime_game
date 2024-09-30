@@ -1,9 +1,12 @@
-﻿using System.Runtime.CompilerServices;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using MyGame.Master;
+using MyGame.Core.System;
 
 public class FieldScene : MyMonoBehaviour
+#if _DEBUG
+  ,IDebugable
+#endif
 {
   //============================================================================
   // Enum
@@ -79,6 +82,8 @@ public class FieldScene : MyMonoBehaviour
   void Update()
   {
     state.Update();
+
+    DebugSystem.Update();
   }
 
   private void LateUpdate()
@@ -106,12 +111,12 @@ public class FieldScene : MyMonoBehaviour
     SkillManager.Instance.Init();
 
     // デバッグマネージャーに登録
-    DebugManager.Instance.Regist(this);
-    DebugManager.Instance.Regist(FieldManager.Instance);
-    DebugManager.Instance.Regist(BulletManager.Instance);
-    DebugManager.Instance.Regist(SkillManager.Instance);
-    DebugManager.Instance.Regist(ResourceManager.Instance);
-    DebugManager.Instance.Regist(EnemyManager.Instance);
+    DebugSystem.Regist(this);
+    DebugSystem.Regist(FieldManager.Instance);
+    DebugSystem.Regist(BulletManager.Instance);
+    DebugSystem.Regist(SkillManager.Instance);
+    DebugSystem.Regist(ResourceManager.Instance);
+    DebugSystem.Regist(EnemyManager.Instance);
 
     // コールバック設定
     SkillManager.Instance.OnGetNewSkill     = OnGetNewSkill;
@@ -440,6 +445,10 @@ public class FieldScene : MyMonoBehaviour
   //----------------------------------------------------------------------------
   // For Debug
   //----------------------------------------------------------------------------
+
+  void OnGUI() { 
+    DebugSystem.OnGUI();
+  }
 
   /// <summary>
   /// デバッグ用の基底メソッド

@@ -2,8 +2,12 @@
 using UnityEngine;
 using System;
 using UnityEngine.AddressableAssets;
+using MyGame.Core.System;
 
 public class ResourceManager : SingletonMonoBehaviour<ResourceManager>
+#if _DEBUG
+  ,IDebugable
+#endif
 {
   /// <summary>
   /// キャッシュリソース、参照カウンタとリソースの参照を保持するのみ

@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using MyGame.Master;
+using MyGame.Core.System;
 
 /// <summary>
 /// スキル管理者
 /// スキル経験値やアクティブスキルを管理する
 /// </summary>
 public class SkillManager : SingletonMonoBehaviour<SkillManager>
+#if _DEBUG
+  ,IDebugable
+#endif
 {
   //============================================================================
   // Variables

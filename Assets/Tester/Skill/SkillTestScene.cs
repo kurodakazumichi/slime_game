@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MyGame.Core.System;
 
 #if _DEBUG
 
@@ -53,6 +54,7 @@ namespace SkillTester
     void Update()
     {
       stateMachine.Update();
+      DebugSystem.Update();
     }
 
     private void LateUpdate()
@@ -84,14 +86,16 @@ namespace SkillTester
       GUILayout.Label("ZX    : Change Bullet");
       GUILayout.Label("V     : Bullet Terminate");
       GUILayout.Label("C     : Object Pool Clear");
+
+      DebugSystem.OnGUI();
     }
 
 
     private void EnterBoot()
     {
-      DebugManager.Instance.Regist(SkillManager.Instance);
-      DebugManager.Instance.Regist(BulletManager.Instance);
-      DebugManager.Instance.Regist(ResourceManager.Instance);
+      DebugSystem.Regist(SkillManager.Instance);
+      DebugSystem.Regist(BulletManager.Instance);
+      DebugSystem.Regist(ResourceManager.Instance);
 
       BulletManager.Instance.Load();
       IconManager.Instance.Load();

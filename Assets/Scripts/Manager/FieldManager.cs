@@ -1,8 +1,12 @@
-﻿using System.Collections;
+﻿using MyGame.Core.System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FieldManager : SingletonMonoBehaviour<FieldManager>
+#if _DEBUG
+  ,IDebugable
+#endif
 {
   //============================================================================
   // Inspector

@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 using MyGame.Master;
+using MyGame.Core.System;
 
 /// <summary>
 /// 弾丸インターフェース
@@ -20,6 +21,9 @@ public interface IBullet
 }
 
 public class BulletManager : SingletonMonoBehaviour<BulletManager>
+#if _DEBUG
+  ,IDebugable
+#endif
 {
   /// <summary>
   /// Bulletのオブジェクトプール一式

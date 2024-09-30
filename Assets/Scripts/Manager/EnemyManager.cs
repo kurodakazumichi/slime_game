@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 using MyGame.Master;
+using MyGame.Core.System;
 
 /// <summary>
 /// 敵のインターフェース
@@ -61,6 +62,9 @@ public interface IEnemy : IActor
 }
 
 public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
+#if _DEBUG
+  ,IDebugable
+#endif
 {
   //============================================================================
   // Variables
