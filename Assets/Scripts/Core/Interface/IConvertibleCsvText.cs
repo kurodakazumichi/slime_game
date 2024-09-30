@@ -1,4 +1,4 @@
-﻿namespace MyGame
+﻿namespace MyGame.Core
 {
   /// <summary>
   /// CsvTextに変換可能

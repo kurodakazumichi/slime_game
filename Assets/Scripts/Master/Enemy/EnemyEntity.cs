@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using MyGame.Core;
 
 namespace MyGame.Master
 {
