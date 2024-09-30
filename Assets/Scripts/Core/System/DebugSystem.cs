@@ -74,35 +74,35 @@ namespace MyGame.Core.System
     [Conditional("_DEBUG")]
     public static void OnGUI()
     {
-    if (!isShow) return;
+      if (!isShow) return;
 
-    // GUI用の解像度を更新
-    GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / screenSize.x, Screen.height / screenSize.y), Vector2.zero);
+      // GUI用の解像度を更新
+      GUIUtility.ScaleAroundPivot(new Vector2(Screen.width / screenSize.x, Screen.height / screenSize.y), Vector2.zero);
 
-    using (var sv = new GUILayout.ScrollViewScope(scrollPosition, GUILayout.Width(screenSize.x), GUILayout.Height(screenSize.y))) {
+      using (var sv = new GUILayout.ScrollViewScope(scrollPosition, GUILayout.Width(screenSize.x), GUILayout.Height(screenSize.y))) {
 
-      using (new GUILayout.HorizontalScope(GUI.skin.box)) {
-        scrollPosition = sv.scrollPosition;
+        using (new GUILayout.HorizontalScope(GUI.skin.box)) {
+          scrollPosition = sv.scrollPosition;
 
-        using (new GUILayout.VerticalScope(GUILayout.Width(100))) 
-        {
-          foreach(var debugger in debugs) {
-            if (GUILayout.Button(debugger.Key)) {
-              current = debugger.Value;
+          using (new GUILayout.VerticalScope(GUILayout.Width(100))) 
+          {
+            foreach(var debugger in debugs) {
+              if (GUILayout.Button(debugger.Key)) {
+                current = debugger.Value;
+              }
+            }
+          }
+        
+          using (new GUILayout.VerticalScope(GUI.skin.box, GUILayout.Width(screenSize.x - 150))) 
+          {
+            if (current != null) {
+              current.OnDebug();
             }
           }
         }
-        
-        using (new GUILayout.VerticalScope(GUI.skin.box, GUILayout.Width(screenSize.x - 150))) 
-        {
-          if (current != null) {
-            current.OnDebug();
-          }
-        }
       }
-    }
 
-    GUI.matrix = Matrix4x4.identity;
+      GUI.matrix = Matrix4x4.identity;
     }
   }
 }
