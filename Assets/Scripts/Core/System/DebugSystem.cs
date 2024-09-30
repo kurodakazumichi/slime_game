@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace MyGame.Core.System
 {
