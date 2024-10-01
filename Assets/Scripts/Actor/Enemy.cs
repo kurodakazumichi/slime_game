@@ -1,7 +1,6 @@
 ﻿using System;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UI;
+using MyGame.Core.Props;
 
 /// <summary>
 /// 敵の基底クラス

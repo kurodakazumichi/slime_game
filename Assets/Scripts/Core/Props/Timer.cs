@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
+namespace MyGame.Core.Props { 
+
 /// <summary>
 /// 時間経過を管理するクラス
 /// </summary>
@@ -23,6 +25,11 @@ public class Timer
   /// タイマー更新時のコールバック
   /// </summary>
   public Action<float> OnUpdate { private get; set; } = null;
+
+  /// <summary>
+  /// タイマー開始時のコールバック
+  /// </summary>
+  public Action OnStart { private get; set; } = null;
 
   /// <summary>
   /// タイマー停止時のコールバック
@@ -68,6 +75,7 @@ public class Timer
   {
     this.timeLimit = time;
     timer = 0f;
+    OnStart?.Invoke();
   }
 
   /// <summary>
@@ -100,3 +108,5 @@ public class Timer
     OnStop?.Invoke();
   }
 }
+
+  }

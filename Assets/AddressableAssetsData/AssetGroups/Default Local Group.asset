@@ -192,6 +192,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6edde0b12ba9b094b90eb67c4c61c197
+    m_Address: Player/Player.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 782888dd8fb6e9648946ca61ac98d9e9
     m_Address: Bullet/LeafBullet1/Animator.controller
     m_ReadOnly: 0
@@ -337,6 +342,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c795fee041cd8e147af6a74ced91f2d2
+    m_Address: Player/Animator.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb7d54865c5b19d4c824669286149c60
     m_Address: Bullet/NormalBullet2/Animator.controller
     m_ReadOnly: 0
@@ -357,8 +367,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d36c55888ccdce54d84df340df2fd1bd
+    m_Address: Player/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6e577b8d85f3f34a8cecb7b52368d85
     m_Address: Bullet/NormalBullet1/Usual.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de33e70eb506de644a2978b8b5c160b9
+    m_Address: Player/Idle.anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
