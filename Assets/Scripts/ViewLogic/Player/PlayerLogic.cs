@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using MyGame.Core.Props;
 using System;
 
@@ -32,12 +32,12 @@ namespace MyGame.ViewLogic
     //=========================================================================
 
     /// <summary>
-    /// ƒXƒe[ƒgƒ}ƒVƒ“
+    /// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³
     /// </summary>
     private StateMachine<State> state = new();
 
     /// <summary>
-    /// ‘¬“x
+    /// é€Ÿåº¦
     /// </summary>
     private Vector3 velocity = Vector3.zero;
 
@@ -47,26 +47,35 @@ namespace MyGame.ViewLogic
     private RangedFloat hp = new(0);
 
     /// <summary>
-    /// –³“Gƒ^ƒCƒ}[
+    /// ç„¡æ•µã‚¿ã‚¤ãƒãƒ¼
     /// </summary>
     private Timer invincibleTimer = new();
 
     /// <summary>
-    /// ˆÚ“®‘¬“x
+    /// ç§»å‹•é€Ÿåº¦
     /// </summary>
     private float speed = 0;
 
     /// <summary>
-    /// HP‚ª•Ï‰»‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN
+    /// HPãŒå¤‰åŒ–ã—ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     /// </summary>
     private Action<float, float> onChangeHP = null;
+
+    //=========================================================================
+    // Properties
+    //=========================================================================
+
+    /// <summary>
+    /// æ­»äº¡ãƒ•ãƒ©ã‚°
+    /// </summary>
+    public bool IsDead => hp.IsEmpty;
 
     //=========================================================================
     // Methods
     //=========================================================================
 
     /// <summary>
-    /// ‰Šú‰»
+    /// åˆæœŸåŒ–
     /// </summary>
     public void Init(MyGame.View.Player target, Action<float, float> onChangeHP)
     {
@@ -79,7 +88,7 @@ namespace MyGame.ViewLogic
       state.Add(State.Idle);
       state.Add(State.Usual, EnterStateUsual, UpdateStateUsual);
 
-      // ƒR[ƒ‹ƒoƒbƒN
+      // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
       invincibleTimer.OnStart = OnStartInvincible;
       invincibleTimer.OnStop  = OnExitInvincible;
 
@@ -87,7 +96,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// XV
+    /// æ›´æ–°
     /// </summary>
     public void Update()
     {
@@ -95,7 +104,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// —LŒø–³Œø‚ÌØ‚è‘Ö‚¦
+    /// æœ‰åŠ¹ç„¡åŠ¹ã®åˆ‡ã‚Šæ›¿ãˆ
     /// </summary>
     public void SetActive(bool flag)
     {
@@ -103,7 +112,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// ƒŠƒZƒbƒg(‰Šúó‘Ô‚É‚·‚é)
+    /// ãƒªã‚»ãƒƒãƒˆ(åˆæœŸçŠ¶æ…‹ã«ã™ã‚‹)
     /// </summary>
     public void Reset()
     {
@@ -115,7 +124,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// ‘€ì‰Â”\‚É‚·‚é
+    /// æ“ä½œå¯èƒ½ã«ã™ã‚‹
     /// </summary>
     public void Playable()
     {
@@ -123,7 +132,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// ƒtƒB[ƒ‹ƒhƒ‚[ƒh‚É‚·‚é
+    /// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹
     /// </summary>
     public void FieldMode()
     {
@@ -131,7 +140,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// ƒoƒgƒ‹ƒ‚[ƒh‚É‚·‚é
+    /// ãƒãƒˆãƒ«ãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹
     /// </summary>
     public void BattleMode()
     {
@@ -139,7 +148,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// ƒ_ƒ[ƒW‚ğó‚¯‚é
+    /// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹
     /// </summary>
     public DamageInfo TakeDamage(AttackInfo info)
     {
@@ -184,11 +193,11 @@ namespace MyGame.ViewLogic
     }
 
     //-------------------------------------------------------------------------
-    // ‘¬“x
+    // é€Ÿåº¦
     //-------------------------------------------------------------------------
 
     /// <summary>
-    /// ‘¬“x‚ğŒvZ‚·‚é
+    /// é€Ÿåº¦ã‚’è¨ˆç®—ã™ã‚‹
     /// </summary>
     private Vector3 CalcVelocity()
     {
@@ -200,7 +209,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// “ü—Í‚©‚ç‘¬“x‚ğæ“¾‚·‚é
+    /// å…¥åŠ›ã‹ã‚‰é€Ÿåº¦ã‚’å–å¾—ã™ã‚‹
     /// </summary>
     /// <returns></returns>
     private Vector3 GetInputVelocity()
@@ -227,11 +236,11 @@ namespace MyGame.ViewLogic
     }
 
     //-------------------------------------------------------------------------
-    // ƒvƒŒƒCƒ„[‚ÌFF–³“Gó‘Ô‚Ì‚Æ‚«‚Í”¼“§–¾A‚Ü‚½‘Ì—Í‚ª0‚É‹ß‚Ã‚­‚Ù‚ÇÔ‚­‚È‚é
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è‰²ï¼šç„¡æ•µçŠ¶æ…‹ã®ã¨ãã¯åŠé€æ˜ã€ã¾ãŸä½“åŠ›ãŒ0ã«è¿‘ã¥ãã»ã©èµ¤ããªã‚‹
     //-------------------------------------------------------------------------
 
     /// <summary>
-    /// ó‘Ô‚É‘Î‰‚µ‚½ƒJƒ‰[‚ğæ“¾
+    /// çŠ¶æ…‹ã«å¯¾å¿œã—ãŸã‚«ãƒ©ãƒ¼ã‚’å–å¾—
     /// </summary>
     private Color GetColor()
     {
@@ -241,7 +250,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// F‚ğXV
+    /// è‰²ã‚’æ›´æ–°
     /// </summary>
     private void UpdateColor()
     {
@@ -249,11 +258,11 @@ namespace MyGame.ViewLogic
     }
 
     //-------------------------------------------------------------------------
-    // –³“G‚Ìˆ—
+    // ç„¡æ•µã®å‡¦ç†
     //-------------------------------------------------------------------------
 
     /// <summary>
-    /// –³“GŠJn‚Ìˆ—
+    /// ç„¡æ•µé–‹å§‹æ™‚ã®å‡¦ç†
     /// </summary>
     private void OnStartInvincible()
     {
@@ -261,7 +270,7 @@ namespace MyGame.ViewLogic
     }
 
     /// <summary>
-    /// –³“GI—¹‚Ìˆ—
+    /// ç„¡æ•µçµ‚äº†æ™‚ã®å‡¦ç†
     /// </summary>
     private void OnExitInvincible()
     {
@@ -269,11 +278,11 @@ namespace MyGame.ViewLogic
     }
 
     //-------------------------------------------------------------------------
-    // ƒXƒe[ƒ^ƒX
+    // ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
     //-------------------------------------------------------------------------
 
     /// <summary>
-    /// HP‚É•Ï‰»‚ª‚ ‚Á‚½‚Æ‚«‚ÉŒÄ‚Ô
+    /// HPã«å¤‰åŒ–ãŒã‚ã£ãŸã¨ãã«å‘¼ã¶
     /// </summary>
     private void OnChangeHP()
     {
