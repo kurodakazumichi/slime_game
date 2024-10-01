@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using MyGame.Core.Props;
-using System;
+using MyGame.System;
 
 namespace MyGame.ViewLogic
 {
@@ -25,7 +26,15 @@ namespace MyGame.ViewLogic
     //=========================================================================
     // Dependencies
     //=========================================================================
+    /// <summary>
+    /// 操作対象
+    /// </summary>
     private MyGame.View.Player target;
+
+    /// <summary>
+    /// FieldSystem
+    /// </summary>
+    private IFieldSystem fs;
 
     //=========================================================================
     // Variables
@@ -77,11 +86,12 @@ namespace MyGame.ViewLogic
     /// <summary>
     /// 初期化
     /// </summary>
-    public void Init(MyGame.View.Player target, Action<float, float> onChangeHP)
+    public void Init(MyGame.View.Player target, IFieldSystem fs, Action<float, float> onChangeHP)
     {
       this.target     = target;
+      this.fs         = fs;
       this.onChangeHP = onChangeHP;
-
+      
       hp.Init(10f);
       OnChangeHP();
 
@@ -188,10 +198,31 @@ namespace MyGame.ViewLogic
       target.Position += velocity * dt;
 
       invincibleTimer.Update(dt);
-      // RestrictMovement();
-      // SyncCameraPosition();
+      RestrictMovement();
     }
 
+    //-------------------------------------------------------------------------
+    // 移動
+    //-------------------------------------------------------------------------
+
+    private void RestrictMovement()
+    {
+      // ロックされてなければ移動制限はしない
+      if (!fs.HasBattleCircle) {
+        return;
+      }
+
+      // BattleCircleの中心からPlayerに向かうベクトル
+      var v = target.Position - fs.BattleCircleCenter;
+
+      // BattleCircleの中心から離れすぎていたら、Circle内に戻す
+      var radius = App.BATTLE_CIRCLE_RADIUS;
+
+      if (!fs.IsInBattleCircle(target.Position)) 
+      {
+        target.Position = fs.BattleCircleCenter + v.normalized * radius;
+      } 
+    }
     //-------------------------------------------------------------------------
     // 速度
     //-------------------------------------------------------------------------

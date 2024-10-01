@@ -1,12 +1,25 @@
 using UnityEngine;
-using MyGame.ViewLogic;
 using UnityEngine.AddressableAssets;
+using MyGame.ViewLogic;
+using MyGame.System;
 
 namespace MyGame.Tester
 {
-
+  
   public class TestPlayerScene : MyMonoBehaviour
   {
+    public class MockFieldSystem : IFieldSystem
+    {
+      public Vector3 BattleCircleCenter => Vector3.zero;
+
+      public bool HasBattleCircle => true;
+
+      public bool IsInBattleCircle(Vector3 position)
+      {
+        return (position.magnitude < 10f);
+      }
+    }
+
     private PlayerLogic player = new();
 
     // Start is called before the first frame update
@@ -17,7 +30,11 @@ namespace MyGame.Tester
 
       var view = Instantiate(handle.Result);
 
-      player.Init(view.GetComponent<MyGame.View.Player>(), OnChangeHP);
+      player.Init(
+        view.GetComponent<MyGame.View.Player>(), 
+        new MockFieldSystem(), 
+        OnChangeHP
+      );
     }
 
     // Update is called once per frame
