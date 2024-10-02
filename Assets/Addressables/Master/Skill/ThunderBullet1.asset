@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145fa1968a4c3e34cada234f05b18bf6, type: 3}
   m_Name: ThunderBullet1
   m_EditorClassIdentifier: 
-  _id: 
-  _no: 0
-  _name: 
-  _maxExp: 0
-  _recastF: 0
-  _recastL: 0
-  _powerF: 0
-  _powerL: 0
-  _penetrableF: 0
-  _penetrableL: 0
-  _speedGrowthRate: 0
-  _attributes: 
-  _growthType: 
-  _impact: 0
-  _iconNo: 0
-  _aimingType: 
+  _id: ThunderBullet1
+  _no: 9
+  _name: "\u30B5\u30F3\u30C0\u30FC\u30A6\u30A7\u30A4\u30D6"
+  _maxExp: 999
+  _recastF: 1
+  _recastL: 0.2
+  _powerF: 2
+  _powerL: 10
+  _penetrableF: 5
+  _penetrableL: 20
+  _speedGrowthRate: 1
+  _attributes: Thu
+  _growthType: Normal
+  _impact: 3
+  _iconNo: 5
+  _aimingType: Weakest

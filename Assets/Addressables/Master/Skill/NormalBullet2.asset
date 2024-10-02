@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145fa1968a4c3e34cada234f05b18bf6, type: 3}
   m_Name: NormalBullet2
   m_EditorClassIdentifier: 
-  _id: 
-  _no: 0
-  _name: 
-  _maxExp: 0
-  _recastF: 0
-  _recastL: 0
-  _powerF: 0
-  _powerL: 0
-  _penetrableF: 0
-  _penetrableL: 0
-  _speedGrowthRate: 0
-  _attributes: 
-  _growthType: 
-  _impact: 0
-  _iconNo: 0
-  _aimingType: 
+  _id: NormalBullet2
+  _no: 2
+  _name: "\u901A\u5E38\u5F3E+"
+  _maxExp: 9999
+  _recastF: 2
+  _recastL: 1
+  _powerF: 50
+  _powerL: 100
+  _penetrableF: 1
+  _penetrableL: 3
+  _speedGrowthRate: 1
+  _attributes: Non
+  _growthType: Normal
+  _impact: 5
+  _iconNo: 1
+  _aimingType: Nearest

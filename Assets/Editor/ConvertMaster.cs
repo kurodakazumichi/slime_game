@@ -37,6 +37,8 @@ public class ConvertMaster
       var path = $"{DAT_BASE_PATH}/Enemy/{data["Id"]}.asset";
       var so = LoadOrCreate<EnemyEntity>(path);
 
+      StartAssetEditing();
+
       so._id                 = data["Id"];
       so._no                 = int.Parse(data["No"]);
       so._name               = data["Name"];
@@ -51,9 +53,10 @@ public class ConvertMaster
       so._skillId            = data["SkillId"];
       so._exp                = int.Parse(data["Exp"]);
 
-      AssetDatabase.SaveAssets();
+      StopAssetEditing(so);
     }
   }
+
 
   /// <summary>
   /// 敵のデータ(ScriptableObject)の内容をcsvファイルに出力
@@ -92,6 +95,8 @@ public class ConvertMaster
       var path = $"{DAT_BASE_PATH}/Skill/{data["Id"]}.asset";
       var so = LoadOrCreate<SkillEntity>(path);
 
+      StartAssetEditing();
+
       so._id              = data["Id"];
       so._no              = int.Parse(data["No"]);
       so._name            = data["Name"];
@@ -109,7 +114,7 @@ public class ConvertMaster
       so._iconNo          = int.Parse(data["IconNo"]);
       so._aimingType      = data["AimingType"];
 
-      AssetDatabase.SaveAssets();
+      StopAssetEditing(so);
     }
   }
 
@@ -224,4 +229,23 @@ public class ConvertMaster
     // 拡張子に基づいてファイル一覧を取得
     return Directory.GetFiles(folderPath, extension, SearchOption.TopDirectoryOnly);
   }
+
+  /// <summary>
+  /// アセット編集開始
+  /// </summary>
+  private static void StartAssetEditing()
+  {
+    AssetDatabase.StartAssetEditing();
+  }
+
+  /// <summary>
+  /// アセット編集終了
+  /// </summary>
+  private static void StopAssetEditing(ScriptableObject so)
+  {
+    AssetDatabase.StopAssetEditing();
+    EditorUtility.SetDirty(so);
+    AssetDatabase.SaveAssets();
+  }
+
 }

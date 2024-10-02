@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145fa1968a4c3e34cada234f05b18bf6, type: 3}
   m_Name: WaterBullet1
   m_EditorClassIdentifier: 
-  _id: 
-  _no: 0
-  _name: 
-  _maxExp: 0
-  _recastF: 0
-  _recastL: 0
-  _powerF: 0
-  _powerL: 0
+  _id: WaterBullet1
+  _no: 8
+  _name: "\u30A6\u30A9\u30FC\u30BF\u30FC\u30DC\u30FC\u30EB"
+  _maxExp: 999
+  _recastF: 1
+  _recastL: 0.2
+  _powerF: 10
+  _powerL: 30
   _penetrableF: 0
   _penetrableL: 0
-  _speedGrowthRate: 0
-  _attributes: 
-  _growthType: 
-  _impact: 0
-  _iconNo: 0
-  _aimingType: 
+  _speedGrowthRate: 1
+  _attributes: Wat
+  _growthType: Normal
+  _impact: 1
+  _iconNo: 4
+  _aimingType: Weakest

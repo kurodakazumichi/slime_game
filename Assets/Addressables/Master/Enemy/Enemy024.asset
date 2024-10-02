@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf6bfd483e7f4ad4a827c472d6f1ed67, type: 3}
   m_Name: Enemy024
   m_EditorClassIdentifier: 
-  _id: 
-  _no: 0
-  _name: 
-  _hp: 0
-  _power: 0
-  _speed: 0
-  _mass: 0
-  _attackAttributes: 
-  _weakAttributes: 
-  _resistAttributes: 
-  _nullfiedAttributes: 
-  _skillId: 
-  _exp: 0
+  _id: Enemy024
+  _no: 24
+  _name: "\u30A6\u30EB"
+  _hp: 20
+  _power: 10
+  _speed: 1.5
+  _mass: 5
+  _attackAttributes: Ice
+  _weakAttributes: Fir
+  _resistAttributes: Ice
+  _nullfiedAttributes: Nil
+  _skillId: IceBullet1
+  _exp: 10
