@@ -21,7 +21,6 @@ namespace MyGame.Tester
     }
 
     private PlayerLogic player = new();
-    private TrackingCameraLogic trackingCamera = new();
 
     // Start is called before the first frame update
     void Start()
@@ -37,8 +36,8 @@ namespace MyGame.Tester
         OnChangeHP
       );
 
-      trackingCamera.Init(Camera.main);
-      trackingCamera.SetTarget(view, new Vector3(0, 10f, -10f));
+      CameraSystem.SetupTrackingCamera(Camera.main);
+      CameraSystem.SetTrackingTarget(view, new Vector3(0, 10f, -10f));
     }
 
     // Update is called once per frame
@@ -76,7 +75,7 @@ namespace MyGame.Tester
       }
 
       player.Update();
-      trackingCamera.Update();
+      CameraSystem.Update();
     }
 
     private void OnChangeHP(float now, float rate)
