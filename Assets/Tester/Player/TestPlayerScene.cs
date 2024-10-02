@@ -36,8 +36,7 @@ namespace MyGame.Tester
         OnChangeHP
       );
 
-      CameraSystem.SetupTrackingCamera(Camera.main);
-      CameraSystem.SetTrackingTarget(view, new Vector3(0, 10f, -10f));
+      CameraSystem.SetupTrackingCamera(Camera.main, view, new Vector3(0, 10f, -10f));
     }
 
     // Update is called once per frame
