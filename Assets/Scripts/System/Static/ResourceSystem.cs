@@ -208,6 +208,11 @@ namespace MyGame.System
     {
       private string __InputText = "";
 
+      public string GetName()
+      {
+        return "ResourceSystem";
+      }
+
       public void OnDebug()
       {
         GUILayout.Label($"Loading Counter = {loadCounter}");

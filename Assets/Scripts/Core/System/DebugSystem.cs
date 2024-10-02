@@ -6,6 +6,9 @@ namespace MyGame.Core.System
 {
   public interface IDebugable
   {
+    string GetName() {
+      return GetType().Name;
+    }
     void OnDebug();
   }
 
@@ -46,7 +49,7 @@ namespace MyGame.Core.System
     [Conditional("_DEBUG")]
     public static void Regist(IDebugable debugger)
     {
-      var name = debugger.GetType().Name;
+      var name = debugger.GetName();
       debugs.Add(name, debugger);
     }
 
