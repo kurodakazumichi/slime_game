@@ -21,6 +21,7 @@ namespace MyGame.Tester
     }
 
     private PlayerLogic player = new();
+    private TrackingCameraLogic trackingCamera = new();
 
     // Start is called before the first frame update
     void Start()
@@ -28,13 +29,16 @@ namespace MyGame.Tester
       var handle = Addressables.LoadAssetAsync<GameObject>("Player/Player.prefab");
       handle.WaitForCompletion();
 
-      var view = Instantiate(handle.Result);
+      var view = Instantiate(handle.Result).GetComponent<MyGame.View.Player>();
 
       player.Init(
-        view.GetComponent<MyGame.View.Player>(), 
+        view, 
         new MockFieldSystem(), 
         OnChangeHP
       );
+
+      trackingCamera.Init(Camera.main);
+      trackingCamera.SetTarget(view, new Vector3(0, 10f, -10f));
     }
 
     // Update is called once per frame
@@ -72,6 +76,7 @@ namespace MyGame.Tester
       }
 
       player.Update();
+      trackingCamera.Update();
     }
 
     private void OnChangeHP(float now, float rate)
