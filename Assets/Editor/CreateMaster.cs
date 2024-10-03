@@ -17,6 +17,12 @@ public class CreateMaster
     CreateMasterData<SkillEntity>($"NewSkillEneity.asset");
   }
 
+  [MenuItem("Assets/CreateMaster/Player")]
+  private static void CreatePlayerMaster()
+  {
+    CreateMasterData<PlayerEntity>($"NewPlayerEneity.asset");
+  }
+
   private static void CreateMasterData<T>(string filename)
     where T : ScriptableObject
   {

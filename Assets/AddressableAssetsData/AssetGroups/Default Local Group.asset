@@ -142,6 +142,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52ad9cbec9d26c5438d233fee03f36b5
+    m_Address: Master/Player/Config.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52f17f35f73c83146ad8b6b864ba4cd6
     m_Address: Bullet/ThunderBullet1/Animator.controller
     m_ReadOnly: 0
