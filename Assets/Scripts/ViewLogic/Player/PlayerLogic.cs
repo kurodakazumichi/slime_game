@@ -1,18 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using MyGame.Core.Props;
+using MyGame.Master;
 using MyGame.System;
 
 namespace MyGame.ViewLogic
 {
   public class PlayerLogic
   {
-    //=========================================================================
-    // Const
-    //=========================================================================
-    const float BATTLE_SPEED = 3f;
-    const float FIELD_SPEED  = 6f;
-
     //=========================================================================
     // Enum
     //=========================================================================
@@ -26,6 +21,11 @@ namespace MyGame.ViewLogic
     //=========================================================================
     // Dependencies
     //=========================================================================
+    /// <summary>
+    /// Playerの設定値
+    /// </summary>
+    private IPlayerEntity config;
+
     /// <summary>
     /// 操作対象
     /// </summary>
@@ -86,13 +86,19 @@ namespace MyGame.ViewLogic
     /// <summary>
     /// 初期化
     /// </summary>
-    public void Init(MyGame.View.Player target, IFieldSystem fs, Action<float, float> onChangeHP)
+    public void Init(
+      IPlayerEntity config,
+      MyGame.View.Player target, 
+      IFieldSystem fs, 
+      Action<float, float> onChangeHP
+    )
     {
+      this.config     = config;
       this.target     = target;
       this.fs         = fs;
       this.onChangeHP = onChangeHP;
       
-      hp.Init(10f);
+      hp.Init(config.InitialHP);
       OnChangeHP();
 
       state.Add(State.Idle);
@@ -129,7 +135,7 @@ namespace MyGame.ViewLogic
       hp.Full();
       OnChangeHP();
       UpdateColor();
-      FieldMode();
+      SearchMode();
       state.SetState(State.Idle);
     }
 
@@ -144,9 +150,9 @@ namespace MyGame.ViewLogic
     /// <summary>
     /// フィールドモードにする
     /// </summary>
-    public void FieldMode()
+    public void SearchMode()
     {
-      speed = FIELD_SPEED;
+      speed = config.SpeedInSearch;
     }
 
     /// <summary>
@@ -154,7 +160,7 @@ namespace MyGame.ViewLogic
     /// </summary>
     public void BattleMode()
     {
-      speed = BATTLE_SPEED;
+      speed = config.SpeedInBattle;
     }
 
     /// <summary>

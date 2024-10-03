@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using MyGame.ViewLogic;
 using MyGame.System;
+using MyGame.Master;
 
 namespace MyGame.Tester
 {
@@ -25,12 +26,15 @@ namespace MyGame.Tester
     // Start is called before the first frame update
     void Start()
     {
+      PlayerMaster.Init();
+
       var handle = Addressables.LoadAssetAsync<GameObject>("Player/Player.prefab");
       handle.WaitForCompletion();
 
       var view = Instantiate(handle.Result).GetComponent<MyGame.View.Player>();
 
       player.Init(
+        PlayerMaster.Config,
         view, 
         new MockFieldSystem(), 
         OnChangeHP
@@ -58,7 +62,7 @@ namespace MyGame.Tester
       }
 
       if (Input.GetKeyDown(KeyCode.Alpha3)) {
-        player.FieldMode();
+        player.SearchMode();
       }
 
       if (Input.GetKeyDown(KeyCode.Alpha4)) {
