@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace MyGame.ViewLogic 
+namespace MyGame.Presenter 
 { 
   /// <summary>
   /// 追従カメラ
   /// </summary>
-  public class TrackingCameraLogic 
+  public class TrackingCameraPresenter : IPresenter
   {
     /// <summary>
     /// カメラのトランスフォーム

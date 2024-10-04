@@ -2,11 +2,11 @@
 using UnityEngine;
 using MyGame.Master;
 using MyGame.View;
-using MyGame.ViewLogic;
+using MyGame.Presenter;
 
 namespace MyGame.System
 {
-  public interface IPlayerSystem { 
+  public interface IPlayerSystem {
     View.Player View { get; }
   }
 
@@ -25,9 +25,9 @@ namespace MyGame.System
     //=========================================================================
 
     /// <summary>
-    /// Playerロジック
+    /// Playerを演じる者
     /// </summary>
-    private PlayerLogic playerLogic;
+    private PlayerPresenter presenter;
 
     //=========================================================================
     // Properties
@@ -36,7 +36,7 @@ namespace MyGame.System
     /// <summary>
     /// PlayerのViewオブジェクトを返す
     /// </summary>
-    public View.Player View => playerLogic.View;
+    public View.Player View => presenter.View;
 
     //=========================================================================
     // Methods
@@ -65,18 +65,18 @@ namespace MyGame.System
     {
       var view = MakePlayerView();
 
-      playerLogic = new();
-      playerLogic.Init(config, view, fs, onChangeHP);
+      presenter = new();
+      presenter.Init(config, view, fs, onChangeHP);
     }
 
     public void Update()
     {
-      playerLogic.Update();
+      presenter.Update();
     }
 
     public void SetPlayable()
     {
-      playerLogic.Playable();
+      presenter.Playable();
     }
 
     //-------------------------------------------------------------------------

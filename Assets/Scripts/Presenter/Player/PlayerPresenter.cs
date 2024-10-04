@@ -5,9 +5,9 @@ using MyGame.Master;
 using MyGame.System;
 using MyGame.View;
 
-namespace MyGame.ViewLogic
+namespace MyGame.Presenter
 {
-  public class PlayerLogic
+  public class PlayerPresenter : IPresenter
   {
     //=========================================================================
     // Enum

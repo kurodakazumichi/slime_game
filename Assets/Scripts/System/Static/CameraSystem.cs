@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using MyGame.ViewLogic;
+using MyGame.Presenter;
 
 namespace MyGame.System
 {
@@ -8,7 +8,7 @@ namespace MyGame.System
     /// <summary>
     /// 追従カメラ
     /// </summary>
-    private static TrackingCameraLogic trackingCamera = null;
+    private static TrackingCameraPresenter trackingCamera = null;
 
     /// <summary>
     /// 追従カメラのセットアップ
