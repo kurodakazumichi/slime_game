@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MyGame.View
 {
-  public class Player : MyMonoBehaviour, IAnimatableSprite, ICollideable
+  public class PlayerView : MyMonoBehaviour, IAnimatableSprite, ICollideable
   {
     //=========================================================================
     // Inspector

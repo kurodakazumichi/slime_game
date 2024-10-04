@@ -10,6 +10,14 @@ namespace MyGame.Presenter
   public class PlayerPresenter : IPresenter
   {
     //=========================================================================
+    // Const
+    //=========================================================================
+    /// <summary>
+    /// PlayerのPrefabのパス
+    /// </summary>
+    const string PLAYER_PREFAB_PATH = "Player/Player.prefab";
+
+    //=========================================================================
     // Enum
     //=========================================================================
 
@@ -23,16 +31,6 @@ namespace MyGame.Presenter
     // Dependencies
     //=========================================================================
     /// <summary>
-    /// Playerの設定値
-    /// </summary>
-    private IPlayerEntity config;
-
-    /// <summary>
-    /// 操作対象
-    /// </summary>
-    private Player target;
-
-    /// <summary>
     /// FieldSystem
     /// </summary>
     private IFieldSystem fs;
@@ -40,6 +38,15 @@ namespace MyGame.Presenter
     //=========================================================================
     // Variables
     //=========================================================================
+    /// <summary>
+    /// Playerの設定値
+    /// </summary>
+    private IPlayerEntity config;
+
+    /// <summary>
+    /// 操作対象
+    /// </summary>
+    private PlayerView target;
 
     /// <summary>
     /// ステートマシン
@@ -89,18 +96,28 @@ namespace MyGame.Presenter
     // Methods
     //=========================================================================
 
+    public void Load()
+    {
+      ResourceSystem.Load<GameObject>(PLAYER_PREFAB_PATH);
+    }
+
+    private PlayerView MakePlayerView()
+    {
+      var res = ResourceSystem.GetCache<GameObject>(PLAYER_PREFAB_PATH);
+      return GameObject.Instantiate(res).GetComponent<PlayerView>();
+    }
+
+
     /// <summary>
     /// 初期化
     /// </summary>
     public void Init(
-      IPlayerEntity config,
-      Player target, 
       IFieldSystem fs, 
       Action<float, float> onChangeHP
     )
     {
-      this.config     = config;
-      this.target     = target;
+      this.config     = PlayerMaster.Config;
+      this.target     = MakePlayerView();
       this.fs         = fs;
       this.onChangeHP = onChangeHP;
       

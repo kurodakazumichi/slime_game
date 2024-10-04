@@ -113,7 +113,7 @@ namespace MyGame.Scene
 
     private void EnterInitialize()
     {
-      sPlayer.Init(PlayerMaster.Config, null, null);
+      sPlayer.Init(null, null);
       sPlayer.SetPlayable();
 
       CameraSystem.SetupTrackingCamera(Camera.main, sPlayer.PlayerTransform, App.CAMERA_OFFSET);
