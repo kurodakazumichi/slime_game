@@ -76,9 +76,9 @@ namespace MyGame.Presenter
     //=========================================================================
 
     /// <summary>
-    /// PlayerのViewオブジェクト
+    /// 対象のTransform
     /// </summary>
-    public View.Player View => target;
+    public Transform TargetTransform => target.CachedTransform;
 
     /// <summary>
     /// 死亡フラグ

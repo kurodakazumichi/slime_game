@@ -7,7 +7,7 @@ using MyGame.Presenter;
 namespace MyGame.System
 {
   public interface IPlayerSystem {
-    View.Player View { get; }
+    Transform PlayerTransform { get; }
   }
 
   public class PlayerSystem : IPlayerSystem
@@ -36,7 +36,7 @@ namespace MyGame.System
     /// <summary>
     /// PlayerのViewオブジェクトを返す
     /// </summary>
-    public View.Player View => presenter.View;
+    public Transform PlayerTransform => presenter.TargetTransform;
 
     //=========================================================================
     // Methods

@@ -37,7 +37,7 @@ namespace MyGame.Tester
 
       if (!isInitialized) {
         sPlayer.Init(PlayerMaster.Config, new MockFieldSystem(), OnChangeHP);
-        CameraSystem.SetupTrackingCamera(Camera.main, sPlayer.View, new Vector3(0, 10f, -10f));
+        CameraSystem.SetupTrackingCamera(Camera.main, sPlayer.PlayerTransform, new Vector3(0, 10f, -10f));
         isInitialized = true;
       }
 

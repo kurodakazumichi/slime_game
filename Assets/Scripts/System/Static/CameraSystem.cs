@@ -13,7 +13,7 @@ namespace MyGame.System
     /// <summary>
     /// 追従カメラのセットアップ
     /// </summary>
-    public static void SetupTrackingCamera(Camera camera, MyMonoBehaviour target, Vector3 offset)
+    public static void SetupTrackingCamera(Camera camera, Transform target, Vector3 offset)
     {
       if (trackingCamera is null) {
         trackingCamera = new();

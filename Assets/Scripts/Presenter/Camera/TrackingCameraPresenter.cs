@@ -15,7 +15,7 @@ namespace MyGame.Presenter
     /// <summary>
     /// 追従対象
     /// </summary>
-    private MyMonoBehaviour target;
+    private Transform target;
 
     /// <summary>
     /// 対象からのオフセット
@@ -33,7 +33,7 @@ namespace MyGame.Presenter
     /// <summary>
     /// 追従対象をセット
     /// </summary>
-    public void SetTarget(MyMonoBehaviour target, Vector3 offset)
+    public void SetTarget(Transform target, Vector3 offset)
     {
       this.target = target;
       this.offset = offset;
@@ -46,8 +46,8 @@ namespace MyGame.Presenter
     {
       if (target is null) return;
 
-      cameraTransform.position = target.Position + offset;
-      cameraTransform.rotation = Quaternion.LookRotation(target.Position - cameraTransform.position, Vector3.up);
+      cameraTransform.position = target.position + offset;
+      cameraTransform.rotation = Quaternion.LookRotation(target.position - cameraTransform.position, Vector3.up);
     }
   }
 
