@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using MyGame.ViewLogic;
 using MyGame.System;
 using MyGame.Master;
 
@@ -21,63 +19,29 @@ namespace MyGame.Tester
       }
     }
 
-    private PlayerLogic player = new();
+    private bool isInitialized = false;
+
+    private PlayerSystem sPlayer = new();
 
     // Start is called before the first frame update
     void Start()
     {
       PlayerMaster.Init();
-
-      var handle = Addressables.LoadAssetAsync<GameObject>("Player/Player.prefab");
-      handle.WaitForCompletion();
-
-      var view = Instantiate(handle.Result).GetComponent<MyGame.View.Player>();
-
-      player.Init(
-        PlayerMaster.Config,
-        view, 
-        new MockFieldSystem(), 
-        OnChangeHP
-      );
-
-      CameraSystem.SetupTrackingCamera(Camera.main, view, new Vector3(0, 10f, -10f));
+      sPlayer.Load();
     }
 
     // Update is called once per frame
     void Update()
     {
-      if(Input.GetKeyDown(KeyCode.Alpha0)) {
-        player.SetActive(false);
-      }
-      if(Input.GetKeyDown(KeyCode.Alpha9)) {
-        player.SetActive(true);
+      if (ResourceSystem.IsLoading) return;
+
+      if (!isInitialized) {
+        sPlayer.Init(PlayerMaster.Config, new MockFieldSystem(), OnChangeHP);
+        CameraSystem.SetupTrackingCamera(Camera.main, sPlayer.View, new Vector3(0, 10f, -10f));
+        isInitialized = true;
       }
 
-      if (Input.GetKeyDown(KeyCode.Alpha1)) {
-        player.Reset();
-      }
-
-      if (Input.GetKeyDown(KeyCode.Alpha2)) {
-        player.Playable();
-      }
-
-      if (Input.GetKeyDown(KeyCode.Alpha3)) {
-        player.SearchMode();
-      }
-
-      if (Input.GetKeyDown(KeyCode.Alpha4)) {
-        player.BattleMode();
-      }
-
-      if (Input.GetKeyDown(KeyCode.Alpha5)) 
-      {
-        player.TakeDamage(new AttackInfo() { 
-          Power      = 1,
-          Attributes = (uint)Attribute.Non
-        });
-      }
-
-      player.Update();
+      sPlayer.Update();
       CameraSystem.Update();
     }
 

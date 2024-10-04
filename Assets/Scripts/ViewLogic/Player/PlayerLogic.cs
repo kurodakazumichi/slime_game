@@ -3,6 +3,7 @@ using UnityEngine;
 using MyGame.Core.Props;
 using MyGame.Master;
 using MyGame.System;
+using MyGame.View;
 
 namespace MyGame.ViewLogic
 {
@@ -29,7 +30,7 @@ namespace MyGame.ViewLogic
     /// <summary>
     /// 操作対象
     /// </summary>
-    private MyGame.View.Player target;
+    private Player target;
 
     /// <summary>
     /// FieldSystem
@@ -75,6 +76,11 @@ namespace MyGame.ViewLogic
     //=========================================================================
 
     /// <summary>
+    /// PlayerのViewオブジェクト
+    /// </summary>
+    public View.Player View => target;
+
+    /// <summary>
     /// 死亡フラグ
     /// </summary>
     public bool IsDead => hp.IsEmpty;
@@ -88,7 +94,7 @@ namespace MyGame.ViewLogic
     /// </summary>
     public void Init(
       IPlayerEntity config,
-      MyGame.View.Player target, 
+      Player target, 
       IFieldSystem fs, 
       Action<float, float> onChangeHP
     )
@@ -213,6 +219,9 @@ namespace MyGame.ViewLogic
 
     private void RestrictMovement()
     {
+      // FieldSystemがなければ何もしない
+      if (fs is null) return;
+
       // ロックされてなければ移動制限はしない
       if (!fs.HasBattleCircle) {
         return;

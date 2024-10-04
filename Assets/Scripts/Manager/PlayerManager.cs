@@ -1,7 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-
+using MyGame.Old;
 public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
 {
   [SerializeField]

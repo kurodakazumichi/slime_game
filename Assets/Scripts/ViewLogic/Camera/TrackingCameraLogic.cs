@@ -47,7 +47,7 @@ namespace MyGame.ViewLogic
       if (target is null) return;
 
       cameraTransform.position = target.Position + offset;
-      cameraTransform.rotation.SetLookRotation(target.Position);
+      cameraTransform.rotation = Quaternion.LookRotation(target.Position - cameraTransform.position, Vector3.up);
     }
   }
 

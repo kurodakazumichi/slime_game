@@ -8,6 +8,7 @@ public static class App
   public const float CAMERA_ANGLE_X = 45f;
   public const float BATTLE_CIRCLE_RADIUS = 10f;
   public static float BATTLE_CIRCLRE_AREA => Mathf.Pow(BATTLE_CIRCLE_RADIUS, 2) * Mathf.PI;
+  public static Vector3 CAMERA_OFFSET = new Vector3(0, 14, -14);
 }
 
 static public class LayerName
