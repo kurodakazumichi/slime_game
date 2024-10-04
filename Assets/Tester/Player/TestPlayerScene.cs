@@ -22,13 +22,14 @@ namespace MyGame.Tester
 
     private bool isInitialized = false;
 
-    private PlayerManager sPlayer = new();
+    private PlayerManager mPlayer = new();
+    private CameraManager mCamera = new();
 
     // Start is called before the first frame update
     void Start()
     {
       PlayerMaster.Init();
-      sPlayer.Load();
+      mPlayer.Load();
     }
 
     // Update is called once per frame
@@ -37,13 +38,13 @@ namespace MyGame.Tester
       if (ResourceSystem.IsLoading) return;
 
       if (!isInitialized) {
-        sPlayer.Init(new MockFieldSystem(), OnChangeHP);
-        CameraSystem.SetupTrackingCamera(Camera.main, sPlayer.PlayerTransform, new Vector3(0, 10f, -10f));
+        mPlayer.Init(new MockFieldSystem(), OnChangeHP);
+        mCamera.SetupTrackingCamera(Camera.main, mPlayer.PlayerTransform, new Vector3(0, 10f, -10f));
         isInitialized = true;
       }
 
-      sPlayer.Update();
-      CameraSystem.Update();
+      mPlayer.Update();
+      mCamera.Update();
     }
 
     private void OnChangeHP(float now, float rate)

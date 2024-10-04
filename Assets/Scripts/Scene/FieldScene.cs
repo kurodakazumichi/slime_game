@@ -31,8 +31,9 @@ namespace MyGame.Scene
     private StateMachine<State> state = new();
 
     //-------------------------------------------------------------------------
-    // Systems
-    private PlayerManager sPlayer = new();
+    // Managers
+    private PlayerManager mPlayer = new();
+    private CameraManager mCamera = new();
 
     //=========================================================================
     // Methods
@@ -99,7 +100,7 @@ namespace MyGame.Scene
     // for Loading
     private void EnterLoading()
     {
-      sPlayer.Load();
+      mPlayer.Load();
     }
 
     private void UpdateLoading()
@@ -114,10 +115,10 @@ namespace MyGame.Scene
 
     private void EnterInitialize()
     {
-      sPlayer.Init(null, null);
-      sPlayer.SetPlayable();
+      mPlayer.Init(null, null);
+      mPlayer.SetPlayable();
 
-      CameraSystem.SetupTrackingCamera(Camera.main, sPlayer.PlayerTransform, App.CAMERA_OFFSET);
+      mCamera.SetupTrackingCamera(Camera.main, mPlayer.PlayerTransform, App.CAMERA_OFFSET);
     }
 
     private void UpdateInitialize()
@@ -135,8 +136,8 @@ namespace MyGame.Scene
 
     private void UpdateSearching()
     {
-      sPlayer.Update();
-      CameraSystem.Update();
+      mPlayer.Update();
+      mCamera.Update();
     }
 
 #if _DEBUG

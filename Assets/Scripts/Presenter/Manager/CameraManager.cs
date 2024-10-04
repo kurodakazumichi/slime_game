@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
-using MyGame.Presenter;
 
-namespace MyGame.System
+namespace MyGame.Presenter.Manager
 {
-  public static class CameraSystem
+  public interface ICameraManager
+  {
+    public void SetupTrackingCamera(Camera camera, Transform target, Vector3 offset);
+  }
+
+  public class CameraManager : ICameraManager
   {
     /// <summary>
     /// 追従カメラ
     /// </summary>
-    private static TrackingCameraPresenter trackingCamera = null;
+    private TrackingCameraPresenter trackingCamera = null;
 
     /// <summary>
     /// 追従カメラのセットアップ
     /// </summary>
-    public static void SetupTrackingCamera(Camera camera, Transform target, Vector3 offset)
+    public void SetupTrackingCamera(Camera camera, Transform target, Vector3 offset)
     {
       if (trackingCamera is null) {
         trackingCamera = new();
@@ -25,7 +29,7 @@ namespace MyGame.System
     /// <summary>
     /// 追従カメラを解除
     /// </summary>
-    public static void ReleaseTrackingCamera()
+    public void ReleaseTrackingCamera()
     {
       trackingCamera = null;
     }
@@ -33,7 +37,7 @@ namespace MyGame.System
     /// <summary>
     /// 更新
     /// </summary>
-    public static void Update()
+    public void Update()
     {
       if (trackingCamera != null) {
         trackingCamera.Update();
