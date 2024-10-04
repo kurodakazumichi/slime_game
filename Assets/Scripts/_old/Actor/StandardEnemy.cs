@@ -1,4 +1,5 @@
 using UnityEngine;
+using MyGame.Old;
 
 public class StandardEnemy : Enemy<StandardEnemy.State>
 {

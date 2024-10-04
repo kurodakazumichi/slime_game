@@ -1,13 +1,14 @@
 using UnityEngine;
 using MyGame.System;
 using MyGame.Master;
+using MyGame.Presenter.Manager;
 
 namespace MyGame.Tester
 {
   
   public class TestPlayerScene : MyMonoBehaviour
   {
-    public class MockFieldSystem : IFieldSystem
+    public class MockFieldSystem : IFieldManager
     {
       public Vector3 BattleCircleCenter => Vector3.zero;
 
@@ -21,7 +22,7 @@ namespace MyGame.Tester
 
     private bool isInitialized = false;
 
-    private PlayerSystem sPlayer = new();
+    private PlayerManager sPlayer = new();
 
     // Start is called before the first frame update
     void Start()

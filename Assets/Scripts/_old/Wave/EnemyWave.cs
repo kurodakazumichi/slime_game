@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using MyGame.Old;
 
 public class EnemyWave
 {

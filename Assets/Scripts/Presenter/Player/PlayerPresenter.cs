@@ -4,6 +4,7 @@ using MyGame.Core.Props;
 using MyGame.Master;
 using MyGame.System;
 using MyGame.View;
+using MyGame.Presenter.Manager;
 
 namespace MyGame.Presenter
 {
@@ -33,7 +34,7 @@ namespace MyGame.Presenter
     /// <summary>
     /// FieldSystem
     /// </summary>
-    private IFieldSystem fs;
+    private IFieldManager fs;
 
     //=========================================================================
     // Variables
@@ -112,7 +113,7 @@ namespace MyGame.Presenter
     /// 初期化
     /// </summary>
     public void Init(
-      IFieldSystem fs, 
+      IFieldManager fs, 
       Action<float, float> onChangeHP
     )
     {

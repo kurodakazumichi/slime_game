@@ -4,6 +4,7 @@ using UnityEngine;
 using MyGame.Core.System;
 using MyGame.Master;
 using MyGame.System;
+using MyGame.Presenter.Manager;
 
 namespace MyGame.Scene
 {
@@ -31,7 +32,7 @@ namespace MyGame.Scene
 
     //-------------------------------------------------------------------------
     // Systems
-    private PlayerSystem sPlayer = new();
+    private PlayerManager sPlayer = new();
 
     //=========================================================================
     // Methods

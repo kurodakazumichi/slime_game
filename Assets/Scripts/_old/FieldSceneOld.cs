@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using MyGame.Master;
 using MyGame.Core.System;
-
+using MyGame.Old;
 public class FieldSceneOld : MyMonoBehaviour
 #if _DEBUG
   ,IDebugable

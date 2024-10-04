@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyGame.Old;
 
 /// <summary>
 /// スキル経験値をもつアイテム、取得するとプレイヤーにスキル経験値が貯まる

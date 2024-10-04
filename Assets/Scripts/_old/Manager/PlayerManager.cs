@@ -2,62 +2,68 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using MyGame.Old;
-public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
+
+namespace MyGame.Old
 {
-  [SerializeField]
-  private GameObject playerPrefab;
-
-  private Player player;
-
-  protected override void MyAwake()
+  public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
   {
-    base.MyAwake();
+    [SerializeField]
+    private GameObject playerPrefab;
 
-    player = Instantiate(playerPrefab).GetComponent<Player>();
-  }
+    private Player player;
 
-  public Action<int, float> OnChangePlayerHP { 
-    set { 
-      player.OnChangeHP = value;
+    protected override void MyAwake()
+    {
+      base.MyAwake();
+
+      player = Instantiate(playerPrefab).GetComponent<Player>();
+    }
+
+    public Action<int, float> OnChangePlayerHP {
+      set {
+        player.OnChangeHP = value;
+      }
+    }
+
+    public void RespawnPlayer()
+    {
+      player.Respawn();
+    }
+
+    public void Playable()
+    {
+      player.SetStateUsual();
+    }
+
+    public bool PlayerExists {
+      get { return player != null; }
+    }
+
+    public bool PlayerIsDead {
+      get { return player.IsDead; }
+    }
+
+    public void AttackPlayer(AttackInfo info)
+    {
+      if (!PlayerExists) return;
+
+      if (PlayerIsDead) return;
+
+      player.TakeDamage(info);
+    }
+
+    new public Vector3 Position {
+      get { return player.Position; }
+    }
+
+    public SphereCollider Collider {
+      get { return player.Collider; }
+    }
+
+    public Player Player {
+      get { return player; }
     }
   }
 
-  public void RespawnPlayer()
-  {
-    player.Respawn();
-  }
 
-  public void Playable()
-  {
-    player.SetStateUsual();
-  }
-
-  public bool PlayerExists {
-    get { return player != null; } 
-  }
-
-  public bool PlayerIsDead {
-    get { return player.IsDead; }
-  }
-
-  public void AttackPlayer(AttackInfo info)
-  {
-    if (!PlayerExists) return;
-
-    if (PlayerIsDead) return;
-
-    player.TakeDamage(info);
-  }
-
-  new public Vector3 Position {
-    get { return player.Position; }
-  }
-
-  public SphereCollider Collider {
-    get { return player.Collider; }
-  }
-
-  public Player Player {
-    get { return player; }
-  }
 }

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyGame.System
+namespace MyGame.Presenter.Manager
 {
 
-  public interface IFieldSystem
+  public interface IFieldManager
   {
     Vector3 BattleCircleCenter { get; }
     bool HasBattleCircle { get; }

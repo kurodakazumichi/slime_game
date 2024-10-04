@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using MyGame.Old;
 public class CollisionManager : SingletonMonoBehaviour<CollisionManager>
 {
   private const float serachRadius = 10f;

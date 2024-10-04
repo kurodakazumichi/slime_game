@@ -1,5 +1,5 @@
-﻿using System.Threading;
-using UnityEngine;
+﻿using UnityEngine;
+using MyGame.Old;
 
 /// <summary>
 /// 通常弾のスクリプト

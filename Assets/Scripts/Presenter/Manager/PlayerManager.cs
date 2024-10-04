@@ -4,13 +4,13 @@ using MyGame.Master;
 using MyGame.Presenter;
 using MyGame.View;
 
-namespace MyGame.System
+namespace MyGame.Presenter.Manager
 {
-  public interface IPlayerSystem {
+  public interface IPlayerManager {
     Transform PlayerTransform { get; }
   }
 
-  public class PlayerSystem : IPlayerSystem
+  public class PlayerManager : IPlayerManager
   {
     //=========================================================================
     // Variables
@@ -41,7 +41,7 @@ namespace MyGame.System
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    public PlayerSystem()
+    public PlayerManager()
     {
       presenter = new();
     }
@@ -58,11 +58,11 @@ namespace MyGame.System
     /// 初期化
     /// </summary>
     public void Init(
-      IFieldSystem fs,
+      IFieldManager fm,
       Action<float, float> onChangeHP
     )
     {
-      presenter.Init(fs, onChangeHP);
+      presenter.Init(fm, onChangeHP);
     }
 
     public void Update()
