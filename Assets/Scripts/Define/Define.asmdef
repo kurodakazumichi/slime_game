@@ -1,0 +1,16 @@
+{
+    "name": "Define",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3238b9c3693471342ac720f4459d48a9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
